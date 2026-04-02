@@ -73,15 +73,24 @@ class Biblioteca:
     def inicializar_indices(self):
         from indices.bst_livros import BSTBiblioteca
         from indices.indice_invertido import IndiceInvertido
+        from indices.busca_aproximada import BuscaAproximada
+        from indices.motor_busca import MotorBusca
 
-        self.bst = BSTBiblioteca()
         livros_lista = list(self.info_livros.values())
+        
+        self.bst = BSTBiblioteca()
         self.bst.construir_de_lista(livros_lista)
-        print(f"[BST] Construida com {len(livros_lista)} livros.")
+        print(f"[BST] {len(livros_lista)} livros indexados.")
 
         self.indice_invertido = IndiceInvertido()
         self.indice_invertido.construir(livros_lista)
-        print(f"[IndiceInvertido] Vocabulario: {len(self.indice_invertido.vocabulario())} tokens.")
+        print(f"[Invertido] {len(self.indice_invertido.vocabulario())} tokens.")
+
+        self.buscador_fuzzy = BuscaAproximada(self.indice_invertido)
+        print("[Fuzzy] Pronto.")
+
+        self.motor = MotorBusca(self)
+        print("[Motor] Todos os indices inicializados.")
 
     def cadastra_aluno(self, nome, idade, serie, turno, contato, endereco):
         _id = str(len(self.id_alunos))
@@ -786,59 +795,37 @@ class JanelaPrincipal(QMainWindow):
             self.status_label.setVisible(False)
             return
 
-        resultados = []
-        motor_usado = "Sequencial"
-        comparacoes = 0
+        # Chama o motor central — ele decide qual algoritmo usar
+        resposta = self.b1.motor.buscar(query)
 
-        # Motor 1 — BST: busca por número exato (ex: "345")
-        if self.b1.bst and query.isdigit():
-            encontrado = self.b1.bst.buscar(int(query))
-            comparacoes = self.b1.bst.comparacoes
-            motor_usado = "BST"
-            if encontrado:
-                resultados = [encontrado]
+        resultados  = resposta["resultados"]
+        motor_usado = resposta["motor_usado"]
+        tempo_ms    = resposta["tempo_ms"]
+        comparacoes = resposta["comparacoes"]
+        score       = resposta["score"]
+        sugestao    = resposta["sugestao"]
 
-        # Motor 2 — BST: busca por intervalo (ex: "100-500")
-        elif self.b1.bst and "-" in query and all(
-            p.strip().isdigit() for p in query.split("-") if p.strip()
-        ):
-            partes = query.split("-")
-            inicio = int(partes[0].strip())
-            fim = int(partes[1].strip())
-            resultados = self.b1.bst.buscar_intervalo(inicio, fim)
-            comparacoes = self.b1.bst.comparacoes
-            motor_usado = "BST (intervalo)"
-
-        # Motor 3 — Índice Invertido: busca por texto (ex: "machado romance")
-        elif self.b1.indice_invertido:
-            resultados = self.b1.indice_invertido.buscar(query)
-            comparacoes = len(query.strip().split())
-            motor_usado = "Índice Invertido"
-
-            # Se AND não retornou nada, tenta OR
-            if not resultados:
-                resultados = self.b1.indice_invertido.buscar_qualquer(query)
-                motor_usado = "Índice Invertido (OR)"
-
-        # Fallback — busca sequencial simples
+        # Monta texto do status
+        if motor_usado == "BST_EXATA":
+            status = f"Motor: BST (exata) · {len(resultados)} resultado(s) · {comparacoes} comparações"
+        elif motor_usado == "BST_INTERVALO":
+            status = f"Motor: BST (intervalo) · {len(resultados)} resultado(s) · {comparacoes} comparações"
+        elif motor_usado == "INVERTIDO":
+            status = f"Motor: Índice Invertido (AND) · {len(resultados)} resultado(s)"
+        elif motor_usado == "INVERTIDO_OR":
+            status = f"Motor: Índice Invertido (OR) · {len(resultados)} resultado(s)"
+        elif motor_usado == "FUZZY":
+            status = f"Motor: Fuzzy · {len(resultados)} resultado(s)"
+            if sugestao:
+                status += f' · Você quis dizer: "{sugestao}"?'
         else:
-            q = query.lower()
-            for livro in self.b1.info_livros.values():
-                if isinstance(livro, dict):
-                    comparacoes += 1
-                    if (q in str(livro.get("titulo", "")).lower()
-                            or q in str(livro.get("autor", "")).lower()
-                            or q in str(livro.get("genero", "")).lower()):
-                        resultados.append(livro)
-            motor_usado = "Sequencial"
+            status = f"{len(resultados)} resultado(s)"
 
         # Popula a tabela com os resultados
         self._popular_tabela_livros(resultados)
 
         # Atualiza o label de status
-        self.status_label.setText(
-            f"Motor: {motor_usado} · {len(resultados)} resultado(s) · {comparacoes} comparação(ões)"
-        )
+        self.status_label.setText(status)
         self.status_label.setVisible(True)
 
     def _popular_tabela_livros(self, livros: list):
