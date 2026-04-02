@@ -779,45 +779,88 @@ class JanelaPrincipal(QMainWindow):
         self._atualizar_tabela_devolucoes()
     
     def _buscar_livros(self):
-        """Busca livros por substring (busca placeholder)"""
-        query = self.search_bar.text().lower()
-        
+        query = self.search_bar.text().strip()
+
         if not query:
             self._atualizar_tabela_acervo()
             self.status_label.setVisible(False)
             return
-        
-        # Busca sequencial simples
+
         resultados = []
-        for numeracao, livro in self.b1.info_livros.items():
-            if isinstance(livro, dict):
-                titulo = str(livro.get("titulo", "")).lower()
-                autor = str(livro.get("autor", "")).lower()
-                genero = str(livro.get("genero", "")).lower()
-                num = str(livro.get("numeracao", "")).lower()
-                
-                if query in titulo or query in autor or query in genero or query in num:
-                    resultados.append((numeracao, livro))
-        
-        # Mostra resultados
+        motor_usado = "Sequencial"
+        comparacoes = 0
+
+        # Motor 1 — BST: busca por número exato (ex: "345")
+        if self.b1.bst and query.isdigit():
+            encontrado = self.b1.bst.buscar(int(query))
+            comparacoes = self.b1.bst.comparacoes
+            motor_usado = "BST"
+            if encontrado:
+                resultados = [encontrado]
+
+        # Motor 2 — BST: busca por intervalo (ex: "100-500")
+        elif self.b1.bst and "-" in query and all(
+            p.strip().isdigit() for p in query.split("-") if p.strip()
+        ):
+            partes = query.split("-")
+            inicio = int(partes[0].strip())
+            fim = int(partes[1].strip())
+            resultados = self.b1.bst.buscar_intervalo(inicio, fim)
+            comparacoes = self.b1.bst.comparacoes
+            motor_usado = "BST (intervalo)"
+
+        # Motor 3 — Índice Invertido: busca por texto (ex: "machado romance")
+        elif self.b1.indice_invertido:
+            resultados = self.b1.indice_invertido.buscar(query)
+            comparacoes = len(query.strip().split())
+            motor_usado = "Índice Invertido"
+
+            # Se AND não retornou nada, tenta OR
+            if not resultados:
+                resultados = self.b1.indice_invertido.buscar_qualquer(query)
+                motor_usado = "Índice Invertido (OR)"
+
+        # Fallback — busca sequencial simples
+        else:
+            q = query.lower()
+            for livro in self.b1.info_livros.values():
+                if isinstance(livro, dict):
+                    comparacoes += 1
+                    if (q in str(livro.get("titulo", "")).lower()
+                            or q in str(livro.get("autor", "")).lower()
+                            or q in str(livro.get("genero", "")).lower()):
+                        resultados.append(livro)
+            motor_usado = "Sequencial"
+
+        # Popula a tabela com os resultados
+        self._popular_tabela_livros(resultados)
+
+        # Atualiza o label de status
+        self.status_label.setText(
+            f"Motor: {motor_usado} · {len(resultados)} resultado(s) · {comparacoes} comparação(ões)"
+        )
+        self.status_label.setVisible(True)
+
+    def _popular_tabela_livros(self, livros: list):
         self.table_livros.setRowCount(0)
-        for numeracao, livro in resultados:
+        for livro in livros:
+            if not isinstance(livro, dict):
+                continue
+            numeracao = livro.get("numeracao", "")
             row = self.table_livros.rowCount()
             self.table_livros.insertRow(row)
-            
-            item_num = QTableWidgetItem(str(livro.get("numeracao", "")))
+
+            item_num = QTableWidgetItem(str(numeracao))
             item_num.setForeground(Qt.white)
             item_num.setTextAlignment(Qt.AlignCenter)
             self.table_livros.setItem(row, 0, item_num)
 
             item_titulo = QTableWidgetItem(str(livro.get("titulo", "")))
             item_titulo.setForeground(Qt.white)
-            item_titulo.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
             self.table_livros.setItem(row, 1, item_titulo)
 
             item_autor = QTableWidgetItem(str(livro.get("autor", "")))
             item_autor.setForeground(Qt.white)
-            item_autor.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
             self.table_livros.setItem(row, 2, item_autor)
 
             item_genero = QTableWidgetItem(str(livro.get("genero", "")))
@@ -829,27 +872,25 @@ class JanelaPrincipal(QMainWindow):
             item_qtd.setForeground(Qt.white)
             item_qtd.setTextAlignment(Qt.AlignCenter)
             self.table_livros.setItem(row, 4, item_qtd)
-            
+
             btn_container = QWidget()
             btn_layout = QHBoxLayout(btn_container)
             btn_layout.setContentsMargins(4, 2, 4, 2)
             btn_layout.setSpacing(6)
-            
+
             btn_emprestar = QPushButton("Emprestar")
             btn_emprestar.setFixedWidth(88)
-            btn_emprestar.clicked.connect(lambda checked, n=numeracao: self._abrir_emprestimo(n))
-            
+            btn_emprestar.clicked.connect(
+                lambda checked, n=numeracao: self._abrir_emprestimo(n)
+            )
             btn_editar = QPushButton("Editar")
             btn_editar.setFixedWidth(72)
-            btn_editar.clicked.connect(lambda checked, n=numeracao: self._abrir_altera_livro(n))
-            
+            btn_editar.clicked.connect(
+                lambda checked, n=numeracao: self._abrir_altera_livro(n)
+            )
             btn_layout.addWidget(btn_emprestar)
             btn_layout.addWidget(btn_editar)
             self.table_livros.setCellWidget(row, 5, btn_container)
-        
-        # Mostra status
-        self.status_label.setText(f" Listagem completa · {len(resultados)} resultado(s)")
-        self.status_label.setVisible(True)
     
     def _buscar_alunos(self):
         """Busca alunos por nome ou ID"""

@@ -46,9 +46,7 @@ class IndiceInvertido:
             return
 
         self._livros[numeracao] = dict(livro)
-        texto = " ".join(
-            str(livro.get(campo, "")) for campo in ("titulo", "autor", "genero")
-        )
+        texto = livro["titulo"] + " " + livro["autor"] + " " + livro["genero"]
         for token in tokenizar(texto):
             self._indice.setdefault(token, set()).add(numeracao)
 
@@ -58,9 +56,7 @@ class IndiceInvertido:
         if not livro_antigo:
             return
 
-        texto = " ".join(
-            str(livro_antigo.get(campo, "")) for campo in ("titulo", "autor", "genero")
-        )
+        texto = livro_antigo["titulo"] + " " + livro_antigo["autor"] + " " + livro_antigo["genero"]
         for token in tokenizar(texto):
             numeros = self._indice.get(token)
             if not numeros:
@@ -84,15 +80,14 @@ class IndiceInvertido:
         if not tokens:
             return []
 
-        conjuntos: list[set[str]] = []
+        sets: list[set[str]] = []
         for token in tokens:
-            numeros = self._indice.get(token)
-            if not numeros:
+            if token not in self._indice:
                 return []
-            conjuntos.append(set(numeros))
+            sets.append(self._indice[token])
 
-        resultado_numeracoes = set.intersection(*conjuntos) if conjuntos else set()
-        return [self._livros[numeracao] for numeracao in sorted(resultado_numeracoes)]
+        numeracoes = sets[0].intersection(*sets[1:])
+        return [self._livros[n] for n in numeracoes if n in self._livros]
 
     def buscar_qualquer(self, query: str) -> list[dict]:
         """Retorna livros que contêm ao menos um dos tokens da consulta."""
@@ -100,13 +95,16 @@ class IndiceInvertido:
         if not tokens:
             return []
 
-        resultado_numeracoes: set[str] = set()
+        sets: list[set[str]] = []
         for token in tokens:
-            numeros = self._indice.get(token)
-            if numeros:
-                resultado_numeracoes.update(numeros)
+            if token in self._indice:
+                sets.append(self._indice[token])
 
-        return [self._livros[numeracao] for numeracao in sorted(resultado_numeracoes)]
+        if not sets:
+            return []
+
+        numeracoes = set().union(*sets)
+        return [self._livros[n] for n in numeracoes if n in self._livros]
 
     def atualizar(self, livro: dict) -> None:
         """Atualiza um livro no índice, substituindo qualquer versão anterior."""
@@ -129,44 +127,66 @@ class IndiceInvertido:
 
 if __name__ == "__main__":
     livros_teste = [
-        {"numeracao": "0001", "titulo": "Dom Casmurro", "autor": "Machado de Assis",
-         "genero": "Romance", "editora": "Penguin", "quantidade": 3},
-        {"numeracao": "0002", "titulo": "Memorias Postumas de Bras Cubas",
-         "autor": "Machado de Assis", "genero": "Romance",
-         "editora": "Penguin", "quantidade": 2},
-        {"numeracao": "0003", "titulo": "O Hobbit", "autor": "J.R.R. Tolkien",
-         "genero": "Fantasia", "editora": "Martins Fontes", "quantidade": 5},
-        {"numeracao": "0004", "titulo": "Duna", "autor": "Frank Herbert",
-         "genero": "Ficcao Cientifica", "editora": "Aleph", "quantidade": 3},
-        {"numeracao": "0005", "titulo": "Fundacao", "autor": "Isaac Asimov",
-         "genero": "Ficcao Cientifica", "editora": "Aleph", "quantidade": 2},
+      {"numeracao": "0001", "titulo": "Dom Casmurro",
+       "autor": "Machado de Assis", "genero": "Romance",
+       "editora": "Penguin", "quantidade": 3},
+      {"numeracao": "0002", "titulo": "Memorias Postumas de Bras Cubas",
+       "autor": "Machado de Assis", "genero": "Romance",
+       "editora": "Penguin", "quantidade": 2},
+      {"numeracao": "0003", "titulo": "O Hobbit",
+       "autor": "J.R.R. Tolkien", "genero": "Fantasia",
+       "editora": "Martins Fontes", "quantidade": 5},
+      {"numeracao": "0004", "titulo": "Vidas Secas",
+       "autor": "Graciliano Ramos", "genero": "Regionalismo",
+       "editora": "Record", "quantidade": 4},
     ]
 
     idx = IndiceInvertido()
     idx.construir(livros_teste)
 
-    print("=== Vocabulario (primeiros 10 tokens) ===")
-    print(idx.vocabulario()[:10])
+    print("=== DIAGNÓSTICO DE TOKENS ===")
+    try:
+        from indices.indice_invertido import tokenizar
+    except ModuleNotFoundError:
+        from indice_invertido import tokenizar
+    print("tokenizar('Machado Romance'):", tokenizar("Machado Romance"))
+    print("tokenizar('Dom Casmurro'):", tokenizar("Dom Casmurro"))
+    print()
 
-    print("\n=== Busca AND: 'machado romance' ===")
-    for r in idx.buscar("machado romance"):
-        print(f"  {r['numeracao']} - {r['titulo']}")
+    print("=== TOKENS DO LIVRO 0001 ===")
+    texto = livros_teste[0]["titulo"] + " " + \
+        livros_teste[0]["autor"] + " " + \
+        livros_teste[0]["genero"]
+    print(f"Texto: '{texto}'")
+    print(f"Tokens: {tokenizar(texto)}")
+    print()
 
-    print("\n=== Busca OR: 'tolkien asimov' ===")
-    for r in idx.buscar_qualquer("tolkien asimov"):
-        print(f"  {r['numeracao']} - {r['titulo']}")
+    print("=== TESTES DE BUSCA (todos devem ter resultado) ===")
 
-    print("\n=== Busca sem resultado: 'xyz123' ===")
-    print(f"  Resultados: {len(idx.buscar('xyz123'))}")
+    r1 = idx.buscar("machado")
+    print(f"'machado' → {len(r1)} resultado(s) "
+        f"{'OK' if len(r1) == 2 else 'FALHOU'}")
 
-    print("\n=== Atualizar livro 0001 e buscar novamente ===")
-    idx.atualizar({"numeracao": "0001", "titulo": "Dom Casmurro Especial",
-                   "autor": "Machado de Assis", "genero": "Romance Classico",
-                   "editora": "Penguin", "quantidade": 5})
-    for r in idx.buscar("especial"):
-        print(f"  {r['numeracao']} - {r['titulo']}")
+    r2 = idx.buscar("romance")
+    print(f"'romance' → {len(r2)} resultado(s) "
+        f"{'OK' if len(r2) == 2 else 'FALHOU'}")
 
-    print("\n=== Remover 0003 e verificar ===")
-    idx.remover("0003")
-    resultado = idx.buscar("tolkien")
-    print(f"  Tolkien apos remocao: {len(resultado)} resultado(s)")
+    r3 = idx.buscar("Machado Romance")
+    print(f"'Machado Romance' → {len(r3)} resultado(s) "
+        f"{'OK' if len(r3) == 2 else 'FALHOU'}")
+
+    r4 = idx.buscar("tolkien fantasia")
+    print(f"'tolkien fantasia' → {len(r4)} resultado(s) "
+        f"{'OK' if len(r4) == 1 else 'FALHOU'}")
+
+    r5 = idx.buscar("tolkien romance")
+    print(f"'tolkien romance' → {len(r5)} resultado(s) "
+        f"{'OK' if len(r5) == 0 else 'FALHOU'}")
+
+    print()
+    print("=== RESULTADO ESPERADO ===")
+    print("machado         → 2  (Dom Casmurro e Memorias Postumas)")
+    print("romance         → 2  (Dom Casmurro e Memorias Postumas)")
+    print("Machado Romance → 2  (ambos têm machado E romance)")
+    print("tolkien fantasia → 1 (O Hobbit)")
+    print("tolkien romance  → 0 (nenhum livro tem tolkien E romance)")
