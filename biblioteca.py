@@ -71,7 +71,17 @@ class Biblioteca:
             json.dump(dados, arq, ensure_ascii=False, indent=2)
 
     def inicializar_indices(self):
-        print("[Indices] prontos para implementação")
+        from indices.bst_livros import BSTBiblioteca
+        from indices.indice_invertido import IndiceInvertido
+
+        self.bst = BSTBiblioteca()
+        livros_lista = list(self.info_livros.values())
+        self.bst.construir_de_lista(livros_lista)
+        print(f"[BST] Construida com {len(livros_lista)} livros.")
+
+        self.indice_invertido = IndiceInvertido()
+        self.indice_invertido.construir(livros_lista)
+        print(f"[IndiceInvertido] Vocabulario: {len(self.indice_invertido.vocabulario())} tokens.")
 
     def cadastra_aluno(self, nome, idade, serie, turno, contato, endereco):
         _id = str(len(self.id_alunos))
@@ -90,6 +100,10 @@ class Biblioteca:
         self.id_livros.append(numeracao)
         self.exportacao(IDS_LIVROS, self.id_livros)
         self.exportacao(INFO_LIVROS, self.info_livros)
+        if self.bst:
+            self.bst.inserir(self.info_livros[numeracao])
+        if self.indice_invertido:
+            self.indice_invertido.atualizar(self.info_livros[numeracao])
         return self.info_livros[numeracao]
 
     def altera_aluno(self, _id, nome, idade, serie, turno, contato, endereco):
@@ -106,6 +120,10 @@ class Biblioteca:
         livro = Livro(numeracao, titulo, genero, autor, editora, qtd)
         self.info_livros[numeracao] = livro.__dict__
         self.exportacao(INFO_LIVROS, self.info_livros)
+        if self.bst:
+            self.bst.inserir(self.info_livros[numeracao])
+        if self.indice_invertido:
+            self.indice_invertido.atualizar(self.info_livros[numeracao])
         return self.info_livros[numeracao]
 
     def fazer_emprestimo(self, _id, livro, devo):
