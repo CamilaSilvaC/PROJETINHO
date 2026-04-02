@@ -1,0 +1,14 @@
+{
+  "DEV-345678": {
+    "chave_emprestimo": "345678",
+    "livro": "Iracema",
+    "aluno": "João Mendes",
+    "data_devolucao": "04/04/2026 23:10"
+  },
+  "DEV-646794": {
+    "chave_emprestimo": "646794",
+    "livro": "Hoje É Um Novo Dia",
+    "aluno": "Olívia Ramos",
+    "data_devolucao": "02/04/2026 08:15"
+  }
+}

@@ -12,19 +12,6 @@
     "livro": "Dom Casmurro",
     "devolucao": "2026-05-15"
   },
-  "345678": {
-    "aluno": {
-      "id": "10",
-      "nome": "João Mendes",
-      "serie": "9",
-      "turno": "Tarde",
-      "idade": "15",
-      "contato": "921234567",
-      "endereco": "Praceta da Alegria, 9"
-    },
-    "livro": "Iracema",
-    "devolucao": "2026-05-29"
-  },
   "456789": {
     "aluno": {
       "id": "15",
@@ -50,5 +37,18 @@
     },
     "livro": "Vidas Secas",
     "devolucao": "2026-06-12"
+  },
+  "614954": {
+    "aluno": {
+      "id": "28",
+      "nome": "Caio Moreira",
+      "serie": "8",
+      "turno": "Manha",
+      "idade": "13",
+      "contato": "939012345",
+      "endereco": "Rua da Saudade, 25"
+    },
+    "livro": "Hoje É Um Novo Dia",
+    "devolucao": "2026-04-15"
   }
 }

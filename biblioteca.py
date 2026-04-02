@@ -23,6 +23,7 @@ IDS_LIVROS = os.path.join(CAMINHO_DB_FILES, "id_livros.json")
 INFO_LIVROS = os.path.join(CAMINHO_DB_FILES, "info_livros.json")
 EMPRESTIMOS = os.path.join(CAMINHO_DB_FILES, "emprestimos.json")
 ID_EMPRESTIMO = os.path.join(CAMINHO_DB_FILES, "id_emprestimo.json")
+HISTORICO_DEVOLUCOES = os.path.join(CAMINHO_DB_FILES, "historico_devolucoes.json")
 
 class Aluno:
     def __init__(self, id, nome, idade, serie, turno, contato, endereco):
@@ -51,6 +52,7 @@ class Biblioteca:
         self.info_livros = self.importacao(INFO_LIVROS)
         self.emprestimos = self.importacao(EMPRESTIMOS)
         self.id_emprestimo = self.importacao(ID_EMPRESTIMO)
+        self.historico_devolucoes = self.importacao(HISTORICO_DEVOLUCOES)
         
         # Hooks de índice para implementação futura
         self.bst = None
@@ -119,6 +121,28 @@ class Biblioteca:
         return chave, self.emprestimos[chave]
 
     def fazer_devolucao(self, chave):
+        emprestimo = self.emprestimos.get(chave)
+        if not emprestimo:
+            return
+
+        # Busca nome do aluno
+        aluno_info = emprestimo.get("aluno", {})
+        if isinstance(aluno_info, dict):
+            nome_aluno = aluno_info.get("nome", "Desconhecido")
+        else:
+            nome_aluno = str(aluno_info)
+
+        # Salva no histórico de devoluções
+        chave_devolucao = f"DEV-{chave}"
+        self.historico_devolucoes[chave_devolucao] = {
+            "chave_emprestimo": chave,
+            "livro": emprestimo.get("livro", ""),
+            "aluno": nome_aluno,
+            "data_devolucao": datetime.now().strftime("%d/%m/%Y %H:%M")
+        }
+        self.exportacao(HISTORICO_DEVOLUCOES, self.historico_devolucoes)
+
+        # Remove o empréstimo ativo
         self.emprestimos.pop(chave)
         self.id_emprestimo.pop(chave)
         self.exportacao(EMPRESTIMOS, self.emprestimos)
@@ -303,6 +327,8 @@ class JanelaPrincipal(QMainWindow):
             self._atualizar_tabela_alunos()
         elif index == 2:
             self._atualizar_tabela_emprestimos()
+        elif index == 3:
+            self._atualizar_tabela_devolucoes()
         self._atualizar_cards()
     
     def _criar_painel_acervo(self) -> QWidget:
@@ -482,19 +508,30 @@ class JanelaPrincipal(QMainWindow):
         return painel
     
     def _criar_painel_devolucoes(self) -> QWidget:
-        """Cria painel de devoluções (redirecionado para empréstimos)"""
         painel = QWidget()
         layout = QVBoxLayout(painel)
-        layout.setAlignment(Qt.AlignCenter)
-        
-        info_label = QLabel(
-            "Use a aba EMPRÉSTIMOS para devolver livros.\n\n"
-            "Selecione o empréstimo desejado e clique em 'Devolver'."
+        layout.setContentsMargins(16, 16, 16, 16)
+        layout.setSpacing(12)
+
+        titulo = QLabel("HISTÓRICO DE DEVOLUÇÕES")
+        titulo.setStyleSheet("font-size: 16px; font-weight: bold; color: #e0e0e0;")
+        layout.addWidget(titulo)
+
+        self.table_devolucoes = QTableWidget()
+        self.table_devolucoes.setColumnCount(4)
+        self.table_devolucoes.setHorizontalHeaderLabels(
+            ["Chave Devolução", "Livro", "Aluno", "Data de Devolução"]
         )
-        info_label.setStyleSheet("font-size: 14px; color: rgba(255,255,255,0.7);")
-        info_label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(info_label)
-        
+        self.table_devolucoes.setColumnWidth(0, 150)
+        self.table_devolucoes.setColumnWidth(1, 280)
+        self.table_devolucoes.setColumnWidth(2, 200)
+        self.table_devolucoes.setColumnWidth(3, 180)
+        self.table_devolucoes.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
+        self.table_devolucoes.setAlternatingRowColors(False)
+        self.table_devolucoes.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table_devolucoes.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
+        layout.addWidget(self.table_devolucoes)
         return painel
     
     def _criar_metric_card(self, titulo: str, valor: str, subtitulo: str) -> QFrame:
@@ -671,6 +708,28 @@ class JanelaPrincipal(QMainWindow):
                 
                 btn_layout.addWidget(btn_devolver)
                 self.table_emprestimos.setCellWidget(row, 4, btn_container)
+
+    def _atualizar_tabela_devolucoes(self):
+        self.table_devolucoes.setRowCount(0)
+        for chave_dev, registro in self.b1.historico_devolucoes.items():
+            row = self.table_devolucoes.rowCount()
+            self.table_devolucoes.insertRow(row)
+
+            item_chave = QTableWidgetItem(str(chave_dev))
+            item_chave.setForeground(Qt.white)
+            self.table_devolucoes.setItem(row, 0, item_chave)
+
+            item_livro = QTableWidgetItem(str(registro.get("livro", "")))
+            item_livro.setForeground(Qt.white)
+            self.table_devolucoes.setItem(row, 1, item_livro)
+
+            item_aluno = QTableWidgetItem(str(registro.get("aluno", "")))
+            item_aluno.setForeground(Qt.white)
+            self.table_devolucoes.setItem(row, 2, item_aluno)
+
+            item_data = QTableWidgetItem(str(registro.get("data_devolucao", "")))
+            item_data.setForeground(Qt.white)
+            self.table_devolucoes.setItem(row, 3, item_data)
     
     def _atualizar_cards(self):
         total_livros = len(self.b1.info_livros)
@@ -699,6 +758,7 @@ class JanelaPrincipal(QMainWindow):
         self._atualizar_tabela_alunos()
         self._atualizar_tabela_emprestimos()
         self._atualizar_cards()
+        self._atualizar_tabela_devolucoes()
     
     def _buscar_livros(self):
         """Busca livros por substring (busca placeholder)"""
@@ -770,7 +830,7 @@ class JanelaPrincipal(QMainWindow):
             self.table_livros.setCellWidget(row, 5, btn_container)
         
         # Mostra status
-        self.status_label.setText(f"Motor: Listagem completa · {len(resultados)} resultado(s)")
+        self.status_label.setText(f" Listagem completa · {len(resultados)} resultado(s)")
         self.status_label.setVisible(True)
     
     def _buscar_alunos(self):
@@ -910,6 +970,7 @@ class JanelaPrincipal(QMainWindow):
             self.b1.fazer_devolucao(chave)
             faz_msg_box("Sucesso", "Devolução realizada com sucesso!", False)
             self._atualizar_tabela_emprestimos()
+            self._atualizar_tabela_devolucoes()
             self._atualizar_cards()
         except KeyError:
             faz_msg_box("Erro", "Chave de empréstimo não encontrada!", True)

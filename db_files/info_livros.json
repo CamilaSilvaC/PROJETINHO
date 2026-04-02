@@ -1,202 +1,1610 @@
 {
-  "0001": {"numeracao": "0001", "titulo": "Dom Casmurro", "genero": "Romance", "autor": "Machado de Assis", "editora": "Penguin", "quantidade": 3},
-  "0002": {"numeracao": "0002", "titulo": "Memorias Postumas de Bras Cubas", "genero": "Romance", "autor": "Machado de Assis", "editora": "Penguin", "quantidade": 2},
-  "0003": {"numeracao": "0003", "titulo": "Quincas Borba", "genero": "Romance", "autor": "Machado de Assis", "editora": "Penguin", "quantidade": 2},
-  "0004": {"numeracao": "0004", "titulo": "Esau e Jaco", "genero": "Romance", "autor": "Machado de Assis", "editora": "Penguin", "quantidade": 1},
-  "0005": {"numeracao": "0005", "titulo": "O Cortico", "genero": "Naturalismo", "autor": "Aluisio Azevedo", "editora": "Atica", "quantidade": 4},
-  "0006": {"numeracao": "0006", "titulo": "Casa de Pensao", "genero": "Naturalismo", "autor": "Aluisio Azevedo", "editora": "Atica", "quantidade": 2},
-  "0007": {"numeracao": "0007", "titulo": "Iracema", "genero": "Romantismo", "autor": "Jose de Alencar", "editora": "Atica", "quantidade": 3},
-  "0008": {"numeracao": "0008", "titulo": "Senhora", "genero": "Romantismo", "autor": "Jose de Alencar", "editora": "Atica", "quantidade": 2},
-  "0009": {"numeracao": "0009", "titulo": "O Guarani", "genero": "Romantismo", "autor": "Jose de Alencar", "editora": "Atica", "quantidade": 3},
-  "0010": {"numeracao": "0010", "titulo": "A Moreninha", "genero": "Romantismo", "autor": "Joaquim Manuel de Macedo", "editora": "Moderna", "quantidade": 2},
-  "0011": {"numeracao": "0011", "titulo": "Capitaes da Areia", "genero": "Romance", "autor": "Jorge Amado", "editora": "Companhia das Letras", "quantidade": 5},
-  "0012": {"numeracao": "0012", "titulo": "Gabriela Cravo e Canela", "genero": "Romance", "autor": "Jorge Amado", "editora": "Companhia das Letras", "quantidade": 3},
-  "0013": {"numeracao": "0013", "titulo": "Terras do Sem Fim", "genero": "Romance", "autor": "Jorge Amado", "editora": "Companhia das Letras", "quantidade": 2},
-  "0014": {"numeracao": "0014", "titulo": "Tieta do Agreste", "genero": "Romance", "autor": "Jorge Amado", "editora": "Companhia das Letras", "quantidade": 2},
-  "0015": {"numeracao": "0015", "titulo": "Vidas Secas", "genero": "Regionalismo", "autor": "Graciliano Ramos", "editora": "Record", "quantidade": 4},
-  "0016": {"numeracao": "0016", "titulo": "Sao Bernardo", "genero": "Regionalismo", "autor": "Graciliano Ramos", "editora": "Record", "quantidade": 2},
-  "0017": {"numeracao": "0017", "titulo": "Angustia", "genero": "Regionalismo", "autor": "Graciliano Ramos", "editora": "Record", "quantidade": 2},
-  "0018": {"numeracao": "0018", "titulo": "Grande Sertao Veredas", "genero": "Regionalismo", "autor": "Guimaraes Rosa", "editora": "Nova Fronteira", "quantidade": 3},
-  "0019": {"numeracao": "0019", "titulo": "Sagarana", "genero": "Conto", "autor": "Guimaraes Rosa", "editora": "Nova Fronteira", "quantidade": 2},
-  "0020": {"numeracao": "0020", "titulo": "Primeiras Estorias", "genero": "Conto", "autor": "Guimaraes Rosa", "editora": "Nova Fronteira", "quantidade": 2},
-  "0021": {"numeracao": "0021", "titulo": "A Hora da Estrela", "genero": "Romance", "autor": "Clarice Lispector", "editora": "Rocco", "quantidade": 4},
-  "0022": {"numeracao": "0022", "titulo": "Perto do Coracao Selvagem", "genero": "Romance", "autor": "Clarice Lispector", "editora": "Rocco", "quantidade": 3},
-  "0023": {"numeracao": "0023", "titulo": "A Paixao Segundo GH", "genero": "Romance", "autor": "Clarice Lispector", "editora": "Rocco", "quantidade": 2},
-  "0024": {"numeracao": "0024", "titulo": "Lacos de Familia", "genero": "Conto", "autor": "Clarice Lispector", "editora": "Rocco", "quantidade": 2},
-  "0025": {"numeracao": "0025", "titulo": "O Senhor dos Aneis A Sociedade do Anel", "genero": "Fantasia", "autor": "J.R.R. Tolkien", "editora": "Martins Fontes", "quantidade": 4},
-  "0026": {"numeracao": "0026", "titulo": "O Senhor dos Aneis As Duas Torres", "genero": "Fantasia", "autor": "J.R.R. Tolkien", "editora": "Martins Fontes", "quantidade": 4},
-  "0027": {"numeracao": "0027", "titulo": "O Senhor dos Aneis O Retorno do Rei", "genero": "Fantasia", "autor": "J.R.R. Tolkien", "editora": "Martins Fontes", "quantidade": 4},
-  "0028": {"numeracao": "0028", "titulo": "O Hobbit", "genero": "Fantasia", "autor": "J.R.R. Tolkien", "editora": "Martins Fontes", "quantidade": 5},
-  "0029": {"numeracao": "0029", "titulo": "O Silmarillion", "genero": "Fantasia", "autor": "J.R.R. Tolkien", "editora": "Martins Fontes", "quantidade": 2},
-  "0030": {"numeracao": "0030", "titulo": "Harry Potter e a Pedra Filosofal", "genero": "Fantasia", "autor": "J.K. Rowling", "editora": "Rocco", "quantidade": 6},
-  "0031": {"numeracao": "0031", "titulo": "Harry Potter e a Camara Secreta", "genero": "Fantasia", "autor": "J.K. Rowling", "editora": "Rocco", "quantidade": 5},
-  "0032": {"numeracao": "0032", "titulo": "Harry Potter e o Prisioneiro de Azkaban", "genero": "Fantasia", "autor": "J.K. Rowling", "editora": "Rocco", "quantidade": 5},
-  "0033": {"numeracao": "0033", "titulo": "Harry Potter e o Calice de Fogo", "genero": "Fantasia", "autor": "J.K. Rowling", "editora": "Rocco", "quantidade": 5},
-  "0034": {"numeracao": "0034", "titulo": "Harry Potter e a Ordem da Fenix", "genero": "Fantasia", "autor": "J.K. Rowling", "editora": "Rocco", "quantidade": 4},
-  "0035": {"numeracao": "0035", "titulo": "Harry Potter e o Enigma do Principe", "genero": "Fantasia", "autor": "J.K. Rowling", "editora": "Rocco", "quantidade": 4},
-  "0036": {"numeracao": "0036", "titulo": "Harry Potter e as Reliquias da Morte", "genero": "Fantasia", "autor": "J.K. Rowling", "editora": "Rocco", "quantidade": 4},
-  "0037": {"numeracao": "0037", "titulo": "1984", "genero": "Distopia", "autor": "George Orwell", "editora": "Companhia das Letras", "quantidade": 4},
-  "0038": {"numeracao": "0038", "titulo": "A Revolucao dos Bichos", "genero": "Distopia", "autor": "George Orwell", "editora": "Companhia das Letras", "quantidade": 3},
-  "0039": {"numeracao": "0039", "titulo": "Admiravel Mundo Novo", "genero": "Distopia", "autor": "Aldous Huxley", "editora": "Globo", "quantidade": 3},
-  "0040": {"numeracao": "0040", "titulo": "Fahrenheit 451", "genero": "Distopia", "autor": "Ray Bradbury", "editora": "Globo", "quantidade": 3},
-  "0041": {"numeracao": "0041", "titulo": "O Conto da Aia", "genero": "Distopia", "autor": "Margaret Atwood", "editora": "Rocco", "quantidade": 3},
-  "0042": {"numeracao": "0042", "titulo": "Os Testamentos", "genero": "Distopia", "autor": "Margaret Atwood", "editora": "Rocco", "quantidade": 2},
-  "0043": {"numeracao": "0043", "titulo": "O Pequeno Principe", "genero": "Fabula", "autor": "Antoine de Saint-Exupery", "editora": "Agir", "quantidade": 7},
-  "0044": {"numeracao": "0044", "titulo": "Cem Anos de Solidao", "genero": "Realismo Magico", "autor": "Gabriel Garcia Marquez", "editora": "Record", "quantidade": 3},
-  "0045": {"numeracao": "0045", "titulo": "Amor nos Tempos do Colera", "genero": "Realismo Magico", "autor": "Gabriel Garcia Marquez", "editora": "Record", "quantidade": 2},
-  "0046": {"numeracao": "0046", "titulo": "Cronica de uma Morte Anunciada", "genero": "Realismo Magico", "autor": "Gabriel Garcia Marquez", "editora": "Record", "quantidade": 2},
-  "0047": {"numeracao": "0047", "titulo": "Crime e Castigo", "genero": "Romance", "autor": "Fiodor Dostoievski", "editora": "Editora 34", "quantidade": 3},
-  "0048": {"numeracao": "0048", "titulo": "O Idiota", "genero": "Romance", "autor": "Fiodor Dostoievski", "editora": "Editora 34", "quantidade": 2},
-  "0049": {"numeracao": "0049", "titulo": "Os Irmaos Karamazov", "genero": "Romance", "autor": "Fiodor Dostoievski", "editora": "Editora 34", "quantidade": 2},
-  "0050": {"numeracao": "0050", "titulo": "Anna Karenina", "genero": "Romance", "autor": "Liev Tolstoi", "editora": "Cosac Naify", "quantidade": 2},
-  "0051": {"numeracao": "0051", "titulo": "Guerra e Paz", "genero": "Romance Historico", "autor": "Liev Tolstoi", "editora": "Cosac Naify", "quantidade": 2},
-  "0052": {"numeracao": "0052", "titulo": "Ressurreicao", "genero": "Romance", "autor": "Liev Tolstoi", "editora": "Cosac Naify", "quantidade": 1},
-  "0053": {"numeracao": "0053", "titulo": "O Alquimista", "genero": "Ficcao", "autor": "Paulo Coelho", "editora": "HarperCollins", "quantidade": 5},
-  "0054": {"numeracao": "0054", "titulo": "Brida", "genero": "Ficcao", "autor": "Paulo Coelho", "editora": "HarperCollins", "quantidade": 3},
-  "0055": {"numeracao": "0055", "titulo": "O Diario de um Mago", "genero": "Ficcao", "autor": "Paulo Coelho", "editora": "HarperCollins", "quantidade": 2},
-  "0056": {"numeracao": "0056", "titulo": "Veronika Decide Morrer", "genero": "Ficcao", "autor": "Paulo Coelho", "editora": "HarperCollins", "quantidade": 2},
-  "0057": {"numeracao": "0057", "titulo": "A Culpa e das Estrelas", "genero": "Jovem Adulto", "autor": "John Green", "editora": "Intrinseca", "quantidade": 4},
-  "0058": {"numeracao": "0058", "titulo": "Cidades de Papel", "genero": "Jovem Adulto", "autor": "John Green", "editora": "Intrinseca", "quantidade": 3},
-  "0059": {"numeracao": "0059", "titulo": "Admiravel Voce", "genero": "Jovem Adulto", "autor": "John Green", "editora": "Intrinseca", "quantidade": 2},
-  "0060": {"numeracao": "0060", "titulo": "O Codigo Da Vinci", "genero": "Suspense", "autor": "Dan Brown", "editora": "Sextante", "quantidade": 4},
-  "0061": {"numeracao": "0061", "titulo": "Inferno", "genero": "Suspense", "autor": "Dan Brown", "editora": "Sextante", "quantidade": 3},
-  "0062": {"numeracao": "0062", "titulo": "Anjos e Demonios", "genero": "Suspense", "autor": "Dan Brown", "editora": "Sextante", "quantidade": 3},
-  "0063": {"numeracao": "0063", "titulo": "Origem", "genero": "Suspense", "autor": "Dan Brown", "editora": "Sextante", "quantidade": 2},
-  "0064": {"numeracao": "0064", "titulo": "Duna", "genero": "Ficcao Cientifica", "autor": "Frank Herbert", "editora": "Aleph", "quantidade": 3},
-  "0065": {"numeracao": "0065", "titulo": "Duna O Messias de Duna", "genero": "Ficcao Cientifica", "autor": "Frank Herbert", "editora": "Aleph", "quantidade": 2},
-  "0066": {"numeracao": "0066", "titulo": "Fundacao", "genero": "Ficcao Cientifica", "autor": "Isaac Asimov", "editora": "Aleph", "quantidade": 3},
-  "0067": {"numeracao": "0067", "titulo": "Fundacao e Imperio", "genero": "Ficcao Cientifica", "autor": "Isaac Asimov", "editora": "Aleph", "quantidade": 2},
-  "0068": {"numeracao": "0068", "titulo": "Segunda Fundacao", "genero": "Ficcao Cientifica", "autor": "Isaac Asimov", "editora": "Aleph", "quantidade": 2},
-  "0069": {"numeracao": "0069", "titulo": "Eu Robo", "genero": "Ficcao Cientifica", "autor": "Isaac Asimov", "editora": "Aleph", "quantidade": 2},
-  "0070": {"numeracao": "0070", "titulo": "O Fim da Eternidade", "genero": "Ficcao Cientifica", "autor": "Isaac Asimov", "editora": "Aleph", "quantidade": 2},
-  "0071": {"numeracao": "0071", "titulo": "Neuromancer", "genero": "Ficcao Cientifica", "autor": "William Gibson", "editora": "Aleph", "quantidade": 2},
-  "0072": {"numeracao": "0072", "titulo": "O Guia do Mochileiro das Galaxias", "genero": "Ficcao Cientifica", "autor": "Douglas Adams", "editora": "Arqueiro", "quantidade": 3},
-  "0073": {"numeracao": "0073", "titulo": "Restaurante no Fim do Universo", "genero": "Ficcao Cientifica", "autor": "Douglas Adams", "editora": "Arqueiro", "quantidade": 2},
-  "0074": {"numeracao": "0074", "titulo": "A Guerra dos Mundos", "genero": "Ficcao Cientifica", "autor": "H.G. Wells", "editora": "Penguin", "quantidade": 2},
-  "0075": {"numeracao": "0075", "titulo": "A Maquina do Tempo", "genero": "Ficcao Cientifica", "autor": "H.G. Wells", "editora": "Penguin", "quantidade": 2},
-  "0076": {"numeracao": "0076", "titulo": "Frankenstein", "genero": "Terror", "autor": "Mary Shelley", "editora": "Penguin", "quantidade": 3},
-  "0077": {"numeracao": "0077", "titulo": "Dracula", "genero": "Terror", "autor": "Bram Stoker", "editora": "Penguin", "quantidade": 2},
-  "0078": {"numeracao": "0078", "titulo": "O Chamado de Cthulhu", "genero": "Terror", "autor": "H.P. Lovecraft", "editora": "Hedra", "quantidade": 2},
-  "0079": {"numeracao": "0079", "titulo": "O", "genero": "Terror", "autor": "H.P. Lovecraft", "editora": "Hedra", "quantidade": 2},
-  "0080": {"numeracao": "0080", "titulo": "It A Coisa", "genero": "Terror", "autor": "Stephen King", "editora": "Suma", "quantidade": 3},
-  "0081": {"numeracao": "0081", "titulo": "O Iluminado", "genero": "Terror", "autor": "Stephen King", "editora": "Suma", "quantidade": 3},
-  "0082": {"numeracao": "0082", "titulo": "Carrie a Estranha", "genero": "Terror", "autor": "Stephen King", "editora": "Suma", "quantidade": 2},
-  "0083": {"numeracao": "0083", "titulo": "Misery", "genero": "Terror", "autor": "Stephen King", "editora": "Suma", "quantidade": 2},
-  "0084": {"numeracao": "0084", "titulo": "A Torre Negra O Pistoleiro", "genero": "Fantasia", "autor": "Stephen King", "editora": "Suma", "quantidade": 2},
-  "0085": {"numeracao": "0085", "titulo": "O Nome do Vento", "genero": "Fantasia", "autor": "Patrick Rothfuss", "editora": "Arqueiro", "quantidade": 3},
-  "0086": {"numeracao": "0086", "titulo": "O Temor do Sabio", "genero": "Fantasia", "autor": "Patrick Rothfuss", "editora": "Arqueiro", "quantidade": 3},
-  "0087": {"numeracao": "0087", "titulo": "A Ultima Desejada", "genero": "Fantasia", "autor": "Patrick Rothfuss", "editora": "Arqueiro", "quantidade": 1},
-  "0088": {"numeracao": "0088", "titulo": "O Caminho dos Reis", "genero": "Fantasia", "autor": "Brandon Sanderson", "editora": "Arqueiro", "quantidade": 3},
-  "0089": {"numeracao": "0089", "titulo": "Palavras de Luz", "genero": "Fantasia", "autor": "Brandon Sanderson", "editora": "Arqueiro", "quantidade": 3},
-  "0090": {"numeracao": "0090", "titulo": "Oathbringer", "genero": "Fantasia", "autor": "Brandon Sanderson", "editora": "Arqueiro", "quantidade": 2},
-  "0091": {"numeracao": "0091", "titulo": "O Imperio Final", "genero": "Fantasia", "autor": "Brandon Sanderson", "editora": "Arqueiro", "quantidade": 3},
-  "0092": {"numeracao": "0092", "titulo": "O Poco da Ascensao", "genero": "Fantasia", "autor": "Brandon Sanderson", "editora": "Arqueiro", "quantidade": 2},
-  "0093": {"numeracao": "0093", "titulo": "O Heroi das Eras", "genero": "Fantasia", "autor": "Brandon Sanderson", "editora": "Arqueiro", "quantidade": 2},
-  "0094": {"numeracao": "0094", "titulo": "Eragon", "genero": "Fantasia", "autor": "Christopher Paolini", "editora": "Rocco", "quantidade": 3},
-  "0095": {"numeracao": "0095", "titulo": "Eldest", "genero": "Fantasia", "autor": "Christopher Paolini", "editora": "Rocco", "quantidade": 2},
-  "0096": {"numeracao": "0096", "titulo": "Brisingr", "genero": "Fantasia", "autor": "Christopher Paolini", "editora": "Rocco", "quantidade": 2},
-  "0097": {"numeracao": "0097", "titulo": "As Cronicas de Narnia O Leao a Feiticeira e o Guarda-Roupa", "genero": "Fantasia", "autor": "C.S. Lewis", "editora": "Martins Fontes", "quantidade": 4},
-  "0098": {"numeracao": "0098", "titulo": "As Cronicas de Narnia O Principe Caspian", "genero": "Fantasia", "autor": "C.S. Lewis", "editora": "Martins Fontes", "quantidade": 3},
-  "0099": {"numeracao": "0099", "titulo": "As Cronicas de Narnia A Viagem do Peregrino da Aurora", "genero": "Fantasia", "autor": "C.S. Lewis", "editora": "Martins Fontes", "quantidade": 2},
-  "0100": {"numeracao": "0100", "titulo": "Jogos Vorazes", "genero": "Distopia", "autor": "Suzanne Collins", "editora": "Rocco", "quantidade": 5},
-  "0101": {"numeracao": "0101", "titulo": "Em Chamas", "genero": "Distopia", "autor": "Suzanne Collins", "editora": "Rocco", "quantidade": 4},
-  "0102": {"numeracao": "0102", "titulo": "A Esperanca", "genero": "Distopia", "autor": "Suzanne Collins", "editora": "Rocco", "quantidade": 4},
-  "0103": {"numeracao": "0103", "titulo": "Divergente", "genero": "Distopia", "autor": "Veronica Roth", "editora": "Rocco", "quantidade": 4},
-  "0104": {"numeracao": "0104", "titulo": "Insurgente", "genero": "Distopia", "autor": "Veronica Roth", "editora": "Rocco", "quantidade": 3},
-  "0105": {"numeracao": "0105", "titulo": "Convergente", "genero": "Distopia", "autor": "Veronica Roth", "editora": "Rocco", "quantidade": 3},
-  "0106": {"numeracao": "0106", "titulo": "Maze Runner Correr ou Morrer", "genero": "Distopia", "autor": "James Dashner", "editora": "Intrinseca", "quantidade": 4},
-  "0107": {"numeracao": "0107", "titulo": "Maze Runner Provas de Fogo", "genero": "Distopia", "autor": "James Dashner", "editora": "Intrinseca", "quantidade": 3},
-  "0108": {"numeracao": "0108", "titulo": "Maze Runner A Cura Mortal", "genero": "Distopia", "autor": "James Dashner", "editora": "Intrinseca", "quantidade": 3},
-  "0109": {"numeracao": "0109", "titulo": "O Morro dos Ventos Uivantes", "genero": "Romance", "autor": "Emily Bronte", "editora": "Penguin", "quantidade": 3},
-  "0110": {"numeracao": "0110", "titulo": "Jane Eyre", "genero": "Romance", "autor": "Charlotte Bronte", "editora": "Penguin", "quantidade": 3},
-  "0111": {"numeracao": "0111", "titulo": "Orgulho e Preconceito", "genero": "Romance", "autor": "Jane Austen", "editora": "Penguin", "quantidade": 4},
-  "0112": {"numeracao": "0112", "titulo": "Razao e Sensibilidade", "genero": "Romance", "autor": "Jane Austen", "editora": "Penguin", "quantidade": 3},
-  "0113": {"numeracao": "0113", "titulo": "Emma", "genero": "Romance", "autor": "Jane Austen", "editora": "Penguin", "quantidade": 2},
-  "0114": {"numeracao": "0114", "titulo": "Persuasao", "genero": "Romance", "autor": "Jane Austen", "editora": "Penguin", "quantidade": 2},
-  "0115": {"numeracao": "0115", "titulo": "Grandes Esperancas", "genero": "Romance", "autor": "Charles Dickens", "editora": "Penguin", "quantidade": 3},
-  "0116": {"numeracao": "0116", "titulo": "Oliver Twist", "genero": "Romance", "autor": "Charles Dickens", "editora": "Penguin", "quantidade": 3},
-  "0117": {"numeracao": "0117", "titulo": "Conto de Duas Cidades", "genero": "Romance Historico", "autor": "Charles Dickens", "editora": "Penguin", "quantidade": 2},
-  "0118": {"numeracao": "0118", "titulo": "David Copperfield", "genero": "Romance", "autor": "Charles Dickens", "editora": "Penguin", "quantidade": 2},
-  "0119": {"numeracao": "0119", "titulo": "O Retrato de Dorian Gray", "genero": "Romance", "autor": "Oscar Wilde", "editora": "Penguin", "quantidade": 3},
-  "0120": {"numeracao": "0120", "titulo": "As Aventuras de Tom Sawyer", "genero": "Aventura", "autor": "Mark Twain", "editora": "Penguin", "quantidade": 3},
-  "0121": {"numeracao": "0121", "titulo": "As Aventuras de Huckleberry Finn", "genero": "Aventura", "autor": "Mark Twain", "editora": "Penguin", "quantidade": 3},
-  "0122": {"numeracao": "0122", "titulo": "Moby Dick", "genero": "Aventura", "autor": "Herman Melville", "editora": "Penguin", "quantidade": 2},
-  "0123": {"numeracao": "0123", "titulo": "A Ilha do Tesouro", "genero": "Aventura", "autor": "Robert Louis Stevenson", "editora": "Penguin", "quantidade": 3},
-  "0124": {"numeracao": "0124", "titulo": "20000 Leguas Submarinas", "genero": "Aventura", "autor": "Julio Verne", "editora": "Penguin", "quantidade": 3},
-  "0125": {"numeracao": "0125", "titulo": "Volta ao Mundo em 80 Dias", "genero": "Aventura", "autor": "Julio Verne", "editora": "Penguin", "quantidade": 3},
-  "0126": {"numeracao": "0126", "titulo": "Viagem ao Centro da Terra", "genero": "Aventura", "autor": "Julio Verne", "editora": "Penguin", "quantidade": 2},
-  "0127": {"numeracao": "0127", "titulo": "Robinson Crusoe", "genero": "Aventura", "autor": "Daniel Defoe", "editora": "Penguin", "quantidade": 2},
-  "0128": {"numeracao": "0128", "titulo": "As Viagens de Gulliver", "genero": "Aventura", "autor": "Jonathan Swift", "editora": "Penguin", "quantidade": 2},
-  "0129": {"numeracao": "0129", "titulo": "Dom Quixote", "genero": "Classico", "autor": "Miguel de Cervantes", "editora": "Penguin", "quantidade": 2},
-  "0130": {"numeracao": "0130", "titulo": "A Divina Comedia", "genero": "Classico", "autor": "Dante Alighieri", "editora": "Editora 34", "quantidade": 2},
-  "0131": {"numeracao": "0131", "titulo": "Iliada", "genero": "Classico", "autor": "Homero", "editora": "Penguin", "quantidade": 2},
-  "0132": {"numeracao": "0132", "titulo": "Odisseia", "genero": "Classico", "autor": "Homero", "editora": "Penguin", "quantidade": 2},
-  "0133": {"numeracao": "0133", "titulo": "Hamlet", "genero": "Classico", "autor": "William Shakespeare", "editora": "Penguin", "quantidade": 3},
-  "0134": {"numeracao": "0134", "titulo": "Romeu e Julieta", "genero": "Classico", "autor": "William Shakespeare", "editora": "Penguin", "quantidade": 3},
-  "0135": {"numeracao": "0135", "titulo": "Macbeth", "genero": "Classico", "autor": "William Shakespeare", "editora": "Penguin", "quantidade": 2},
-  "0136": {"numeracao": "0136", "titulo": "Otelo", "genero": "Classico", "autor": "William Shakespeare", "editora": "Penguin", "quantidade": 2},
-  "0137": {"numeracao": "0137", "titulo": "O Mercador de Veneza", "genero": "Classico", "autor": "William Shakespeare", "editora": "Penguin", "quantidade": 2},
-  "0138": {"numeracao": "0138", "titulo": "A Metamorfose", "genero": "Classico", "autor": "Franz Kafka", "editora": "Companhia das Letras", "quantidade": 3},
-  "0139": {"numeracao": "0139", "titulo": "O Processo", "genero": "Classico", "autor": "Franz Kafka", "editora": "Companhia das Letras", "quantidade": 2},
-  "0140": {"numeracao": "0140", "titulo": "O Castelo", "genero": "Classico", "autor": "Franz Kafka", "editora": "Companhia das Letras", "quantidade": 2},
-  "0141": {"numeracao": "0141", "titulo": "Em Busca do Tempo Perdido No Caminho de Swann", "genero": "Classico", "autor": "Marcel Proust", "editora": "Globo", "quantidade": 2},
-  "0142": {"numeracao": "0142", "titulo": "Ulisses", "genero": "Classico", "autor": "James Joyce", "editora": "Penguin", "quantidade": 1},
-  "0143": {"numeracao": "0143", "titulo": "Dublinenses", "genero": "Conto", "autor": "James Joyce", "editora": "Penguin", "quantidade": 2},
-  "0144": {"numeracao": "0144", "titulo": "O Sol Tambem se Levanta", "genero": "Romance", "autor": "Ernest Hemingway", "editora": "Bertrand Brasil", "quantidade": 2},
-  "0145": {"numeracao": "0145", "titulo": "Por Quem os Sinos Dobram", "genero": "Romance", "autor": "Ernest Hemingway", "editora": "Bertrand Brasil", "quantidade": 2},
-  "0146": {"numeracao": "0146", "titulo": "O Velho e o Mar", "genero": "Romance", "autor": "Ernest Hemingway", "editora": "Bertrand Brasil", "quantidade": 3},
-  "0147": {"numeracao": "0147", "titulo": "O Grande Gatsby", "genero": "Romance", "autor": "F. Scott Fitzgerald", "editora": "Penguin", "quantidade": 3},
-  "0148": {"numeracao": "0148", "titulo": "Suave e a Noite", "genero": "Romance", "autor": "F. Scott Fitzgerald", "editora": "Penguin", "quantidade": 2},
-  "0149": {"numeracao": "0149", "titulo": "O Apanhador no Campo de Centeio", "genero": "Romance", "autor": "J.D. Salinger", "editora": "Editora do Autor", "quantidade": 3},
-  "0150": {"numeracao": "0150", "titulo": "Sobre os Ossos dos Mortos", "genero": "Romance", "autor": "Olga Tokarczuk", "editora": "Todavia", "quantidade": 2},
-  "0151": {"numeracao": "0151", "titulo": "Os Miseraveis", "genero": "Romance Historico", "autor": "Victor Hugo", "editora": "Cosac Naify", "quantidade": 3},
-  "0152": {"numeracao": "0152", "titulo": "Notre-Dame de Paris", "genero": "Romance Historico", "autor": "Victor Hugo", "editora": "Cosac Naify", "quantidade": 2},
-  "0153": {"numeracao": "0153", "titulo": "Conte de Monte Cristo", "genero": "Romance Historico", "autor": "Alexandre Dumas", "editora": "Penguin", "quantidade": 2},
-  "0154": {"numeracao": "0154", "titulo": "Os Tres Mosqueteiros", "genero": "Romance Historico", "autor": "Alexandre Dumas", "editora": "Penguin", "quantidade": 3},
-  "0155": {"numeracao": "0155", "titulo": "Germinal", "genero": "Naturalismo", "autor": "Emile Zola", "editora": "Penguin", "quantidade": 2},
-  "0156": {"numeracao": "0156", "titulo": "Nana", "genero": "Naturalismo", "autor": "Emile Zola", "editora": "Penguin", "quantidade": 2},
-  "0157": {"numeracao": "0157", "titulo": "Madame Bovary", "genero": "Romance", "autor": "Gustave Flaubert", "editora": "Penguin", "quantidade": 2},
-  "0158": {"numeracao": "0158", "titulo": "Educacao Sentimental", "genero": "Romance", "autor": "Gustave Flaubert", "editora": "Penguin", "quantidade": 1},
-  "0159": {"numeracao": "0159", "titulo": "O Vermelho e o Negro", "genero": "Romance", "autor": "Stendhal", "editora": "Penguin", "quantidade": 2},
-  "0160": {"numeracao": "0160", "titulo": "A Cartuxo de Parma", "genero": "Romance", "autor": "Stendhal", "editora": "Penguin", "quantidade": 1},
-  "0161": {"numeracao": "0161", "titulo": "A Morte de Ivan Ilyich", "genero": "Novela", "autor": "Liev Tolstoi", "editora": "Cosac Naify", "quantidade": 2},
-  "0162": {"numeracao": "0162", "titulo": "Noites Brancas", "genero": "Novela", "autor": "Fiodor Dostoievski", "editora": "Editora 34", "quantidade": 2},
-  "0163": {"numeracao": "0163", "titulo": "A Dama do Cachorrinho", "genero": "Conto", "autor": "Anton Tchekhov", "editora": "Cosac Naify", "quantidade": 2},
-  "0164": {"numeracao": "0164", "titulo": "A Enfermaria No 6", "genero": "Conto", "autor": "Anton Tchekhov", "editora": "Cosac Naify", "quantidade": 2},
-  "0165": {"numeracao": "0165", "titulo": "O Jogador", "genero": "Romance", "autor": "Fiodor Dostoievski", "editora": "Editora 34", "quantidade": 2},
-  "0166": {"numeracao": "0166", "titulo": "Steelheart", "genero": "Ficcao Cientifica", "autor": "Brandon Sanderson", "editora": "Arqueiro", "quantidade": 2},
-  "0167": {"numeracao": "0167", "titulo": "Elantris", "genero": "Fantasia", "autor": "Brandon Sanderson", "editora": "Arqueiro", "quantidade": 2},
-  "0168": {"numeracao": "0168", "titulo": "Warbreaker", "genero": "Fantasia", "autor": "Brandon Sanderson", "editora": "Arqueiro", "quantidade": 2},
-  "0169": {"numeracao": "0169", "titulo": "A Luz de Todas as Luzes", "genero": "Ficcao Cientifica", "autor": "Anthony Doerr", "editora": "Intrinseca", "quantidade": 3},
-  "0170": {"numeracao": "0170", "titulo": "A Garota no Trem", "genero": "Suspense", "autor": "Paula Hawkins", "editora": "Record", "quantidade": 3},
-  "0171": {"numeracao": "0171", "titulo": "Garota Exemplar", "genero": "Suspense", "autor": "Gillian Flynn", "editora": "Intrínseca", "quantidade": 3},
-  "0172": {"numeracao": "0172", "titulo": "Desaparecida", "genero": "Suspense", "autor": "Gillian Flynn", "editora": "Intrinseca", "quantidade": 2},
-  "0173": {"numeracao": "0173", "titulo": "O Silencio das Inocentes", "genero": "Suspense", "autor": "Thomas Harris", "editora": "Record", "quantidade": 2},
-  "0174": {"numeracao": "0174", "titulo": "Hannibal", "genero": "Suspense", "autor": "Thomas Harris", "editora": "Record", "quantidade": 2},
-  "0175": {"numeracao": "0175", "titulo": "O Nome da Rosa", "genero": "Suspense", "autor": "Umberto Eco", "editora": "Record", "quantidade": 2},
-  "0176": {"numeracao": "0176", "titulo": "O Pendulo de Foucault", "genero": "Suspense", "autor": "Umberto Eco", "editora": "Record", "quantidade": 2},
-  "0177": {"numeracao": "0177", "titulo": "Assassinato no Expresso do Oriente", "genero": "Policial", "autor": "Agatha Christie", "editora": "HarperCollins", "quantidade": 3},
-  "0178": {"numeracao": "0178", "titulo": "Morte no Nilo", "genero": "Policial", "autor": "Agatha Christie", "editora": "HarperCollins", "quantidade": 3},
-  "0179": {"numeracao": "0179", "titulo": "Dez Negrinhos", "genero": "Policial", "autor": "Agatha Christie", "editora": "HarperCollins", "quantidade": 3},
-  "0180": {"numeracao": "0180", "titulo": "O Caso dos Bombons Envenenados", "genero": "Policial", "autor": "Agatha Christie", "editora": "HarperCollins", "quantidade": 2},
-  "0181": {"numeracao": "0181", "titulo": "Um Estudo em Vermelho", "genero": "Policial", "autor": "Arthur Conan Doyle", "editora": "Penguin", "quantidade": 3},
-  "0182": {"numeracao": "0182", "titulo": "O Cao dos Baskervilles", "genero": "Policial", "autor": "Arthur Conan Doyle", "editora": "Penguin", "quantidade": 3},
-  "0183": {"numeracao": "0183", "titulo": "As Aventuras de Sherlock Holmes", "genero": "Policial", "autor": "Arthur Conan Doyle", "editora": "Penguin", "quantidade": 3},
-  "0184": {"numeracao": "0184", "titulo": "O Signo dos Quatro", "genero": "Policial", "autor": "Arthur Conan Doyle", "editora": "Penguin", "quantidade": 2},
-  "0185": {"numeracao": "0185", "titulo": "A Menina que Roubava Livros", "genero": "Romance Historico", "autor": "Markus Zusak", "editora": "Intrinseca", "quantidade": 5},
-  "0186": {"numeracao": "0186", "titulo": "O Diario de Anne Frank", "genero": "Biografia", "autor": "Anne Frank", "editora": "Record", "quantidade": 4},
-  "0187": {"numeracao": "0187", "titulo": "Se Isto e um Homem", "genero": "Biografia", "autor": "Primo Levi", "editora": "Rocco", "quantidade": 3},
-  "0188": {"numeracao": "0188", "titulo": "A Noite", "genero": "Biografia", "autor": "Elie Wiesel", "editora": "Ediouro", "quantidade": 3},
-  "0189": {"numeracao": "0189", "titulo": "Maus", "genero": "Quadrinhos", "autor": "Art Spiegelman", "editora": "Companhia das Letras", "quantidade": 2},
-  "0190": {"numeracao": "0190", "titulo": "Persepolis", "genero": "Quadrinhos", "autor": "Marjane Satrapi", "editora": "Companhia das Letras", "quantidade": 2},
-  "0191": {"numeracao": "0191", "titulo": "Watchmen", "genero": "Quadrinhos", "autor": "Alan Moore", "editora": "Panini", "quantidade": 2},
-  "0192": {"numeracao": "0192", "titulo": "Sandman Preludio e Noturno", "genero": "Quadrinhos", "autor": "Neil Gaiman", "editora": "Panini", "quantidade": 2},
-  "0193": {"numeracao": "0193", "titulo": "American Gods", "genero": "Fantasia", "autor": "Neil Gaiman", "editora": "Intrinseca", "quantidade": 3},
-  "0194": {"numeracao": "0194", "titulo": "Deuses Americanos", "genero": "Fantasia", "autor": "Neil Gaiman", "editora": "Intrinseca", "quantidade": 2},
-  "0195": {"numeracao": "0195", "titulo": "Coraline", "genero": "Fantasia", "autor": "Neil Gaiman", "editora": "Rocco", "quantidade": 3},
-  "0196": {"numeracao": "0196", "titulo": "Bom Presagio", "genero": "Fantasia", "autor": "Neil Gaiman", "editora": "Intrinseca", "quantidade": 2},
-  "0197": {"numeracao": "0197", "titulo": "O Oceano no Fim do Caminho", "genero": "Fantasia", "autor": "Neil Gaiman", "editora": "Intrinseca", "quantidade": 2},
-  "0198": {"numeracao": "0198", "titulo": "A Batalha do Labirinto", "genero": "Mitologia", "autor": "Rick Riordan", "editora": "Intrinseca", "quantidade": 3},
-  "0199": {"numeracao": "0199", "titulo": "O Ladrao de Raios", "genero": "Mitologia", "autor": "Rick Riordan", "editora": "Intrinseca", "quantidade": 4},
-  "0200": {"numeracao": "0200", "titulo": "O Mar de Monstros", "genero": "Mitologia", "autor": "Rick Riordan", "editora": "Intrinseca", "quantidade": 3}
+  "0001": {
+    "numeracao": "0001",
+    "titulo": "Dom Casmurro",
+    "genero": "Romance",
+    "autor": "Machado de Assis",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0002": {
+    "numeracao": "0002",
+    "titulo": "Memorias Postumas de Bras Cubas",
+    "genero": "Romance",
+    "autor": "Machado de Assis",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0003": {
+    "numeracao": "0003",
+    "titulo": "Quincas Borba",
+    "genero": "Romance",
+    "autor": "Machado de Assis",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0004": {
+    "numeracao": "0004",
+    "titulo": "Esau e Jaco",
+    "genero": "Romance",
+    "autor": "Machado de Assis",
+    "editora": "Penguin",
+    "quantidade": 1
+  },
+  "0005": {
+    "numeracao": "0005",
+    "titulo": "O Cortico",
+    "genero": "Naturalismo",
+    "autor": "Aluisio Azevedo",
+    "editora": "Atica",
+    "quantidade": 4
+  },
+  "0006": {
+    "numeracao": "0006",
+    "titulo": "Casa de Pensao",
+    "genero": "Naturalismo",
+    "autor": "Aluisio Azevedo",
+    "editora": "Atica",
+    "quantidade": 2
+  },
+  "0007": {
+    "numeracao": "0007",
+    "titulo": "Iracema",
+    "genero": "Romantismo",
+    "autor": "Jose de Alencar",
+    "editora": "Atica",
+    "quantidade": 3
+  },
+  "0008": {
+    "numeracao": "0008",
+    "titulo": "Senhora",
+    "genero": "Romantismo",
+    "autor": "Jose de Alencar",
+    "editora": "Atica",
+    "quantidade": 2
+  },
+  "0009": {
+    "numeracao": "0009",
+    "titulo": "O Guarani",
+    "genero": "Romantismo",
+    "autor": "Jose de Alencar",
+    "editora": "Atica",
+    "quantidade": 3
+  },
+  "0010": {
+    "numeracao": "0010",
+    "titulo": "A Moreninha",
+    "genero": "Romantismo",
+    "autor": "Joaquim Manuel de Macedo",
+    "editora": "Moderna",
+    "quantidade": 2
+  },
+  "0011": {
+    "numeracao": "0011",
+    "titulo": "Capitaes da Areia",
+    "genero": "Romance",
+    "autor": "Jorge Amado",
+    "editora": "Companhia das Letras",
+    "quantidade": 5
+  },
+  "0012": {
+    "numeracao": "0012",
+    "titulo": "Gabriela Cravo e Canela",
+    "genero": "Romance",
+    "autor": "Jorge Amado",
+    "editora": "Companhia das Letras",
+    "quantidade": 3
+  },
+  "0013": {
+    "numeracao": "0013",
+    "titulo": "Terras do Sem Fim",
+    "genero": "Romance",
+    "autor": "Jorge Amado",
+    "editora": "Companhia das Letras",
+    "quantidade": 2
+  },
+  "0014": {
+    "numeracao": "0014",
+    "titulo": "Tieta do Agreste",
+    "genero": "Romance",
+    "autor": "Jorge Amado",
+    "editora": "Companhia das Letras",
+    "quantidade": 2
+  },
+  "0015": {
+    "numeracao": "0015",
+    "titulo": "Vidas Secas",
+    "genero": "Regionalismo",
+    "autor": "Graciliano Ramos",
+    "editora": "Record",
+    "quantidade": 4
+  },
+  "0016": {
+    "numeracao": "0016",
+    "titulo": "Sao Bernardo",
+    "genero": "Regionalismo",
+    "autor": "Graciliano Ramos",
+    "editora": "Record",
+    "quantidade": 2
+  },
+  "0017": {
+    "numeracao": "0017",
+    "titulo": "Angustia",
+    "genero": "Regionalismo",
+    "autor": "Graciliano Ramos",
+    "editora": "Record",
+    "quantidade": 2
+  },
+  "0018": {
+    "numeracao": "0018",
+    "titulo": "Grande Sertao Veredas",
+    "genero": "Regionalismo",
+    "autor": "Guimaraes Rosa",
+    "editora": "Nova Fronteira",
+    "quantidade": 3
+  },
+  "0019": {
+    "numeracao": "0019",
+    "titulo": "Sagarana",
+    "genero": "Conto",
+    "autor": "Guimaraes Rosa",
+    "editora": "Nova Fronteira",
+    "quantidade": 2
+  },
+  "0020": {
+    "numeracao": "0020",
+    "titulo": "Primeiras Estorias",
+    "genero": "Conto",
+    "autor": "Guimaraes Rosa",
+    "editora": "Nova Fronteira",
+    "quantidade": 2
+  },
+  "0021": {
+    "numeracao": "0021",
+    "titulo": "A Hora da Estrela",
+    "genero": "Romance",
+    "autor": "Clarice Lispector",
+    "editora": "Rocco",
+    "quantidade": 4
+  },
+  "0022": {
+    "numeracao": "0022",
+    "titulo": "Perto do Coracao Selvagem",
+    "genero": "Romance",
+    "autor": "Clarice Lispector",
+    "editora": "Rocco",
+    "quantidade": 3
+  },
+  "0023": {
+    "numeracao": "0023",
+    "titulo": "A Paixao Segundo GH",
+    "genero": "Romance",
+    "autor": "Clarice Lispector",
+    "editora": "Rocco",
+    "quantidade": 2
+  },
+  "0024": {
+    "numeracao": "0024",
+    "titulo": "Lacos de Familia",
+    "genero": "Conto",
+    "autor": "Clarice Lispector",
+    "editora": "Rocco",
+    "quantidade": 2
+  },
+  "0025": {
+    "numeracao": "0025",
+    "titulo": "O Senhor dos Aneis A Sociedade do Anel",
+    "genero": "Fantasia",
+    "autor": "J.R.R. Tolkien",
+    "editora": "Martins Fontes",
+    "quantidade": 4
+  },
+  "0026": {
+    "numeracao": "0026",
+    "titulo": "O Senhor dos Aneis As Duas Torres",
+    "genero": "Fantasia",
+    "autor": "J.R.R. Tolkien",
+    "editora": "Martins Fontes",
+    "quantidade": 4
+  },
+  "0027": {
+    "numeracao": "0027",
+    "titulo": "O Senhor dos Aneis O Retorno do Rei",
+    "genero": "Fantasia",
+    "autor": "J.R.R. Tolkien",
+    "editora": "Martins Fontes",
+    "quantidade": 4
+  },
+  "0028": {
+    "numeracao": "0028",
+    "titulo": "O Hobbit",
+    "genero": "Fantasia",
+    "autor": "J.R.R. Tolkien",
+    "editora": "Martins Fontes",
+    "quantidade": 5
+  },
+  "0029": {
+    "numeracao": "0029",
+    "titulo": "O Silmarillion",
+    "genero": "Fantasia",
+    "autor": "J.R.R. Tolkien",
+    "editora": "Martins Fontes",
+    "quantidade": 2
+  },
+  "0030": {
+    "numeracao": "0030",
+    "titulo": "Harry Potter e a Pedra Filosofal",
+    "genero": "Fantasia",
+    "autor": "J.K. Rowling",
+    "editora": "Rocco",
+    "quantidade": 6
+  },
+  "0031": {
+    "numeracao": "0031",
+    "titulo": "Harry Potter e a Camara Secreta",
+    "genero": "Fantasia",
+    "autor": "J.K. Rowling",
+    "editora": "Rocco",
+    "quantidade": 5
+  },
+  "0032": {
+    "numeracao": "0032",
+    "titulo": "Harry Potter e o Prisioneiro de Azkaban",
+    "genero": "Fantasia",
+    "autor": "J.K. Rowling",
+    "editora": "Rocco",
+    "quantidade": 5
+  },
+  "0033": {
+    "numeracao": "0033",
+    "titulo": "Harry Potter e o Calice de Fogo",
+    "genero": "Fantasia",
+    "autor": "J.K. Rowling",
+    "editora": "Rocco",
+    "quantidade": 5
+  },
+  "0034": {
+    "numeracao": "0034",
+    "titulo": "Harry Potter e a Ordem da Fenix",
+    "genero": "Fantasia",
+    "autor": "J.K. Rowling",
+    "editora": "Rocco",
+    "quantidade": 4
+  },
+  "0035": {
+    "numeracao": "0035",
+    "titulo": "Harry Potter e o Enigma do Principe",
+    "genero": "Fantasia",
+    "autor": "J.K. Rowling",
+    "editora": "Rocco",
+    "quantidade": 4
+  },
+  "0036": {
+    "numeracao": "0036",
+    "titulo": "Harry Potter e as Reliquias da Morte",
+    "genero": "Fantasia",
+    "autor": "J.K. Rowling",
+    "editora": "Rocco",
+    "quantidade": 4
+  },
+  "0037": {
+    "numeracao": "0037",
+    "titulo": "1984",
+    "genero": "Distopia",
+    "autor": "George Orwell",
+    "editora": "Companhia das Letras",
+    "quantidade": 4
+  },
+  "0038": {
+    "numeracao": "0038",
+    "titulo": "A Revolucao dos Bichos",
+    "genero": "Distopia",
+    "autor": "George Orwell",
+    "editora": "Companhia das Letras",
+    "quantidade": 3
+  },
+  "0039": {
+    "numeracao": "0039",
+    "titulo": "Admiravel Mundo Novo",
+    "genero": "Distopia",
+    "autor": "Aldous Huxley",
+    "editora": "Globo",
+    "quantidade": 3
+  },
+  "0040": {
+    "numeracao": "0040",
+    "titulo": "Fahrenheit 451",
+    "genero": "Distopia",
+    "autor": "Ray Bradbury",
+    "editora": "Globo",
+    "quantidade": 3
+  },
+  "0041": {
+    "numeracao": "0041",
+    "titulo": "O Conto da Aia",
+    "genero": "Distopia",
+    "autor": "Margaret Atwood",
+    "editora": "Rocco",
+    "quantidade": 3
+  },
+  "0042": {
+    "numeracao": "0042",
+    "titulo": "Os Testamentos",
+    "genero": "Distopia",
+    "autor": "Margaret Atwood",
+    "editora": "Rocco",
+    "quantidade": 2
+  },
+  "0043": {
+    "numeracao": "0043",
+    "titulo": "O Pequeno Principe",
+    "genero": "Fabula",
+    "autor": "Antoine de Saint-Exupery",
+    "editora": "Agir",
+    "quantidade": 7
+  },
+  "0044": {
+    "numeracao": "0044",
+    "titulo": "Cem Anos de Solidao",
+    "genero": "Realismo Magico",
+    "autor": "Gabriel Garcia Marquez",
+    "editora": "Record",
+    "quantidade": 3
+  },
+  "0045": {
+    "numeracao": "0045",
+    "titulo": "Amor nos Tempos do Colera",
+    "genero": "Realismo Magico",
+    "autor": "Gabriel Garcia Marquez",
+    "editora": "Record",
+    "quantidade": 2
+  },
+  "0046": {
+    "numeracao": "0046",
+    "titulo": "Cronica de uma Morte Anunciada",
+    "genero": "Realismo Magico",
+    "autor": "Gabriel Garcia Marquez",
+    "editora": "Record",
+    "quantidade": 2
+  },
+  "0047": {
+    "numeracao": "0047",
+    "titulo": "Crime e Castigo",
+    "genero": "Romance",
+    "autor": "Fiodor Dostoievski",
+    "editora": "Editora 34",
+    "quantidade": 3
+  },
+  "0048": {
+    "numeracao": "0048",
+    "titulo": "O Idiota",
+    "genero": "Romance",
+    "autor": "Fiodor Dostoievski",
+    "editora": "Editora 34",
+    "quantidade": 2
+  },
+  "0049": {
+    "numeracao": "0049",
+    "titulo": "Os Irmaos Karamazov",
+    "genero": "Romance",
+    "autor": "Fiodor Dostoievski",
+    "editora": "Editora 34",
+    "quantidade": 2
+  },
+  "0050": {
+    "numeracao": "0050",
+    "titulo": "Anna Karenina",
+    "genero": "Romance",
+    "autor": "Liev Tolstoi",
+    "editora": "Cosac Naify",
+    "quantidade": 2
+  },
+  "0051": {
+    "numeracao": "0051",
+    "titulo": "Guerra e Paz",
+    "genero": "Romance Historico",
+    "autor": "Liev Tolstoi",
+    "editora": "Cosac Naify",
+    "quantidade": 2
+  },
+  "0052": {
+    "numeracao": "0052",
+    "titulo": "Ressurreicao",
+    "genero": "Romance",
+    "autor": "Liev Tolstoi",
+    "editora": "Cosac Naify",
+    "quantidade": 1
+  },
+  "0053": {
+    "numeracao": "0053",
+    "titulo": "O Alquimista",
+    "genero": "Ficcao",
+    "autor": "Paulo Coelho",
+    "editora": "HarperCollins",
+    "quantidade": 5
+  },
+  "0054": {
+    "numeracao": "0054",
+    "titulo": "Brida",
+    "genero": "Ficcao",
+    "autor": "Paulo Coelho",
+    "editora": "HarperCollins",
+    "quantidade": 3
+  },
+  "0055": {
+    "numeracao": "0055",
+    "titulo": "O Diario de um Mago",
+    "genero": "Ficcao",
+    "autor": "Paulo Coelho",
+    "editora": "HarperCollins",
+    "quantidade": 2
+  },
+  "0056": {
+    "numeracao": "0056",
+    "titulo": "Veronika Decide Morrer",
+    "genero": "Ficcao",
+    "autor": "Paulo Coelho",
+    "editora": "HarperCollins",
+    "quantidade": 2
+  },
+  "0057": {
+    "numeracao": "0057",
+    "titulo": "A Culpa e das Estrelas",
+    "genero": "Jovem Adulto",
+    "autor": "John Green",
+    "editora": "Intrinseca",
+    "quantidade": 4
+  },
+  "0058": {
+    "numeracao": "0058",
+    "titulo": "Cidades de Papel",
+    "genero": "Jovem Adulto",
+    "autor": "John Green",
+    "editora": "Intrinseca",
+    "quantidade": 3
+  },
+  "0059": {
+    "numeracao": "0059",
+    "titulo": "Admiravel Voce",
+    "genero": "Jovem Adulto",
+    "autor": "John Green",
+    "editora": "Intrinseca",
+    "quantidade": 2
+  },
+  "0060": {
+    "numeracao": "0060",
+    "titulo": "O Codigo Da Vinci",
+    "genero": "Suspense",
+    "autor": "Dan Brown",
+    "editora": "Sextante",
+    "quantidade": 4
+  },
+  "0061": {
+    "numeracao": "0061",
+    "titulo": "Inferno",
+    "genero": "Suspense",
+    "autor": "Dan Brown",
+    "editora": "Sextante",
+    "quantidade": 3
+  },
+  "0062": {
+    "numeracao": "0062",
+    "titulo": "Anjos e Demonios",
+    "genero": "Suspense",
+    "autor": "Dan Brown",
+    "editora": "Sextante",
+    "quantidade": 3
+  },
+  "0063": {
+    "numeracao": "0063",
+    "titulo": "Origem",
+    "genero": "Suspense",
+    "autor": "Dan Brown",
+    "editora": "Sextante",
+    "quantidade": 2
+  },
+  "0064": {
+    "numeracao": "0064",
+    "titulo": "Duna",
+    "genero": "Ficcao Cientifica",
+    "autor": "Frank Herbert",
+    "editora": "Aleph",
+    "quantidade": 3
+  },
+  "0065": {
+    "numeracao": "0065",
+    "titulo": "Duna O Messias de Duna",
+    "genero": "Ficcao Cientifica",
+    "autor": "Frank Herbert",
+    "editora": "Aleph",
+    "quantidade": 2
+  },
+  "0066": {
+    "numeracao": "0066",
+    "titulo": "Fundacao",
+    "genero": "Ficcao Cientifica",
+    "autor": "Isaac Asimov",
+    "editora": "Aleph",
+    "quantidade": 3
+  },
+  "0067": {
+    "numeracao": "0067",
+    "titulo": "Fundacao e Imperio",
+    "genero": "Ficcao Cientifica",
+    "autor": "Isaac Asimov",
+    "editora": "Aleph",
+    "quantidade": 2
+  },
+  "0068": {
+    "numeracao": "0068",
+    "titulo": "Segunda Fundacao",
+    "genero": "Ficcao Cientifica",
+    "autor": "Isaac Asimov",
+    "editora": "Aleph",
+    "quantidade": 2
+  },
+  "0069": {
+    "numeracao": "0069",
+    "titulo": "Eu Robo",
+    "genero": "Ficcao Cientifica",
+    "autor": "Isaac Asimov",
+    "editora": "Aleph",
+    "quantidade": 2
+  },
+  "0070": {
+    "numeracao": "0070",
+    "titulo": "O Fim da Eternidade",
+    "genero": "Ficcao Cientifica",
+    "autor": "Isaac Asimov",
+    "editora": "Aleph",
+    "quantidade": 2
+  },
+  "0071": {
+    "numeracao": "0071",
+    "titulo": "Neuromancer",
+    "genero": "Ficcao Cientifica",
+    "autor": "William Gibson",
+    "editora": "Aleph",
+    "quantidade": 2
+  },
+  "0072": {
+    "numeracao": "0072",
+    "titulo": "O Guia do Mochileiro das Galaxias",
+    "genero": "Ficcao Cientifica",
+    "autor": "Douglas Adams",
+    "editora": "Arqueiro",
+    "quantidade": 3
+  },
+  "0073": {
+    "numeracao": "0073",
+    "titulo": "Restaurante no Fim do Universo",
+    "genero": "Ficcao Cientifica",
+    "autor": "Douglas Adams",
+    "editora": "Arqueiro",
+    "quantidade": 2
+  },
+  "0074": {
+    "numeracao": "0074",
+    "titulo": "A Guerra dos Mundos",
+    "genero": "Ficcao Cientifica",
+    "autor": "H.G. Wells",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0075": {
+    "numeracao": "0075",
+    "titulo": "A Maquina do Tempo",
+    "genero": "Ficcao Cientifica",
+    "autor": "H.G. Wells",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0076": {
+    "numeracao": "0076",
+    "titulo": "Frankenstein",
+    "genero": "Terror",
+    "autor": "Mary Shelley",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0077": {
+    "numeracao": "0077",
+    "titulo": "Dracula",
+    "genero": "Terror",
+    "autor": "Bram Stoker",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0078": {
+    "numeracao": "0078",
+    "titulo": "O Chamado de Cthulhu",
+    "genero": "Terror",
+    "autor": "H.P. Lovecraft",
+    "editora": "Hedra",
+    "quantidade": 2
+  },
+  "0079": {
+    "numeracao": "0079",
+    "titulo": "O",
+    "genero": "Terror",
+    "autor": "H.P. Lovecraft",
+    "editora": "Hedra",
+    "quantidade": 2
+  },
+  "0080": {
+    "numeracao": "0080",
+    "titulo": "It A Coisa",
+    "genero": "Terror",
+    "autor": "Stephen King",
+    "editora": "Suma",
+    "quantidade": 3
+  },
+  "0081": {
+    "numeracao": "0081",
+    "titulo": "O Iluminado",
+    "genero": "Terror",
+    "autor": "Stephen King",
+    "editora": "Suma",
+    "quantidade": 3
+  },
+  "0082": {
+    "numeracao": "0082",
+    "titulo": "Carrie a Estranha",
+    "genero": "Terror",
+    "autor": "Stephen King",
+    "editora": "Suma",
+    "quantidade": 2
+  },
+  "0083": {
+    "numeracao": "0083",
+    "titulo": "Misery",
+    "genero": "Terror",
+    "autor": "Stephen King",
+    "editora": "Suma",
+    "quantidade": 2
+  },
+  "0084": {
+    "numeracao": "0084",
+    "titulo": "A Torre Negra O Pistoleiro",
+    "genero": "Fantasia",
+    "autor": "Stephen King",
+    "editora": "Suma",
+    "quantidade": 2
+  },
+  "0085": {
+    "numeracao": "0085",
+    "titulo": "O Nome do Vento",
+    "genero": "Fantasia",
+    "autor": "Patrick Rothfuss",
+    "editora": "Arqueiro",
+    "quantidade": 3
+  },
+  "0086": {
+    "numeracao": "0086",
+    "titulo": "O Temor do Sabio",
+    "genero": "Fantasia",
+    "autor": "Patrick Rothfuss",
+    "editora": "Arqueiro",
+    "quantidade": 3
+  },
+  "0087": {
+    "numeracao": "0087",
+    "titulo": "A Ultima Desejada",
+    "genero": "Fantasia",
+    "autor": "Patrick Rothfuss",
+    "editora": "Arqueiro",
+    "quantidade": 1
+  },
+  "0088": {
+    "numeracao": "0088",
+    "titulo": "O Caminho dos Reis",
+    "genero": "Fantasia",
+    "autor": "Brandon Sanderson",
+    "editora": "Arqueiro",
+    "quantidade": 3
+  },
+  "0089": {
+    "numeracao": "0089",
+    "titulo": "Palavras de Luz",
+    "genero": "Fantasia",
+    "autor": "Brandon Sanderson",
+    "editora": "Arqueiro",
+    "quantidade": 3
+  },
+  "0090": {
+    "numeracao": "0090",
+    "titulo": "Oathbringer",
+    "genero": "Fantasia",
+    "autor": "Brandon Sanderson",
+    "editora": "Arqueiro",
+    "quantidade": 2
+  },
+  "0091": {
+    "numeracao": "0091",
+    "titulo": "O Imperio Final",
+    "genero": "Fantasia",
+    "autor": "Brandon Sanderson",
+    "editora": "Arqueiro",
+    "quantidade": 3
+  },
+  "0092": {
+    "numeracao": "0092",
+    "titulo": "O Poco da Ascensao",
+    "genero": "Fantasia",
+    "autor": "Brandon Sanderson",
+    "editora": "Arqueiro",
+    "quantidade": 2
+  },
+  "0093": {
+    "numeracao": "0093",
+    "titulo": "O Heroi das Eras",
+    "genero": "Fantasia",
+    "autor": "Brandon Sanderson",
+    "editora": "Arqueiro",
+    "quantidade": 2
+  },
+  "0094": {
+    "numeracao": "0094",
+    "titulo": "Eragon",
+    "genero": "Fantasia",
+    "autor": "Christopher Paolini",
+    "editora": "Rocco",
+    "quantidade": 3
+  },
+  "0095": {
+    "numeracao": "0095",
+    "titulo": "Eldest",
+    "genero": "Fantasia",
+    "autor": "Christopher Paolini",
+    "editora": "Rocco",
+    "quantidade": 2
+  },
+  "0096": {
+    "numeracao": "0096",
+    "titulo": "Brisingr",
+    "genero": "Fantasia",
+    "autor": "Christopher Paolini",
+    "editora": "Rocco",
+    "quantidade": 2
+  },
+  "0097": {
+    "numeracao": "0097",
+    "titulo": "As Cronicas de Narnia O Leao a Feiticeira e o Guarda-Roupa",
+    "genero": "Fantasia",
+    "autor": "C.S. Lewis",
+    "editora": "Martins Fontes",
+    "quantidade": 4
+  },
+  "0098": {
+    "numeracao": "0098",
+    "titulo": "As Cronicas de Narnia O Principe Caspian",
+    "genero": "Fantasia",
+    "autor": "C.S. Lewis",
+    "editora": "Martins Fontes",
+    "quantidade": 3
+  },
+  "0099": {
+    "numeracao": "0099",
+    "titulo": "As Cronicas de Narnia A Viagem do Peregrino da Aurora",
+    "genero": "Fantasia",
+    "autor": "C.S. Lewis",
+    "editora": "Martins Fontes",
+    "quantidade": 2
+  },
+  "0100": {
+    "numeracao": "0100",
+    "titulo": "Jogos Vorazes",
+    "genero": "Distopia",
+    "autor": "Suzanne Collins",
+    "editora": "Rocco",
+    "quantidade": 5
+  },
+  "0101": {
+    "numeracao": "0101",
+    "titulo": "Em Chamas",
+    "genero": "Distopia",
+    "autor": "Suzanne Collins",
+    "editora": "Rocco",
+    "quantidade": 4
+  },
+  "0102": {
+    "numeracao": "0102",
+    "titulo": "A Esperanca",
+    "genero": "Distopia",
+    "autor": "Suzanne Collins",
+    "editora": "Rocco",
+    "quantidade": 4
+  },
+  "0103": {
+    "numeracao": "0103",
+    "titulo": "Divergente",
+    "genero": "Distopia",
+    "autor": "Veronica Roth",
+    "editora": "Rocco",
+    "quantidade": 4
+  },
+  "0104": {
+    "numeracao": "0104",
+    "titulo": "Insurgente",
+    "genero": "Distopia",
+    "autor": "Veronica Roth",
+    "editora": "Rocco",
+    "quantidade": 3
+  },
+  "0105": {
+    "numeracao": "0105",
+    "titulo": "Convergente",
+    "genero": "Distopia",
+    "autor": "Veronica Roth",
+    "editora": "Rocco",
+    "quantidade": 3
+  },
+  "0106": {
+    "numeracao": "0106",
+    "titulo": "Maze Runner Correr ou Morrer",
+    "genero": "Distopia",
+    "autor": "James Dashner",
+    "editora": "Intrinseca",
+    "quantidade": 4
+  },
+  "0107": {
+    "numeracao": "0107",
+    "titulo": "Maze Runner Provas de Fogo",
+    "genero": "Distopia",
+    "autor": "James Dashner",
+    "editora": "Intrinseca",
+    "quantidade": 3
+  },
+  "0108": {
+    "numeracao": "0108",
+    "titulo": "Maze Runner A Cura Mortal",
+    "genero": "Distopia",
+    "autor": "James Dashner",
+    "editora": "Intrinseca",
+    "quantidade": 3
+  },
+  "0109": {
+    "numeracao": "0109",
+    "titulo": "O Morro dos Ventos Uivantes",
+    "genero": "Romance",
+    "autor": "Emily Bronte",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0110": {
+    "numeracao": "0110",
+    "titulo": "Jane Eyre",
+    "genero": "Romance",
+    "autor": "Charlotte Bronte",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0111": {
+    "numeracao": "0111",
+    "titulo": "Orgulho e Preconceito",
+    "genero": "Romance",
+    "autor": "Jane Austen",
+    "editora": "Penguin",
+    "quantidade": 4
+  },
+  "0112": {
+    "numeracao": "0112",
+    "titulo": "Razao e Sensibilidade",
+    "genero": "Romance",
+    "autor": "Jane Austen",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0113": {
+    "numeracao": "0113",
+    "titulo": "Emma",
+    "genero": "Romance",
+    "autor": "Jane Austen",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0114": {
+    "numeracao": "0114",
+    "titulo": "Persuasao",
+    "genero": "Romance",
+    "autor": "Jane Austen",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0115": {
+    "numeracao": "0115",
+    "titulo": "Grandes Esperancas",
+    "genero": "Romance",
+    "autor": "Charles Dickens",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0116": {
+    "numeracao": "0116",
+    "titulo": "Oliver Twist",
+    "genero": "Romance",
+    "autor": "Charles Dickens",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0117": {
+    "numeracao": "0117",
+    "titulo": "Conto de Duas Cidades",
+    "genero": "Romance Historico",
+    "autor": "Charles Dickens",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0118": {
+    "numeracao": "0118",
+    "titulo": "David Copperfield",
+    "genero": "Romance",
+    "autor": "Charles Dickens",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0119": {
+    "numeracao": "0119",
+    "titulo": "O Retrato de Dorian Gray",
+    "genero": "Romance",
+    "autor": "Oscar Wilde",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0120": {
+    "numeracao": "0120",
+    "titulo": "As Aventuras de Tom Sawyer",
+    "genero": "Aventura",
+    "autor": "Mark Twain",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0121": {
+    "numeracao": "0121",
+    "titulo": "As Aventuras de Huckleberry Finn",
+    "genero": "Aventura",
+    "autor": "Mark Twain",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0122": {
+    "numeracao": "0122",
+    "titulo": "Moby Dick",
+    "genero": "Aventura",
+    "autor": "Herman Melville",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0123": {
+    "numeracao": "0123",
+    "titulo": "A Ilha do Tesouro",
+    "genero": "Aventura",
+    "autor": "Robert Louis Stevenson",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0124": {
+    "numeracao": "0124",
+    "titulo": "20000 Leguas Submarinas",
+    "genero": "Aventura",
+    "autor": "Julio Verne",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0125": {
+    "numeracao": "0125",
+    "titulo": "Volta ao Mundo em 80 Dias",
+    "genero": "Aventura",
+    "autor": "Julio Verne",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0126": {
+    "numeracao": "0126",
+    "titulo": "Viagem ao Centro da Terra",
+    "genero": "Aventura",
+    "autor": "Julio Verne",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0127": {
+    "numeracao": "0127",
+    "titulo": "Robinson Crusoe",
+    "genero": "Aventura",
+    "autor": "Daniel Defoe",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0128": {
+    "numeracao": "0128",
+    "titulo": "As Viagens de Gulliver",
+    "genero": "Aventura",
+    "autor": "Jonathan Swift",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0129": {
+    "numeracao": "0129",
+    "titulo": "Dom Quixote",
+    "genero": "Classico",
+    "autor": "Miguel de Cervantes",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0130": {
+    "numeracao": "0130",
+    "titulo": "A Divina Comedia",
+    "genero": "Classico",
+    "autor": "Dante Alighieri",
+    "editora": "Editora 34",
+    "quantidade": 2
+  },
+  "0131": {
+    "numeracao": "0131",
+    "titulo": "Iliada",
+    "genero": "Classico",
+    "autor": "Homero",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0132": {
+    "numeracao": "0132",
+    "titulo": "Odisseia",
+    "genero": "Classico",
+    "autor": "Homero",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0133": {
+    "numeracao": "0133",
+    "titulo": "Hamlet",
+    "genero": "Classico",
+    "autor": "William Shakespeare",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0134": {
+    "numeracao": "0134",
+    "titulo": "Romeu e Julieta",
+    "genero": "Classico",
+    "autor": "William Shakespeare",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0135": {
+    "numeracao": "0135",
+    "titulo": "Macbeth",
+    "genero": "Classico",
+    "autor": "William Shakespeare",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0136": {
+    "numeracao": "0136",
+    "titulo": "Otelo",
+    "genero": "Classico",
+    "autor": "William Shakespeare",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0137": {
+    "numeracao": "0137",
+    "titulo": "O Mercador de Veneza",
+    "genero": "Classico",
+    "autor": "William Shakespeare",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0138": {
+    "numeracao": "0138",
+    "titulo": "A Metamorfose",
+    "genero": "Classico",
+    "autor": "Franz Kafka",
+    "editora": "Companhia das Letras",
+    "quantidade": 3
+  },
+  "0139": {
+    "numeracao": "0139",
+    "titulo": "O Processo",
+    "genero": "Classico",
+    "autor": "Franz Kafka",
+    "editora": "Companhia das Letras",
+    "quantidade": 2
+  },
+  "0140": {
+    "numeracao": "0140",
+    "titulo": "O Castelo",
+    "genero": "Classico",
+    "autor": "Franz Kafka",
+    "editora": "Companhia das Letras",
+    "quantidade": 2
+  },
+  "0141": {
+    "numeracao": "0141",
+    "titulo": "Em Busca do Tempo Perdido No Caminho de Swann",
+    "genero": "Classico",
+    "autor": "Marcel Proust",
+    "editora": "Globo",
+    "quantidade": 2
+  },
+  "0142": {
+    "numeracao": "0142",
+    "titulo": "Ulisses",
+    "genero": "Classico",
+    "autor": "James Joyce",
+    "editora": "Penguin",
+    "quantidade": 1
+  },
+  "0143": {
+    "numeracao": "0143",
+    "titulo": "Dublinenses",
+    "genero": "Conto",
+    "autor": "James Joyce",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0144": {
+    "numeracao": "0144",
+    "titulo": "O Sol Tambem se Levanta",
+    "genero": "Romance",
+    "autor": "Ernest Hemingway",
+    "editora": "Bertrand Brasil",
+    "quantidade": 2
+  },
+  "0145": {
+    "numeracao": "0145",
+    "titulo": "Por Quem os Sinos Dobram",
+    "genero": "Romance",
+    "autor": "Ernest Hemingway",
+    "editora": "Bertrand Brasil",
+    "quantidade": 2
+  },
+  "0146": {
+    "numeracao": "0146",
+    "titulo": "O Velho e o Mar",
+    "genero": "Romance",
+    "autor": "Ernest Hemingway",
+    "editora": "Bertrand Brasil",
+    "quantidade": 3
+  },
+  "0147": {
+    "numeracao": "0147",
+    "titulo": "O Grande Gatsby",
+    "genero": "Romance",
+    "autor": "F. Scott Fitzgerald",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0148": {
+    "numeracao": "0148",
+    "titulo": "Suave e a Noite",
+    "genero": "Romance",
+    "autor": "F. Scott Fitzgerald",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0149": {
+    "numeracao": "0149",
+    "titulo": "O Apanhador no Campo de Centeio",
+    "genero": "Romance",
+    "autor": "J.D. Salinger",
+    "editora": "Editora do Autor",
+    "quantidade": 3
+  },
+  "0150": {
+    "numeracao": "0150",
+    "titulo": "Sobre os Ossos dos Mortos",
+    "genero": "Romance",
+    "autor": "Olga Tokarczuk",
+    "editora": "Todavia",
+    "quantidade": 2
+  },
+  "0151": {
+    "numeracao": "0151",
+    "titulo": "Os Miseraveis",
+    "genero": "Romance Historico",
+    "autor": "Victor Hugo",
+    "editora": "Cosac Naify",
+    "quantidade": 3
+  },
+  "0152": {
+    "numeracao": "0152",
+    "titulo": "Notre-Dame de Paris",
+    "genero": "Romance Historico",
+    "autor": "Victor Hugo",
+    "editora": "Cosac Naify",
+    "quantidade": 2
+  },
+  "0153": {
+    "numeracao": "0153",
+    "titulo": "Conte de Monte Cristo",
+    "genero": "Romance Historico",
+    "autor": "Alexandre Dumas",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0154": {
+    "numeracao": "0154",
+    "titulo": "Os Tres Mosqueteiros",
+    "genero": "Romance Historico",
+    "autor": "Alexandre Dumas",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0155": {
+    "numeracao": "0155",
+    "titulo": "Germinal",
+    "genero": "Naturalismo",
+    "autor": "Emile Zola",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0156": {
+    "numeracao": "0156",
+    "titulo": "Nana",
+    "genero": "Naturalismo",
+    "autor": "Emile Zola",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0157": {
+    "numeracao": "0157",
+    "titulo": "Madame Bovary",
+    "genero": "Romance",
+    "autor": "Gustave Flaubert",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0158": {
+    "numeracao": "0158",
+    "titulo": "Educacao Sentimental",
+    "genero": "Romance",
+    "autor": "Gustave Flaubert",
+    "editora": "Penguin",
+    "quantidade": 1
+  },
+  "0159": {
+    "numeracao": "0159",
+    "titulo": "O Vermelho e o Negro",
+    "genero": "Romance",
+    "autor": "Stendhal",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0160": {
+    "numeracao": "0160",
+    "titulo": "A Cartuxo de Parma",
+    "genero": "Romance",
+    "autor": "Stendhal",
+    "editora": "Penguin",
+    "quantidade": 1
+  },
+  "0161": {
+    "numeracao": "0161",
+    "titulo": "A Morte de Ivan Ilyich",
+    "genero": "Novela",
+    "autor": "Liev Tolstoi",
+    "editora": "Cosac Naify",
+    "quantidade": 2
+  },
+  "0162": {
+    "numeracao": "0162",
+    "titulo": "Noites Brancas",
+    "genero": "Novela",
+    "autor": "Fiodor Dostoievski",
+    "editora": "Editora 34",
+    "quantidade": 2
+  },
+  "0163": {
+    "numeracao": "0163",
+    "titulo": "A Dama do Cachorrinho",
+    "genero": "Conto",
+    "autor": "Anton Tchekhov",
+    "editora": "Cosac Naify",
+    "quantidade": 2
+  },
+  "0164": {
+    "numeracao": "0164",
+    "titulo": "A Enfermaria No 6",
+    "genero": "Conto",
+    "autor": "Anton Tchekhov",
+    "editora": "Cosac Naify",
+    "quantidade": 2
+  },
+  "0165": {
+    "numeracao": "0165",
+    "titulo": "O Jogador",
+    "genero": "Romance",
+    "autor": "Fiodor Dostoievski",
+    "editora": "Editora 34",
+    "quantidade": 2
+  },
+  "0166": {
+    "numeracao": "0166",
+    "titulo": "Steelheart",
+    "genero": "Ficcao Cientifica",
+    "autor": "Brandon Sanderson",
+    "editora": "Arqueiro",
+    "quantidade": 2
+  },
+  "0167": {
+    "numeracao": "0167",
+    "titulo": "Elantris",
+    "genero": "Fantasia",
+    "autor": "Brandon Sanderson",
+    "editora": "Arqueiro",
+    "quantidade": 2
+  },
+  "0168": {
+    "numeracao": "0168",
+    "titulo": "Warbreaker",
+    "genero": "Fantasia",
+    "autor": "Brandon Sanderson",
+    "editora": "Arqueiro",
+    "quantidade": 2
+  },
+  "0169": {
+    "numeracao": "0169",
+    "titulo": "A Luz de Todas as Luzes",
+    "genero": "Ficcao Cientifica",
+    "autor": "Anthony Doerr",
+    "editora": "Intrinseca",
+    "quantidade": 3
+  },
+  "0170": {
+    "numeracao": "0170",
+    "titulo": "A Garota no Trem",
+    "genero": "Suspense",
+    "autor": "Paula Hawkins",
+    "editora": "Record",
+    "quantidade": 3
+  },
+  "0171": {
+    "numeracao": "0171",
+    "titulo": "Garota Exemplar",
+    "genero": "Suspense",
+    "autor": "Gillian Flynn",
+    "editora": "Intrínseca",
+    "quantidade": 3
+  },
+  "0172": {
+    "numeracao": "0172",
+    "titulo": "Desaparecida",
+    "genero": "Suspense",
+    "autor": "Gillian Flynn",
+    "editora": "Intrinseca",
+    "quantidade": 2
+  },
+  "0173": {
+    "numeracao": "0173",
+    "titulo": "O Silencio das Inocentes",
+    "genero": "Suspense",
+    "autor": "Thomas Harris",
+    "editora": "Record",
+    "quantidade": 2
+  },
+  "0174": {
+    "numeracao": "0174",
+    "titulo": "Hannibal",
+    "genero": "Suspense",
+    "autor": "Thomas Harris",
+    "editora": "Record",
+    "quantidade": 2
+  },
+  "0175": {
+    "numeracao": "0175",
+    "titulo": "O Nome da Rosa",
+    "genero": "Suspense",
+    "autor": "Umberto Eco",
+    "editora": "Record",
+    "quantidade": 2
+  },
+  "0176": {
+    "numeracao": "0176",
+    "titulo": "O Pendulo de Foucault",
+    "genero": "Suspense",
+    "autor": "Umberto Eco",
+    "editora": "Record",
+    "quantidade": 2
+  },
+  "0177": {
+    "numeracao": "0177",
+    "titulo": "Assassinato no Expresso do Oriente",
+    "genero": "Policial",
+    "autor": "Agatha Christie",
+    "editora": "HarperCollins",
+    "quantidade": 3
+  },
+  "0178": {
+    "numeracao": "0178",
+    "titulo": "Morte no Nilo",
+    "genero": "Policial",
+    "autor": "Agatha Christie",
+    "editora": "HarperCollins",
+    "quantidade": 3
+  },
+  "0179": {
+    "numeracao": "0179",
+    "titulo": "Dez Negrinhos",
+    "genero": "Policial",
+    "autor": "Agatha Christie",
+    "editora": "HarperCollins",
+    "quantidade": 3
+  },
+  "0180": {
+    "numeracao": "0180",
+    "titulo": "O Caso dos Bombons Envenenados",
+    "genero": "Policial",
+    "autor": "Agatha Christie",
+    "editora": "HarperCollins",
+    "quantidade": 2
+  },
+  "0181": {
+    "numeracao": "0181",
+    "titulo": "Um Estudo em Vermelho",
+    "genero": "Policial",
+    "autor": "Arthur Conan Doyle",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0182": {
+    "numeracao": "0182",
+    "titulo": "O Cao dos Baskervilles",
+    "genero": "Policial",
+    "autor": "Arthur Conan Doyle",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0183": {
+    "numeracao": "0183",
+    "titulo": "As Aventuras de Sherlock Holmes",
+    "genero": "Policial",
+    "autor": "Arthur Conan Doyle",
+    "editora": "Penguin",
+    "quantidade": 3
+  },
+  "0184": {
+    "numeracao": "0184",
+    "titulo": "O Signo dos Quatro",
+    "genero": "Policial",
+    "autor": "Arthur Conan Doyle",
+    "editora": "Penguin",
+    "quantidade": 2
+  },
+  "0185": {
+    "numeracao": "0185",
+    "titulo": "A Menina que Roubava Livros",
+    "genero": "Romance Historico",
+    "autor": "Markus Zusak",
+    "editora": "Intrinseca",
+    "quantidade": 5
+  },
+  "0186": {
+    "numeracao": "0186",
+    "titulo": "O Diario de Anne Frank",
+    "genero": "Biografia",
+    "autor": "Anne Frank",
+    "editora": "Record",
+    "quantidade": 4
+  },
+  "0187": {
+    "numeracao": "0187",
+    "titulo": "Se Isto e um Homem",
+    "genero": "Biografia",
+    "autor": "Primo Levi",
+    "editora": "Rocco",
+    "quantidade": 3
+  },
+  "0188": {
+    "numeracao": "0188",
+    "titulo": "A Noite",
+    "genero": "Biografia",
+    "autor": "Elie Wiesel",
+    "editora": "Ediouro",
+    "quantidade": 3
+  },
+  "0189": {
+    "numeracao": "0189",
+    "titulo": "Maus",
+    "genero": "Quadrinhos",
+    "autor": "Art Spiegelman",
+    "editora": "Companhia das Letras",
+    "quantidade": 2
+  },
+  "0190": {
+    "numeracao": "0190",
+    "titulo": "Persepolis",
+    "genero": "Quadrinhos",
+    "autor": "Marjane Satrapi",
+    "editora": "Companhia das Letras",
+    "quantidade": 2
+  },
+  "0191": {
+    "numeracao": "0191",
+    "titulo": "Watchmen",
+    "genero": "Quadrinhos",
+    "autor": "Alan Moore",
+    "editora": "Panini",
+    "quantidade": 2
+  },
+  "0192": {
+    "numeracao": "0192",
+    "titulo": "Sandman Preludio e Noturno",
+    "genero": "Quadrinhos",
+    "autor": "Neil Gaiman",
+    "editora": "Panini",
+    "quantidade": 2
+  },
+  "0193": {
+    "numeracao": "0193",
+    "titulo": "American Gods",
+    "genero": "Fantasia",
+    "autor": "Neil Gaiman",
+    "editora": "Intrinseca",
+    "quantidade": 3
+  },
+  "0194": {
+    "numeracao": "0194",
+    "titulo": "Deuses Americanos",
+    "genero": "Fantasia",
+    "autor": "Neil Gaiman",
+    "editora": "Intrinseca",
+    "quantidade": 2
+  },
+  "0195": {
+    "numeracao": "0195",
+    "titulo": "Coraline",
+    "genero": "Fantasia",
+    "autor": "Neil Gaiman",
+    "editora": "Rocco",
+    "quantidade": 3
+  },
+  "0196": {
+    "numeracao": "0196",
+    "titulo": "Bom Presagio",
+    "genero": "Fantasia",
+    "autor": "Neil Gaiman",
+    "editora": "Intrinseca",
+    "quantidade": 2
+  },
+  "0197": {
+    "numeracao": "0197",
+    "titulo": "O Oceano no Fim do Caminho",
+    "genero": "Fantasia",
+    "autor": "Neil Gaiman",
+    "editora": "Intrinseca",
+    "quantidade": 2
+  },
+  "0198": {
+    "numeracao": "0198",
+    "titulo": "A Batalha do Labirinto",
+    "genero": "Mitologia",
+    "autor": "Rick Riordan",
+    "editora": "Intrinseca",
+    "quantidade": 3
+  },
+  "0199": {
+    "numeracao": "0199",
+    "titulo": "O Ladrao de Raios",
+    "genero": "Mitologia",
+    "autor": "Rick Riordan",
+    "editora": "Intrinseca",
+    "quantidade": 4
+  },
+  "0200": {
+    "numeracao": "0200",
+    "titulo": "O Mar de Monstros",
+    "genero": "Mitologia",
+    "autor": "Rick Riordan",
+    "editora": "Intrinseca",
+    "quantidade": 3
+  },
+  "251": {
+    "numeracao": "251",
+    "titulo": "Hoje é um novo dia",
+    "genero": "Auto ajuda",
+    "autor": "Globo",
+    "editora": "Criança esperança",
+    "quantidade": 10
+  }
 }
