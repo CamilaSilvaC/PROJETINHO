@@ -173,35 +173,38 @@ class JanelaPrincipal(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
 
-        self.b1 = Biblioteca()  # Presumindo que a classe Biblioteca já está definida
+        self.b1 = Biblioteca()  
         
         # Criando o widget central
         self.widgetCentral = QWidget(self)
 
-        # Criando janelas para cada botão (aqui você define as janelas)
-        self.janelaCA = JanelaCadastraAluno(self.b1)  # Janela para cadastrar aluno
-        self.janelaCL = JanelaCadastroLivro(self.b1)  # Janela para cadastrar livro
-        self.janelaAA = JanelaAteraAluno(self.b1)  # Janela para alterar aluno
-        self.janelaAL = JanelaAlteraLivro(self.b1)  # Janela para alterar livro
-        self.janelaEP = JanelaEmprestimo(self.b1)  # Janela para empréstimo
-        self.janelaDV = JanelaDevolucao(self.b1)  # Janela para devolução
+        # Criando janelas para cada botão
+        self.janelaCA = JanelaCadastraAluno(self.b1)  
+        self.janelaCL = JanelaCadastroLivro(self.b1)  
+        self.janelaAA = JanelaAteraAluno(self.b1)  
+        self.janelaAL = JanelaAlteraLivro(self.b1)  
+        self.janelaEP = JanelaEmprestimo(self.b1)  
+        self.janelaDV = JanelaDevolucao(self.b1) 
         
         # Criando os layouts da janela principal
         self.meuLayout1 = QVBoxLayout(self.widgetCentral)
         self.layout_botoes = QGridLayout()
-
-        # Criando o logo
-        self.logo_label = QLabel(self)  # Criação do QLabel para a logo
-        self.logo_pixmap = QPixmap(r'C:\Users\Luisa\biblioteca(sb)\img\logo.png')  # Caminho da logo
-        self.logo_pixmap = self.logo_pixmap.scaled(350, 300, Qt.AspectRatioMode.KeepAspectRatio)  # Redimensiona a logo
+        self.logo_label = QLabel(self)
+        caminho_logo = os.path.join(os.path.dirname(__file__), 'img', 'logo.png')
+        
+        self.logo_pixmap = QPixmap(caminho_logo)
+        
+        if self.logo_pixmap.isNull():
+            print(f"Erro: Não encontrei a logo em {caminho_logo}")
+        
+        self.logo_pixmap = self.logo_pixmap.scaled(350, 300, Qt.AspectRatioMode.KeepAspectRatio)
         self.logo_label.setPixmap(self.logo_pixmap)
-        self.logo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)  # Centraliza a logo
+        self.logo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        # Adicionando o logo no layout
         self.meuLayout1.addWidget(self.logo_label, alignment=Qt.AlignmentFlag.AlignCenter)
 
         # Criando os botões
-        self.criabotoes()  # Método que cria os botões
+        self.criabotoes()  
 
         # Adicionando os botões ao layout
         self.layout_botoes.addWidget(self.CA, 0, 0)
@@ -251,24 +254,18 @@ class JanelaPrincipal(QMainWindow):
             self.b1.emprestimos
         ))
 
-        # Setando o widget central
         self.setCentralWidget(self.widgetCentral)
 
     def config_style(self):
-        # Obtém a resolução da tela principal
         screen = QApplication.primaryScreen()
         screen_size = screen.size()
 
-        # Definir o tamanho da janela para a resolução da tela principal
         self.resize(screen_size.width(), screen_size.height())
 
-        # Tornar a janela maximizada
         self.showMaximized()
 
-        # Definindo o tamanho mínimo da janela, por exemplo, 80% da resolução da tela
         self.setMinimumSize(screen_size.width() * 0.8, screen_size.height() * 0.8)
 
-        # Aplicando o tema dark
         qdarktheme.setup_theme(
             theme='dark',
             corner_shape='rounded',
@@ -419,7 +416,7 @@ class JanelaCadastroLivro(QDialog):
     def faz_slot(self, func, *args):
         def slot():
             n, t, g, a, e, q = args
-            if self.verifica_campos(*args):  # Usando 'self.verifica_campos' para acessar o método
+            if self.verifica_campos(*args):  
                 msg = func(
                     n.text(), t.text(), g.text(), a.text(), e.text(), q.value()
                 )
@@ -450,8 +447,6 @@ def faz_msg_box(titulo, mensagem, erro=False):
         msg.setIcon(QMessageBox.Information)  
     msg.exec()
 
-
-#Configurações da janela de Alteração dos alunos 
 class JanelaAteraAluno(QDialog):
     def __init__(self, biblioteca: Biblioteca, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -542,7 +537,7 @@ class JanelaAlteraLivro(QDialog):
     def faz_slot(self, func, *args):
         def slot():
             n, t, g, a, e, q = args
-            if self.verifica_campos(*args):  # Correção: usando self.verifica_campos
+            if self.verifica_campos(*args): 
                 msg = func(
                     n.text(), t.text(), g.text(), a.text(), e.text(), q.value()
                 )
@@ -569,7 +564,7 @@ class JanelaAlteraLivro(QDialog):
 def faz_msg_box(titulo, mensagem, erro=False):
     msg = QMessageBox()
     msg.setWindowTitle(titulo)
-    msg.setText(mensagem)  # Aqui 'mensagem' agora é uma string
+    msg.setText(mensagem)  
     if erro:
         msg.setIcon(QMessageBox.Critical)  
     else:
@@ -581,7 +576,7 @@ def faz_msg_box(titulo, mensagem, erro=False):
 class JanelaEmprestimo(QDialog):
     def __init__(self, biblioteca: Biblioteca, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.biblioteca = biblioteca  # Armazenando a referência para a biblioteca puxando do BD
+        self.biblioteca = biblioteca  
         self.setWindowTitle("Empréstimo de Livro")
         self.setMinimumSize(500, 200)
 
