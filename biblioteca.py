@@ -176,22 +176,14 @@ class JanelaPrincipal(QMainWindow):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
         
-        # Logo e nome
-        logo_label = QLabel("SB")
-        logo_label.setStyleSheet(
-            "font-size: 36px; font-weight: bold; color: #AD49E1; "
-            "text-align: center; padding: 16px;"
-        )
+        # Logo real do sistema
+        logo_label = QLabel()
+        pixmap = QPixmap("img/logo.png")
+        pixmap = pixmap.scaled(160, 160, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        logo_label.setPixmap(pixmap)
         logo_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(logo_label)
-        
-        sistema_label = QLabel("SISTEMA DE\nBIBLIOTECA")
-        sistema_label.setStyleSheet(
-            "font-size: 10px; color: #AD49E1; text-align: center; "
-            "letter-spacing: 1px; padding: 8px; font-weight: bold;"
-        )
-        sistema_label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(sistema_label)
+        # Texto abaixo da logo
         
         separador1 = QFrame()
         separador1.setFrameShape(QFrame.HLine)
@@ -213,6 +205,10 @@ class JanelaPrincipal(QMainWindow):
         layout.addWidget(self.btn_acervo)
         
         self.btn_alunos = self._criar_botao_nav("👥 Alunos")
+        self.btn_alunos.setStyleSheet(
+            self.btn_alunos.styleSheet()
+            + "\nQPushButton#nav-btn { color: #c97ff0; }"
+        )
         self.btn_alunos.clicked.connect(lambda: self._switch_panel(1, self.btn_alunos))
         layout.addWidget(self.btn_alunos)
         
@@ -357,7 +353,9 @@ class JanelaPrincipal(QMainWindow):
         
         # Filtros rápidos
         filtros_layout = QHBoxLayout()
-        filtros_layout.addWidget(QLabel("Filtros:"))
+        self.label_filtros = QLabel("Filtros:")
+        self.label_filtros.setStyleSheet("color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 500;")
+        filtros_layout.addWidget(self.label_filtros)
         
         self.btn_todos = QPushButton("Todos")
         self.btn_todos.setCheckable(True)
@@ -369,18 +367,6 @@ class JanelaPrincipal(QMainWindow):
         self.btn_disponiveis.setCheckable(True)
         self.btn_disponiveis.clicked.connect(lambda: self._filtrar_livros("disponiveis"))
         filtros_layout.addWidget(self.btn_disponiveis)
-        
-        # Gêneros
-        generos = set()
-        for livro in self.b1.info_livros.values():
-            if isinstance(livro, dict) and "genero" in livro:
-                generos.add(livro["genero"])
-        
-        for genero in sorted(generos)[:5]:  # Limite a 5 gêneros
-            btn_genero = QPushButton(genero)
-            btn_genero.setCheckable(True)
-            btn_genero.clicked.connect(lambda checked, g=genero: self._filtrar_livros(f"genero:{g}"))
-            filtros_layout.addWidget(btn_genero)
         
         filtros_layout.addStretch()
         layout.addLayout(filtros_layout)
@@ -396,9 +382,18 @@ class JanelaPrincipal(QMainWindow):
         self.table_livros.setColumnWidth(2, 160)
         self.table_livros.setColumnWidth(3, 120)
         self.table_livros.setColumnWidth(4, 70)
-        self.table_livros.setColumnWidth(5, 100)
-        
-        self.table_livros.setAlternatingRowColors(True)
+        self.table_livros.setColumnWidth(5, 200)
+        self.table_livros.horizontalHeader().setSectionResizeMode(5, QHeaderView.ResizeMode.Fixed)
+
+        self.table_livros.setAlternatingRowColors(False)
+        self.table_livros.setStyleSheet(
+            """
+            QTableWidget { background-color: #1a1a2e; }
+            QTableWidget::item { background-color: #1a1a2e; color: #e0e0e0; }
+            QTableWidget::item:selected { background-color: rgba(173,73,225,0.25); color: #ffffff; }
+            QTableWidget::item:hover { background-color: rgba(173,73,225,0.1); }
+            """
+        )
         self.table_livros.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.table_livros.horizontalHeader().setStretchLastSection(False)
         layout.addWidget(self.table_livros)
@@ -545,17 +540,17 @@ class JanelaPrincipal(QMainWindow):
                 # Botões de ação
                 btn_container = QWidget()
                 btn_layout = QHBoxLayout(btn_container)
-                btn_layout.setContentsMargins(2, 2, 2, 2)
-                btn_layout.setSpacing(2)
+                btn_layout.setContentsMargins(4, 2, 4, 2)
+                btn_layout.setSpacing(6)
                 
                 btn_emprestar = QPushButton("Emprestar")
-                btn_emprestar.setFixedWidth(70)
+                btn_emprestar.setFixedWidth(88)
                 btn_emprestar.clicked.connect(
                     lambda checked, n=numeracao: self._abrir_emprestimo(n)
                 )
                 
                 btn_editar = QPushButton("Editar")
-                btn_editar.setFixedWidth(70)
+                btn_editar.setFixedWidth(72)
                 btn_editar.clicked.connect(
                     lambda checked, n=numeracao: self._abrir_altera_livro(n)
                 )
@@ -684,15 +679,15 @@ class JanelaPrincipal(QMainWindow):
             
             btn_container = QWidget()
             btn_layout = QHBoxLayout(btn_container)
-            btn_layout.setContentsMargins(2, 2, 2, 2)
-            btn_layout.setSpacing(2)
+            btn_layout.setContentsMargins(4, 2, 4, 2)
+            btn_layout.setSpacing(6)
             
             btn_emprestar = QPushButton("Emprestar")
-            btn_emprestar.setFixedWidth(70)
+            btn_emprestar.setFixedWidth(88)
             btn_emprestar.clicked.connect(lambda checked, n=numeracao: self._abrir_emprestimo(n))
             
             btn_editar = QPushButton("Editar")
-            btn_editar.setFixedWidth(70)
+            btn_editar.setFixedWidth(72)
             btn_editar.clicked.connect(lambda checked, n=numeracao: self._abrir_altera_livro(n))
             
             btn_layout.addWidget(btn_emprestar)
@@ -753,8 +748,6 @@ class JanelaPrincipal(QMainWindow):
                     incluir = True
                 elif filtro == "disponiveis":
                     incluir = livro.get("quantidade", 0) > 0
-                elif filtro.startswith("genero:"):
-                    incluir = livro.get("genero", "").lower() == filtro.split(":")[1].lower()
                 else:
                     incluir = True
                 
@@ -770,15 +763,15 @@ class JanelaPrincipal(QMainWindow):
                     
                     btn_container = QWidget()
                     btn_layout = QHBoxLayout(btn_container)
-                    btn_layout.setContentsMargins(2, 2, 2, 2)
-                    btn_layout.setSpacing(2)
+                    btn_layout.setContentsMargins(4, 2, 4, 2)
+                    btn_layout.setSpacing(6)
                     
                     btn_emprestar = QPushButton("Emprestar")
-                    btn_emprestar.setFixedWidth(70)
+                    btn_emprestar.setFixedWidth(88)
                     btn_emprestar.clicked.connect(lambda checked, n=numeracao: self._abrir_emprestimo(n))
                     
                     btn_editar = QPushButton("Editar")
-                    btn_editar.setFixedWidth(70)
+                    btn_editar.setFixedWidth(72)
                     btn_editar.clicked.connect(lambda checked, n=numeracao: self._abrir_altera_livro(n))
                     
                     btn_layout.addWidget(btn_emprestar)
@@ -917,6 +910,32 @@ class JanelaPrincipal(QMainWindow):
 class JanelaCadastraAluno(QDialog):
     def __init__(self, biblioteca: Biblioteca, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
+        self.setStyleSheet("""
+            QDialog, QWidget {
+                background-color: #1a1a2e;
+                color: #e0e0e0;
+            }
+            QLabel {
+                color: #e0e0e0;
+            }
+            QLineEdit, QComboBox, QSpinBox {
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(173, 73, 225, 0.3);
+                border-radius: 6px;
+                padding: 7px 12px;
+                color: #e0e0e0;
+            }
+            QPushButton {
+                background: rgba(173, 73, 225, 0.2);
+                border: 1px solid rgba(173, 73, 225, 0.4);
+                border-radius: 6px;
+                padding: 8px 18px;
+                color: #e0e0e0;
+            }
+            QPushButton:hover {
+                background: rgba(173, 73, 225, 0.35);
+            }
+        """)
 
         self.setWindowTitle("Cadastro de Aluno")
         self.setMinimumSize(900, 350)
@@ -969,6 +988,32 @@ class JanelaCadastraAluno(QDialog):
 class JanelaCadastroLivro(QDialog):
     def __init__(self, biblioteca: Biblioteca, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
+        self.setStyleSheet("""
+            QDialog, QWidget {
+                background-color: #1a1a2e;
+                color: #e0e0e0;
+            }
+            QLabel {
+                color: #e0e0e0;
+            }
+            QLineEdit, QComboBox, QSpinBox {
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(173, 73, 225, 0.3);
+                border-radius: 6px;
+                padding: 7px 12px;
+                color: #e0e0e0;
+            }
+            QPushButton {
+                background: rgba(173, 73, 225, 0.2);
+                border: 1px solid rgba(173, 73, 225, 0.4);
+                border-radius: 6px;
+                padding: 8px 18px;
+                color: #e0e0e0;
+            }
+            QPushButton:hover {
+                background: rgba(173, 73, 225, 0.35);
+            }
+        """)
 
         self.setWindowTitle("Cadastro de Livro")
         self.setMinimumSize(900, 350)
@@ -1033,6 +1078,32 @@ def faz_msg_box(titulo, mensagem, erro=False):
 class JanelaAteraAluno(QDialog):
     def __init__(self, biblioteca: Biblioteca, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
+        self.setStyleSheet("""
+            QDialog, QWidget {
+                background-color: #1a1a2e;
+                color: #e0e0e0;
+            }
+            QLabel {
+                color: #e0e0e0;
+            }
+            QLineEdit, QComboBox, QSpinBox {
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(173, 73, 225, 0.3);
+                border-radius: 6px;
+                padding: 7px 12px;
+                color: #e0e0e0;
+            }
+            QPushButton {
+                background: rgba(173, 73, 225, 0.2);
+                border: 1px solid rgba(173, 73, 225, 0.4);
+                border-radius: 6px;
+                padding: 8px 18px;
+                color: #e0e0e0;
+            }
+            QPushButton:hover {
+                background: rgba(173, 73, 225, 0.35);
+            }
+        """)
 
         self.setWindowTitle("Altera Cadastro - Aluno")
         self.setMinimumSize(900, 350)
@@ -1090,6 +1161,32 @@ class JanelaAteraAluno(QDialog):
 class JanelaAlteraLivro(QDialog):
     def __init__(self, biblioteca: Biblioteca, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
+        self.setStyleSheet("""
+            QDialog, QWidget {
+                background-color: #1a1a2e;
+                color: #e0e0e0;
+            }
+            QLabel {
+                color: #e0e0e0;
+            }
+            QLineEdit, QComboBox, QSpinBox {
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(173, 73, 225, 0.3);
+                border-radius: 6px;
+                padding: 7px 12px;
+                color: #e0e0e0;
+            }
+            QPushButton {
+                background: rgba(173, 73, 225, 0.2);
+                border: 1px solid rgba(173, 73, 225, 0.4);
+                border-radius: 6px;
+                padding: 8px 18px;
+                color: #e0e0e0;
+            }
+            QPushButton:hover {
+                background: rgba(173, 73, 225, 0.35);
+            }
+        """)
 
         self.setWindowTitle("Altera Cadastro - Livro")
         self.setMinimumSize(900, 350)
@@ -1159,6 +1256,32 @@ def faz_msg_box(titulo, mensagem, erro=False):
 class JanelaEmprestimo(QDialog):
     def __init__(self, biblioteca: Biblioteca, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
+        self.setStyleSheet("""
+            QDialog, QWidget {
+                background-color: #1a1a2e;
+                color: #e0e0e0;
+            }
+            QLabel {
+                color: #e0e0e0;
+            }
+            QLineEdit, QComboBox, QSpinBox {
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(173, 73, 225, 0.3);
+                border-radius: 6px;
+                padding: 7px 12px;
+                color: #e0e0e0;
+            }
+            QPushButton {
+                background: rgba(173, 73, 225, 0.2);
+                border: 1px solid rgba(173, 73, 225, 0.4);
+                border-radius: 6px;
+                padding: 8px 18px;
+                color: #e0e0e0;
+            }
+            QPushButton:hover {
+                background: rgba(173, 73, 225, 0.35);
+            }
+        """)
         self.biblioteca = biblioteca  
         self.setWindowTitle("Empréstimo de Livro")
         self.setMinimumSize(500, 200)
@@ -1209,6 +1332,32 @@ class JanelaEmprestimo(QDialog):
 class JanelaDevolucao(QDialog):
     def __init__(self, biblioteca: Biblioteca, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
+        self.setStyleSheet("""
+            QDialog, QWidget {
+                background-color: #1a1a2e;
+                color: #e0e0e0;
+            }
+            QLabel {
+                color: #e0e0e0;
+            }
+            QLineEdit, QComboBox, QSpinBox {
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(173, 73, 225, 0.3);
+                border-radius: 6px;
+                padding: 7px 12px;
+                color: #e0e0e0;
+            }
+            QPushButton {
+                background: rgba(173, 73, 225, 0.2);
+                border: 1px solid rgba(173, 73, 225, 0.4);
+                border-radius: 6px;
+                padding: 8px 18px;
+                color: #e0e0e0;
+            }
+            QPushButton:hover {
+                background: rgba(173, 73, 225, 0.35);
+            }
+        """)
         self.setWindowTitle("Devolução")
         self.setMinimumSize(600, 350)
 
