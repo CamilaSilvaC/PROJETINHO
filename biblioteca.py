@@ -166,6 +166,11 @@ class JanelaPrincipal(QMainWindow):
         
         self.setCentralWidget(self.splitter)
         self.config_style()
+        self._conectar_atualizacao_dialogos()
+        self._atualizar_tabela_acervo()
+        self._atualizar_tabela_alunos()
+        self._atualizar_tabela_emprestimos()
+        self._atualizar_cards()
     
     def _criar_sidebar(self) -> QFrame:
         """Cria sidebar com navegação"""
@@ -205,10 +210,6 @@ class JanelaPrincipal(QMainWindow):
         layout.addWidget(self.btn_acervo)
         
         self.btn_alunos = self._criar_botao_nav("👥 Alunos")
-        self.btn_alunos.setStyleSheet(
-            self.btn_alunos.styleSheet()
-            + "\nQPushButton#nav-btn { color: #c97ff0; }"
-        )
         self.btn_alunos.clicked.connect(lambda: self._switch_panel(1, self.btn_alunos))
         layout.addWidget(self.btn_alunos)
         
@@ -302,6 +303,7 @@ class JanelaPrincipal(QMainWindow):
             self._atualizar_tabela_alunos()
         elif index == 2:
             self._atualizar_tabela_emprestimos()
+        self._atualizar_cards()
     
     def _criar_painel_acervo(self) -> QWidget:
         """Cria painel de acervo de livros"""
@@ -316,6 +318,10 @@ class JanelaPrincipal(QMainWindow):
         self.card_emprestimos = self._criar_metric_card("EMPRÉSTIMOS\nATIVOS", "0", "Livros em circulação")
         self.card_alunos = self._criar_metric_card("ALUNOS\nCADASTRADOS", "0", "Total de alunos")
         self.card_disponiveis = self._criar_metric_card("DISPONÍVEIS\nAGORA", "0", "Prontos para empréstimo")
+        self.card_livros_label = self.card_livros.valor_label
+        self.card_emprestimos_label = self.card_emprestimos.valor_label
+        self.card_alunos_label = self.card_alunos.valor_label
+        self.card_disponiveis_label = self.card_disponiveis.valor_label
         
         metrics_layout.addWidget(self.card_livros)
         metrics_layout.addWidget(self.card_emprestimos)
@@ -382,8 +388,8 @@ class JanelaPrincipal(QMainWindow):
         self.table_livros.setColumnWidth(2, 160)
         self.table_livros.setColumnWidth(3, 120)
         self.table_livros.setColumnWidth(4, 70)
-        self.table_livros.setColumnWidth(5, 200)
-        self.table_livros.horizontalHeader().setSectionResizeMode(5, QHeaderView.ResizeMode.Fixed)
+        self.table_livros.setColumnWidth(5, 180)
+        self.table_livros.horizontalHeader().setSectionResizeMode(5, QHeaderView.Fixed)
 
         self.table_livros.setAlternatingRowColors(False)
         self.table_livros.setStyleSheet(
@@ -435,9 +441,10 @@ class JanelaPrincipal(QMainWindow):
         self.table_alunos.setColumnWidth(3, 100)
         self.table_alunos.setColumnWidth(4, 150)
         self.table_alunos.setColumnWidth(5, 200)
-        self.table_alunos.setColumnWidth(6, 100)
+        self.table_alunos.setColumnWidth(6, 180)
+        self.table_alunos.horizontalHeader().setSectionResizeMode(6, QHeaderView.Fixed)
         
-        self.table_alunos.setAlternatingRowColors(True)
+        self.table_alunos.setAlternatingRowColors(False)
         self.table_alunos.setSelectionBehavior(QAbstractItemView.SelectRows)
         layout.addWidget(self.table_alunos)
         
@@ -464,9 +471,10 @@ class JanelaPrincipal(QMainWindow):
         self.table_emprestimos.setColumnWidth(1, 200)
         self.table_emprestimos.setColumnWidth(2, 250)
         self.table_emprestimos.setColumnWidth(3, 150)
-        self.table_emprestimos.setColumnWidth(4, 100)
+        self.table_emprestimos.setColumnWidth(4, 180)
+        self.table_emprestimos.horizontalHeader().setSectionResizeMode(4, QHeaderView.Fixed)
         
-        self.table_emprestimos.setAlternatingRowColors(True)
+        self.table_emprestimos.setAlternatingRowColors(False)
         self.table_emprestimos.setSelectionBehavior(QAbstractItemView.SelectRows)
         layout.addWidget(self.table_emprestimos)
         
@@ -531,11 +539,25 @@ class JanelaPrincipal(QMainWindow):
             self.table_livros.insertRow(row)
             
             if isinstance(livro, dict):
-                self.table_livros.setItem(row, 0, QTableWidgetItem(str(livro.get("numeracao", ""))))
-                self.table_livros.setItem(row, 1, QTableWidgetItem(str(livro.get("titulo", ""))))
-                self.table_livros.setItem(row, 2, QTableWidgetItem(str(livro.get("autor", ""))))
-                self.table_livros.setItem(row, 3, QTableWidgetItem(str(livro.get("genero", ""))))
-                self.table_livros.setItem(row, 4, QTableWidgetItem(str(livro.get("quantidade", ""))))
+                item_num = QTableWidgetItem(str(livro.get("numeracao", "")))
+                item_num.setTextAlignment(Qt.AlignCenter)
+                self.table_livros.setItem(row, 0, item_num)
+
+                item_titulo = QTableWidgetItem(str(livro.get("titulo", "")))
+                item_titulo.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+                self.table_livros.setItem(row, 1, item_titulo)
+
+                item_autor = QTableWidgetItem(str(livro.get("autor", "")))
+                item_autor.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+                self.table_livros.setItem(row, 2, item_autor)
+
+                item_genero = QTableWidgetItem(str(livro.get("genero", "")))
+                item_genero.setTextAlignment(Qt.AlignCenter)
+                self.table_livros.setItem(row, 3, item_genero)
+
+                item_qtd = QTableWidgetItem(str(livro.get("quantidade", "")))
+                item_qtd.setTextAlignment(Qt.AlignCenter)
+                self.table_livros.setItem(row, 4, item_qtd)
                 
                 # Botões de ação
                 btn_container = QWidget()
@@ -559,8 +581,8 @@ class JanelaPrincipal(QMainWindow):
                 btn_layout.addWidget(btn_editar)
                 
                 self.table_livros.setCellWidget(row, 5, btn_container)
-        
-        self._atualizar_metricas()
+
+            self._atualizar_cards()
     
     def _atualizar_tabela_alunos(self):
         """Atualiza a tabela de alunos"""
@@ -625,24 +647,33 @@ class JanelaPrincipal(QMainWindow):
                 btn_layout.addWidget(btn_devolver)
                 self.table_emprestimos.setCellWidget(row, 4, btn_container)
     
-    def _atualizar_metricas(self):
-        """Atualiza os cards de métricas"""
-        # Total de livros
+    def _atualizar_cards(self):
         total_livros = len(self.b1.info_livros)
-        self.card_livros.valor_label.setText(str(total_livros))
-        
-        # Empréstimos ativos
-        total_emprestimos = len(self.b1.emprestimos)
-        self.card_emprestimos.valor_label.setText(str(total_emprestimos))
-        
-        # Total de alunos
+        emprestimos_ativos = len(self.b1.emprestimos)
         total_alunos = len(self.b1.info_alunos)
-        self.card_alunos.valor_label.setText(str(total_alunos))
-        
-        # Livros disponíveis
-        disponiveis = sum(1 for livro in self.b1.info_livros.values()
-                         if isinstance(livro, dict) and livro.get("quantidade", 0) > 0)
-        self.card_disponiveis.valor_label.setText(str(disponiveis))
+        disponiveis = sum(
+            int(dados.get("quantidade", 0))
+            for dados in self.b1.info_livros.values()
+            if isinstance(dados, dict)
+        )
+        self.card_livros_label.setText(str(total_livros))
+        self.card_emprestimos_label.setText(str(emprestimos_ativos))
+        self.card_alunos_label.setText(str(total_alunos))
+        self.card_disponiveis_label.setText(str(disponiveis))
+
+    def _conectar_atualizacao_dialogos(self):
+        self.janelaCA.finished.connect(self._atualizar_interface_dados)
+        self.janelaCL.finished.connect(self._atualizar_interface_dados)
+        self.janelaAA.finished.connect(self._atualizar_interface_dados)
+        self.janelaAL.finished.connect(self._atualizar_interface_dados)
+        self.janelaEP.finished.connect(self._atualizar_interface_dados)
+        self.janelaDV.finished.connect(self._atualizar_interface_dados)
+
+    def _atualizar_interface_dados(self):
+        self._atualizar_tabela_acervo()
+        self._atualizar_tabela_alunos()
+        self._atualizar_tabela_emprestimos()
+        self._atualizar_cards()
     
     def _buscar_livros(self):
         """Busca livros por substring (busca placeholder)"""
@@ -671,11 +702,25 @@ class JanelaPrincipal(QMainWindow):
             row = self.table_livros.rowCount()
             self.table_livros.insertRow(row)
             
-            self.table_livros.setItem(row, 0, QTableWidgetItem(str(livro.get("numeracao", ""))))
-            self.table_livros.setItem(row, 1, QTableWidgetItem(str(livro.get("titulo", ""))))
-            self.table_livros.setItem(row, 2, QTableWidgetItem(str(livro.get("autor", ""))))
-            self.table_livros.setItem(row, 3, QTableWidgetItem(str(livro.get("genero", ""))))
-            self.table_livros.setItem(row, 4, QTableWidgetItem(str(livro.get("quantidade", ""))))
+            item_num = QTableWidgetItem(str(livro.get("numeracao", "")))
+            item_num.setTextAlignment(Qt.AlignCenter)
+            self.table_livros.setItem(row, 0, item_num)
+
+            item_titulo = QTableWidgetItem(str(livro.get("titulo", "")))
+            item_titulo.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+            self.table_livros.setItem(row, 1, item_titulo)
+
+            item_autor = QTableWidgetItem(str(livro.get("autor", "")))
+            item_autor.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+            self.table_livros.setItem(row, 2, item_autor)
+
+            item_genero = QTableWidgetItem(str(livro.get("genero", "")))
+            item_genero.setTextAlignment(Qt.AlignCenter)
+            self.table_livros.setItem(row, 3, item_genero)
+
+            item_qtd = QTableWidgetItem(str(livro.get("quantidade", "")))
+            item_qtd.setTextAlignment(Qt.AlignCenter)
+            self.table_livros.setItem(row, 4, item_qtd)
             
             btn_container = QWidget()
             btn_layout = QHBoxLayout(btn_container)
@@ -755,11 +800,25 @@ class JanelaPrincipal(QMainWindow):
                     row = self.table_livros.rowCount()
                     self.table_livros.insertRow(row)
                     
-                    self.table_livros.setItem(row, 0, QTableWidgetItem(str(livro.get("numeracao", ""))))
-                    self.table_livros.setItem(row, 1, QTableWidgetItem(str(livro.get("titulo", ""))))
-                    self.table_livros.setItem(row, 2, QTableWidgetItem(str(livro.get("autor", ""))))
-                    self.table_livros.setItem(row, 3, QTableWidgetItem(str(livro.get("genero", ""))))
-                    self.table_livros.setItem(row, 4, QTableWidgetItem(str(livro.get("quantidade", ""))))
+                    item_num = QTableWidgetItem(str(livro.get("numeracao", "")))
+                    item_num.setTextAlignment(Qt.AlignCenter)
+                    self.table_livros.setItem(row, 0, item_num)
+
+                    item_titulo = QTableWidgetItem(str(livro.get("titulo", "")))
+                    item_titulo.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+                    self.table_livros.setItem(row, 1, item_titulo)
+
+                    item_autor = QTableWidgetItem(str(livro.get("autor", "")))
+                    item_autor.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+                    self.table_livros.setItem(row, 2, item_autor)
+
+                    item_genero = QTableWidgetItem(str(livro.get("genero", "")))
+                    item_genero.setTextAlignment(Qt.AlignCenter)
+                    self.table_livros.setItem(row, 3, item_genero)
+
+                    item_qtd = QTableWidgetItem(str(livro.get("quantidade", "")))
+                    item_qtd.setTextAlignment(Qt.AlignCenter)
+                    self.table_livros.setItem(row, 4, item_qtd)
                     
                     btn_container = QWidget()
                     btn_layout = QHBoxLayout(btn_container)
@@ -804,7 +863,7 @@ class JanelaPrincipal(QMainWindow):
             self.b1.fazer_devolucao(chave)
             faz_msg_box("Sucesso", "Devolução realizada com sucesso!", False)
             self._atualizar_tabela_emprestimos()
-            self._atualizar_metricas()
+            self._atualizar_cards()
         except KeyError:
             faz_msg_box("Erro", "Chave de empréstimo não encontrada!", True)
     
