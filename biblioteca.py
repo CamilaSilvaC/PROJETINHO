@@ -4,14 +4,16 @@ import sys
 from pathlib import Path
 import qdarktheme
 from datetime import datetime
-from PySide6.QtCore import Qt
-from PySide6.QtGui import QPixmap
+from PySide6.QtCore import Qt, QTimer, QSize
+from PySide6.QtGui import QPixmap, QColor
 from PySide6.QtWidgets import (
     QMainWindow, QCalendarWidget, QVBoxLayout,
     QGridLayout, QFormLayout, QWidget, QFrame,
     QApplication, QPushButton, QLabel, QDialog,
     QLineEdit, QSpinBox, QDateEdit, QListWidget,
-    QDialogButtonBox, QMessageBox
+    QDialogButtonBox, QMessageBox, QSplitter,
+    QStackedWidget, QTableWidget, QTableWidgetItem,
+    QHeaderView, QHBoxLayout, QAbstractItemView
 )
 
 CAMINHO_DB_FILES = Path(__file__).parent / "db_files"
@@ -49,6 +51,14 @@ class Biblioteca:
         self.info_livros = self.importacao(INFO_LIVROS)
         self.emprestimos = self.importacao(EMPRESTIMOS)
         self.id_emprestimo = self.importacao(ID_EMPRESTIMO)
+        
+        # Hooks de índice para implementação futura
+        self.bst = None
+        self.indice_invertido = None
+        self.buscador_fuzzy = None
+        self.motor = None
+        
+        self.inicializar_indices()
 
     def importacao(self, caminho: str):
         with open(caminho, "r", encoding="utf-8") as arq:
@@ -57,6 +67,9 @@ class Biblioteca:
     def exportacao(self, caminho: str, dados: dict):
         with open(caminho, "w", encoding="utf-8") as arq:
             json.dump(dados, arq, ensure_ascii=False, indent=2)
+
+    def inicializar_indices(self):
+        print("[Indices] prontos para implementação")
 
     def cadastra_aluno(self, nome, idade, serie, turno, contato, endereco):
         _id = str(len(self.id_alunos))
@@ -70,7 +83,7 @@ class Biblioteca:
         return self.info_alunos[_id]
 
     def cadastra_livro(self, numeracao, titulo, genero, autor, editora, qtd):
-        livro = Livro(numeracao, titulo, genero, autor, editora, qtd)
+        livro = Livro(numeracao, titulo, genero, autor, editora, int(qtd) if isinstance(qtd, str) else qtd)
         self.info_livros[numeracao] = livro.__dict__
         self.id_livros.append(numeracao)
         self.exportacao(IDS_LIVROS, self.id_livros)
@@ -112,225 +125,795 @@ class Biblioteca:
         self.exportacao(ID_EMPRESTIMO, self.id_emprestimo)
 
 class JanelaPrincipal(QMainWindow):
-    def altera_aluno(
-            self, _id: str, nome: str, idade: str, serie: str,
-            turno: str, contato: str, endereco: str
-            ):
-
-        if _id not in self.id_alunos:
-            return None
-
-        self.info_alunos[_id] = {
-            "ID": _id,
-            "Nome": nome.title(),
-            "Série": serie,
-            "Turno": turno.title(),
-            "Idade": idade,
-            "Contato": contato,
-            "Endereço": endereco.title()
-            }
-        self.exportacao(INFO_ALUNOS, self.info_alunos)
-        return self.info_alunos[_id]
-
-    def altera_livro(self, numeracao: str, titulo: str, genero: str,
-                     autor: str, editora: str, qtd: str
-                     ):
-        if numeracao not in self.id_livros:
-            return None
-        self.info_livros[numeracao] = (
-            f"Título: {titulo.capitalize()}, "
-            f"Gênero: {genero.capitalize()}, "
-            f"Autor: {autor.capitalize()}, "
-            f"Editora:  {editora.capitalize()}, Quantidade: {qtd}")
-        self.exportacao(INFO_LIVROS, self.info_livros)
-        return self.info_livros[numeracao]
-
-    def fazer_emprestimo(self, _id: str, livro: str, devo: str):
-
-        chave = str(datetime.now().microsecond)
-
-        self.emprestimos[chave] = {
-            "aluno": self.info_alunos[_id],
-            "livro": livro.title(),
-            "devolucao": devo
-        }
-        self.id_emprestimo[chave] = _id
-        self.exportacao(EMPRESTIMOS, self.emprestimos)
-        self.exportacao(ID_EMPRESTIMO, self.id_emprestimo)
-
-        return chave, self.emprestimos[chave]
-
-    def fazer_devolucao(self, chave: str):
-
-        self.emprestimos.pop(chave)
-        self.id_emprestimo.pop(chave)
-        self.exportacao(EMPRESTIMOS, self.emprestimos)
-        self.exportacao(ID_EMPRESTIMO, self.id_emprestimo)
-
-
-class JanelaPrincipal(QMainWindow):
 
     def __init__(self) -> None:
         super().__init__()
-
-        self.b1 = Biblioteca()  
+        self.setWindowTitle("Sistema de Biblioteca")
         
-        # Criando o widget central
-        self.widgetCentral = QWidget(self)
-
-        # Criando janelas para cada botão
-        self.janelaCA = JanelaCadastraAluno(self.b1)  
-        self.janelaCL = JanelaCadastroLivro(self.b1)  
-        self.janelaAA = JanelaAteraAluno(self.b1)  
-        self.janelaAL = JanelaAlteraLivro(self.b1)  
-        self.janelaEP = JanelaEmprestimo(self.b1)  
-        self.janelaDV = JanelaDevolucao(self.b1) 
+        # Instancia biblioteca
+        self.b1 = Biblioteca()
         
-        # Criando os layouts da janela principal
-        self.meuLayout1 = QVBoxLayout(self.widgetCentral)
-        self.layout_botoes = QGridLayout()
-        self.logo_label = QLabel(self)
-        caminho_logo = os.path.join(os.path.dirname(__file__), 'img', 'logo.png')
+        # Cria janelas secundárias
+        self.janelaCA = JanelaCadastraAluno(self.b1)
+        self.janelaCL = JanelaCadastroLivro(self.b1)
+        self.janelaAA = JanelaAteraAluno(self.b1)
+        self.janelaAL = JanelaAlteraLivro(self.b1)
+        self.janelaEP = JanelaEmprestimo(self.b1)
+        self.janelaDV = JanelaDevolucao(self.b1)
         
-        self.logo_pixmap = QPixmap(caminho_logo)
+        # Cria layout principal com splitter
+        self.splitter = QSplitter(Qt.Horizontal)
         
-        if self.logo_pixmap.isNull():
-            print(f"Erro: Não encontrei a logo em {caminho_logo}")
+        # Cria sidebar (painel esquerdo)
+        self.sidebar = self._criar_sidebar()
         
-        self.logo_pixmap = self.logo_pixmap.scaled(350, 300, Qt.AspectRatioMode.KeepAspectRatio)
-        self.logo_label.setPixmap(self.logo_pixmap)
-        self.logo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.meuLayout1.addWidget(self.logo_label, alignment=Qt.AlignmentFlag.AlignCenter)
-
-        # Criando os botões
-        self.criabotoes()  
-
-        # Adicionando os botões ao layout
-        self.layout_botoes.addWidget(self.CA, 0, 0)
-        self.layout_botoes.addWidget(self.CL, 0, 1)
-        self.layout_botoes.addWidget(self.AA, 1, 0)
-        self.layout_botoes.addWidget(self.AL, 1, 1)
-        self.layout_botoes.addWidget(self.EP, 2, 0)
-        self.layout_botoes.addWidget(self.DV, 2, 1)
-
-        self.layout_botoes.addWidget(
-            alunos := Botao("Listagem Alunos"),
-            3, 0, 1, 2
-        )
-        self.layout_botoes.addWidget(
-            livros := Botao("Listagem Livros"),
-            4, 0, 1, 2
-        )
-        self.layout_botoes.addWidget(
-            emprestimos := Botao("Listagem Empréstimos"),
-            5, 0, 1, 2
-        )
-
-        # Adicionando os botões ao layout principal
-        self.meuLayout1.addLayout(self.layout_botoes)
-
-        # Configurando o estilo da janela
+        # Cria stacked widget para os painéis (painel direito)
+        self.stacked = QStackedWidget()
+        self.painel_acervo = self._criar_painel_acervo()
+        self.painel_alunos = self._criar_painel_alunos()
+        self.painel_emprestimos = self._criar_painel_emprestimos()
+        self.painel_devolucoes = self._criar_painel_devolucoes()
+        
+        self.stacked.addWidget(self.painel_acervo)        # 0
+        self.stacked.addWidget(self.painel_alunos)        # 1
+        self.stacked.addWidget(self.painel_emprestimos)   # 2
+        self.stacked.addWidget(self.painel_devolucoes)    # 3
+        
+        # Adiciona sidebar e stacked ao splitter
+        self.splitter.addWidget(self.sidebar)
+        self.splitter.addWidget(self.stacked)
+        self.splitter.setSizes([220, 1280])
+        
+        self.setCentralWidget(self.splitter)
         self.config_style()
-
-        # Conectando os botões com os métodos apropriados
-        self.CA.clicked.connect(self.janelaCA.show)
-        self.CL.clicked.connect(self.janelaCL.show)
-        self.AA.clicked.connect(self.janelaAA.show)
-        self.AL.clicked.connect(self.janelaAL.show)
-        self.EP.clicked.connect(self.janelaEP.show)
-        self.DV.clicked.connect(self.janelaDV.show)
-
-        alunos.clicked.connect(self.faz_slot(
-            self.listagem_dados,
-            self.b1.info_alunos
-        ))
-        livros.clicked.connect(self.faz_slot(
-            self.listagem_dados,
-            self.b1.info_livros
-        ))
-        emprestimos.clicked.connect(self.faz_slot(
-            self.listagem_dados,
-            self.b1.emprestimos
-        ))
-
-        self.setCentralWidget(self.widgetCentral)
-
+    
+    def _criar_sidebar(self) -> QFrame:
+        """Cria sidebar com navegação"""
+        sidebar = QFrame()
+        sidebar.setObjectName("sidebar")
+        sidebar.setFixedWidth(220)
+        layout = QVBoxLayout(sidebar)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
+        
+        # Logo e nome
+        logo_label = QLabel("SB")
+        logo_label.setStyleSheet(
+            "font-size: 36px; font-weight: bold; color: #AD49E1; "
+            "text-align: center; padding: 16px;"
+        )
+        logo_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(logo_label)
+        
+        sistema_label = QLabel("SISTEMA DE\nBIBLIOTECA")
+        sistema_label.setStyleSheet(
+            "font-size: 10px; color: #AD49E1; text-align: center; "
+            "letter-spacing: 1px; padding: 8px; font-weight: bold;"
+        )
+        sistema_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(sistema_label)
+        
+        separador1 = QFrame()
+        separador1.setFrameShape(QFrame.HLine)
+        separador1.setStyleSheet("background: rgba(173, 73, 225, 0.2);")
+        layout.addWidget(separador1)
+        
+        # Seção ACERVO
+        secao_acervo = QLabel("ACERVO")
+        secao_acervo.setObjectName("section-label")
+        secao_acervo.setStyleSheet(
+            "color: rgba(173, 73, 225, 0.45); font-size: 10px; "
+            "letter-spacing: 2px; padding: 12px 16px 4px; font-weight: bold;"
+        )
+        layout.addWidget(secao_acervo)
+        
+        # Botões de navegação ACERVO
+        self.btn_acervo = self._criar_botao_nav("📚 Acervo de Livros", True)
+        self.btn_acervo.clicked.connect(lambda: self._switch_panel(0, self.btn_acervo))
+        layout.addWidget(self.btn_acervo)
+        
+        self.btn_alunos = self._criar_botao_nav("👥 Alunos")
+        self.btn_alunos.clicked.connect(lambda: self._switch_panel(1, self.btn_alunos))
+        layout.addWidget(self.btn_alunos)
+        
+        self.btn_emprestimos = self._criar_botao_nav("📤 Empréstimos")
+        self.btn_emprestimos.clicked.connect(lambda: self._switch_panel(2, self.btn_emprestimos))
+        layout.addWidget(self.btn_emprestimos)
+        
+        self.btn_devolucoes = self._criar_botao_nav("📥 Devoluções")
+        self.btn_devolucoes.clicked.connect(lambda: self._switch_panel(3, self.btn_devolucoes))
+        layout.addWidget(self.btn_devolucoes)
+        
+        self.nav_buttons = [self.btn_acervo, self.btn_alunos, self.btn_emprestimos, self.btn_devolucoes]
+        
+        separador2 = QFrame()
+        separador2.setFrameShape(QFrame.HLine)
+        separador2.setStyleSheet("background: rgba(173, 73, 225, 0.2); margin: 8px 0;")
+        layout.addWidget(separador2)
+        
+        # Seção CADASTRO
+        secao_cadastro = QLabel("CADASTRO")
+        secao_cadastro.setObjectName("section-label")
+        secao_cadastro.setStyleSheet(
+            "color: rgba(173, 73, 225, 0.45); font-size: 10px; "
+            "letter-spacing: 2px; padding: 12px 16px 4px; font-weight: bold;"
+        )
+        layout.addWidget(secao_cadastro)
+        
+        btn_novo_livro = self._criar_botao_nav("➕ Novo Livro")
+        btn_novo_livro.clicked.connect(self.janelaCL.show)
+        layout.addWidget(btn_novo_livro)
+        
+        btn_novo_aluno = self._criar_botao_nav("➕ Novo Aluno")
+        btn_novo_aluno.clicked.connect(self.janelaCA.show)
+        layout.addWidget(btn_novo_aluno)
+        
+        layout.addStretch()
+        
+        return sidebar
+    
+    def _criar_botao_nav(self, texto: str, ativo: bool = False) -> QPushButton:
+        """Cria um botão de navegação da sidebar"""
+        btn = QPushButton(texto)
+        btn.setObjectName("nav-btn")
+        btn.setProperty("active", ativo)
+        btn.setFlat(True)
+        btn.setStyleSheet(
+            """
+            QPushButton#nav-btn {
+                background: transparent;
+                border: none;
+                border-left: 2px solid transparent;
+                padding: 9px 16px 9px 14px;
+                text-align: left;
+                color: rgba(255,255,255,0.55);
+                font-size: 13px;
+                font-weight: 500;
+            }
+            QPushButton#nav-btn:hover {
+                background: rgba(173, 73, 225, 0.08);
+                color: rgba(255,255,255,0.85);
+            }
+            QPushButton#nav-btn[active="true"] {
+                background: rgba(173, 73, 225, 0.12);
+                border-left: 2px solid #AD49E1;
+                color: #c97ff0;
+            }
+            """
+        )
+        return btn
+    
+    def _switch_panel(self, index: int, btn: QPushButton):
+        """Troca entre painéis e atualiza estilo do botão"""
+        # Desativa todos os botões
+        for b in self.nav_buttons:
+            b.setProperty("active", False)
+            b.style().unpolish(b)
+            b.style().polish(b)
+        
+        # Ativa botão clicado
+        btn.setProperty("active", True)
+        btn.style().unpolish(btn)
+        btn.style().polish(btn)
+        
+        # Troca painel
+        self.stacked.setCurrentIndex(index)
+        
+        # Recarrega dados se necessário
+        if index == 0:
+            self._atualizar_tabela_acervo()
+        elif index == 1:
+            self._atualizar_tabela_alunos()
+        elif index == 2:
+            self._atualizar_tabela_emprestimos()
+    
+    def _criar_painel_acervo(self) -> QWidget:
+        """Cria painel de acervo de livros"""
+        painel = QWidget()
+        layout = QVBoxLayout(painel)
+        layout.setContentsMargins(16, 16, 16, 16)
+        layout.setSpacing(12)
+        
+        # Cards de métricas
+        metrics_layout = QHBoxLayout()
+        self.card_livros = self._criar_metric_card("LIVROS NO\nACERVO", "0", "Total de livros cadastrados")
+        self.card_emprestimos = self._criar_metric_card("EMPRÉSTIMOS\nATIVOS", "0", "Livros em circulação")
+        self.card_alunos = self._criar_metric_card("ALUNOS\nCADASTRADOS", "0", "Total de alunos")
+        self.card_disponiveis = self._criar_metric_card("DISPONÍVEIS\nAGORA", "0", "Prontos para empréstimo")
+        
+        metrics_layout.addWidget(self.card_livros)
+        metrics_layout.addWidget(self.card_emprestimos)
+        metrics_layout.addWidget(self.card_alunos)
+        metrics_layout.addWidget(self.card_disponiveis)
+        layout.addLayout(metrics_layout)
+        
+        # Barra de busca
+        busca_layout = QHBoxLayout()
+        self.search_bar = QLineEdit()
+        self.search_bar.setObjectName("search-bar")
+        self.search_bar.setPlaceholderText(
+            "Buscar por título, autor, gênero ou numeração (ex: tolkien · 0016 · 10-20)…"
+        )
+        self.search_bar.setFixedHeight(40)
+        
+        btn_buscar = QPushButton("Buscar")
+        btn_buscar.setFixedWidth(100)
+        btn_buscar.clicked.connect(self._buscar_livros)
+        self.search_bar.returnPressed.connect(self._buscar_livros)
+        
+        busca_layout.addWidget(self.search_bar)
+        busca_layout.addWidget(btn_buscar)
+        layout.addLayout(busca_layout)
+        
+        # Status da busca
+        self.status_label = QLabel()
+        self.status_label.setObjectName("status-bar")
+        self.status_label.setVisible(False)
+        self.status_label.setStyleSheet(
+            "background: rgba(173, 73, 225, 0.08); border: 1px solid rgba(173, 73, 225, 0.2); "
+            "border-radius: 6px; padding: 5px 12px; color: rgba(255,255,255,0.6); font-size: 12px;"
+        )
+        layout.addWidget(self.status_label)
+        
+        # Filtros rápidos
+        filtros_layout = QHBoxLayout()
+        filtros_layout.addWidget(QLabel("Filtros:"))
+        
+        self.btn_todos = QPushButton("Todos")
+        self.btn_todos.setCheckable(True)
+        self.btn_todos.setChecked(True)
+        self.btn_todos.clicked.connect(lambda: self._filtrar_livros("todos"))
+        filtros_layout.addWidget(self.btn_todos)
+        
+        self.btn_disponiveis = QPushButton("Disponíveis")
+        self.btn_disponiveis.setCheckable(True)
+        self.btn_disponiveis.clicked.connect(lambda: self._filtrar_livros("disponiveis"))
+        filtros_layout.addWidget(self.btn_disponiveis)
+        
+        # Gêneros
+        generos = set()
+        for livro in self.b1.info_livros.values():
+            if isinstance(livro, dict) and "genero" in livro:
+                generos.add(livro["genero"])
+        
+        for genero in sorted(generos)[:5]:  # Limite a 5 gêneros
+            btn_genero = QPushButton(genero)
+            btn_genero.setCheckable(True)
+            btn_genero.clicked.connect(lambda checked, g=genero: self._filtrar_livros(f"genero:{g}"))
+            filtros_layout.addWidget(btn_genero)
+        
+        filtros_layout.addStretch()
+        layout.addLayout(filtros_layout)
+        
+        # Tabela de livros
+        self.table_livros = QTableWidget()
+        self.table_livros.setColumnCount(6)
+        self.table_livros.setHorizontalHeaderLabels(
+            ["Num.", "Título", "Autor", "Gênero", "Qtd.", "Ações"]
+        )
+        self.table_livros.setColumnWidth(0, 70)
+        self.table_livros.setColumnWidth(1, 300)
+        self.table_livros.setColumnWidth(2, 160)
+        self.table_livros.setColumnWidth(3, 120)
+        self.table_livros.setColumnWidth(4, 70)
+        self.table_livros.setColumnWidth(5, 100)
+        
+        self.table_livros.setAlternatingRowColors(True)
+        self.table_livros.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table_livros.horizontalHeader().setStretchLastSection(False)
+        layout.addWidget(self.table_livros)
+        
+        return painel
+    
+    def _criar_painel_alunos(self) -> QWidget:
+        """Cria painel de alunos"""
+        painel = QWidget()
+        layout = QVBoxLayout(painel)
+        layout.setContentsMargins(16, 16, 16, 16)
+        layout.setSpacing(12)
+        
+        # Barra de busca
+        busca_layout = QHBoxLayout()
+        self.search_alunos = QLineEdit()
+        self.search_alunos.setObjectName("search-bar")
+        self.search_alunos.setPlaceholderText("Buscar aluno por nome ou ID…")
+        self.search_alunos.setFixedHeight(40)
+        
+        btn_buscar = QPushButton("Buscar")
+        btn_buscar.setFixedWidth(100)
+        btn_buscar.clicked.connect(self._buscar_alunos)
+        self.search_alunos.returnPressed.connect(self._buscar_alunos)
+        
+        busca_layout.addWidget(self.search_alunos)
+        busca_layout.addWidget(btn_buscar)
+        layout.addLayout(busca_layout)
+        
+        # Tabela de alunos
+        self.table_alunos = QTableWidget()
+        self.table_alunos.setColumnCount(7)
+        self.table_alunos.setHorizontalHeaderLabels(
+            ["ID", "Nome", "Série", "Turno", "Contato", "Endereço", "Ações"]
+        )
+        self.table_alunos.setColumnWidth(0, 60)
+        self.table_alunos.setColumnWidth(1, 200)
+        self.table_alunos.setColumnWidth(2, 80)
+        self.table_alunos.setColumnWidth(3, 100)
+        self.table_alunos.setColumnWidth(4, 150)
+        self.table_alunos.setColumnWidth(5, 200)
+        self.table_alunos.setColumnWidth(6, 100)
+        
+        self.table_alunos.setAlternatingRowColors(True)
+        self.table_alunos.setSelectionBehavior(QAbstractItemView.SelectRows)
+        layout.addWidget(self.table_alunos)
+        
+        return painel
+    
+    def _criar_painel_emprestimos(self) -> QWidget:
+        """Cria painel de empréstimos"""
+        painel = QWidget()
+        layout = QVBoxLayout(painel)
+        layout.setContentsMargins(16, 16, 16, 16)
+        layout.setSpacing(12)
+        
+        titulo = QLabel("EMPRÉSTIMOS ATIVOS")
+        titulo.setStyleSheet("font-size: 16px; font-weight: bold; color: #e0e0e0;")
+        layout.addWidget(titulo)
+        
+        # Tabela de empréstimos
+        self.table_emprestimos = QTableWidget()
+        self.table_emprestimos.setColumnCount(5)
+        self.table_emprestimos.setHorizontalHeaderLabels(
+            ["Chave", "Aluno", "Livro", "Devolução", "Ações"]
+        )
+        self.table_emprestimos.setColumnWidth(0, 100)
+        self.table_emprestimos.setColumnWidth(1, 200)
+        self.table_emprestimos.setColumnWidth(2, 250)
+        self.table_emprestimos.setColumnWidth(3, 150)
+        self.table_emprestimos.setColumnWidth(4, 100)
+        
+        self.table_emprestimos.setAlternatingRowColors(True)
+        self.table_emprestimos.setSelectionBehavior(QAbstractItemView.SelectRows)
+        layout.addWidget(self.table_emprestimos)
+        
+        layout.addStretch()
+        return painel
+    
+    def _criar_painel_devolucoes(self) -> QWidget:
+        """Cria painel de devoluções (redirecionado para empréstimos)"""
+        painel = QWidget()
+        layout = QVBoxLayout(painel)
+        layout.setAlignment(Qt.AlignCenter)
+        
+        info_label = QLabel(
+            "Use a aba EMPRÉSTIMOS para devolver livros.\n\n"
+            "Selecione o empréstimo desejado e clique em 'Devolver'."
+        )
+        info_label.setStyleSheet("font-size: 14px; color: rgba(255,255,255,0.7);")
+        info_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(info_label)
+        
+        return painel
+    
+    def _criar_metric_card(self, titulo: str, valor: str, subtitulo: str) -> QFrame:
+        """Cria um card de métrica"""
+        card = QFrame()
+        card.setObjectName("metric-card")
+        card.setStyleSheet(
+            "background: rgba(255,255,255,0.04); border: 1px solid rgba(173, 73, 225, 0.15); "
+            "border-radius: 8px; padding: 12px;"
+        )
+        
+        layout = QVBoxLayout(card)
+        layout.setContentsMargins(12, 12, 12, 12)
+        
+        titulo_label = QLabel(titulo)
+        titulo_label.setStyleSheet(
+            "font-size: 11px; color: rgba(173, 73, 225, 0.6); letter-spacing: 0.5px; font-weight: bold;"
+        )
+        layout.addWidget(titulo_label)
+        
+        valor_label = QLabel(valor)
+        valor_label.setStyleSheet("font-size: 22px; font-weight: bold; color: #e0e0e0;")
+        layout.addWidget(valor_label)
+        
+        subtitulo_label = QLabel(subtitulo)
+        subtitulo_label.setStyleSheet("font-size: 11px; color: rgba(255,255,255,0.5);")
+        layout.addWidget(subtitulo_label)
+        
+        # Armazenar labels para atualização
+        card.titulo_label = titulo_label
+        card.valor_label = valor_label
+        card.subtitulo_label = subtitulo_label
+        
+        return card
+    
+    def _atualizar_tabela_acervo(self):
+        """Atualiza a tabela de acervo"""
+        self.table_livros.setRowCount(0)
+        
+        for numeracao, livro in self.b1.info_livros.items():
+            row = self.table_livros.rowCount()
+            self.table_livros.insertRow(row)
+            
+            if isinstance(livro, dict):
+                self.table_livros.setItem(row, 0, QTableWidgetItem(str(livro.get("numeracao", ""))))
+                self.table_livros.setItem(row, 1, QTableWidgetItem(str(livro.get("titulo", ""))))
+                self.table_livros.setItem(row, 2, QTableWidgetItem(str(livro.get("autor", ""))))
+                self.table_livros.setItem(row, 3, QTableWidgetItem(str(livro.get("genero", ""))))
+                self.table_livros.setItem(row, 4, QTableWidgetItem(str(livro.get("quantidade", ""))))
+                
+                # Botões de ação
+                btn_container = QWidget()
+                btn_layout = QHBoxLayout(btn_container)
+                btn_layout.setContentsMargins(2, 2, 2, 2)
+                btn_layout.setSpacing(2)
+                
+                btn_emprestar = QPushButton("Emprestar")
+                btn_emprestar.setFixedWidth(70)
+                btn_emprestar.clicked.connect(
+                    lambda checked, n=numeracao: self._abrir_emprestimo(n)
+                )
+                
+                btn_editar = QPushButton("Editar")
+                btn_editar.setFixedWidth(70)
+                btn_editar.clicked.connect(
+                    lambda checked, n=numeracao: self._abrir_altera_livro(n)
+                )
+                
+                btn_layout.addWidget(btn_emprestar)
+                btn_layout.addWidget(btn_editar)
+                
+                self.table_livros.setCellWidget(row, 5, btn_container)
+        
+        self._atualizar_metricas()
+    
+    def _atualizar_tabela_alunos(self):
+        """Atualiza a tabela de alunos"""
+        self.table_alunos.setRowCount(0)
+        
+        for aluno_id, aluno in self.b1.info_alunos.items():
+            row = self.table_alunos.rowCount()
+            self.table_alunos.insertRow(row)
+            
+            if isinstance(aluno, dict):
+                self.table_alunos.setItem(row, 0, QTableWidgetItem(str(aluno_id)))
+                self.table_alunos.setItem(row, 1, QTableWidgetItem(str(aluno.get("nome", ""))))
+                self.table_alunos.setItem(row, 2, QTableWidgetItem(str(aluno.get("serie", ""))))
+                self.table_alunos.setItem(row, 3, QTableWidgetItem(str(aluno.get("turno", ""))))
+                self.table_alunos.setItem(row, 4, QTableWidgetItem(str(aluno.get("contato", ""))))
+                self.table_alunos.setItem(row, 5, QTableWidgetItem(str(aluno.get("endereco", ""))))
+                
+                btn_container = QWidget()
+                btn_layout = QHBoxLayout(btn_container)
+                btn_layout.setContentsMargins(2, 2, 2, 2)
+                
+                btn_editar = QPushButton("Editar")
+                btn_editar.setFixedWidth(70)
+                btn_editar.clicked.connect(
+                    lambda checked, aid=aluno_id: self._abrir_altera_aluno(aid)
+                )
+                
+                btn_layout.addWidget(btn_editar)
+                self.table_alunos.setCellWidget(row, 6, btn_container)
+    
+    def _atualizar_tabela_emprestimos(self):
+        """Atualiza a tabela de empréstimos"""
+        self.table_emprestimos.setRowCount(0)
+        
+        for chave, emprestimo in self.b1.emprestimos.items():
+            row = self.table_emprestimos.rowCount()
+            self.table_emprestimos.insertRow(row)
+            
+            if isinstance(emprestimo, dict):
+                self.table_emprestimos.setItem(row, 0, QTableWidgetItem(str(chave)))
+                
+                aluno_info = emprestimo.get("aluno", {})
+                if isinstance(aluno_info, dict):
+                    aluno_nome = aluno_info.get("nome", "N/A")
+                else:
+                    aluno_nome = str(aluno_info)
+                self.table_emprestimos.setItem(row, 1, QTableWidgetItem(aluno_nome))
+                
+                self.table_emprestimos.setItem(row, 2, QTableWidgetItem(str(emprestimo.get("livro", ""))))
+                self.table_emprestimos.setItem(row, 3, QTableWidgetItem(str(emprestimo.get("devolucao", ""))))
+                
+                btn_container = QWidget()
+                btn_layout = QHBoxLayout(btn_container)
+                btn_layout.setContentsMargins(2, 2, 2, 2)
+                
+                btn_devolver = QPushButton("Devolver")
+                btn_devolver.setFixedWidth(70)
+                btn_devolver.clicked.connect(
+                    lambda checked, c=chave: self._fazer_devolucao(c)
+                )
+                
+                btn_layout.addWidget(btn_devolver)
+                self.table_emprestimos.setCellWidget(row, 4, btn_container)
+    
+    def _atualizar_metricas(self):
+        """Atualiza os cards de métricas"""
+        # Total de livros
+        total_livros = len(self.b1.info_livros)
+        self.card_livros.valor_label.setText(str(total_livros))
+        
+        # Empréstimos ativos
+        total_emprestimos = len(self.b1.emprestimos)
+        self.card_emprestimos.valor_label.setText(str(total_emprestimos))
+        
+        # Total de alunos
+        total_alunos = len(self.b1.info_alunos)
+        self.card_alunos.valor_label.setText(str(total_alunos))
+        
+        # Livros disponíveis
+        disponiveis = sum(1 for livro in self.b1.info_livros.values()
+                         if isinstance(livro, dict) and livro.get("quantidade", 0) > 0)
+        self.card_disponiveis.valor_label.setText(str(disponiveis))
+    
+    def _buscar_livros(self):
+        """Busca livros por substring (busca placeholder)"""
+        query = self.search_bar.text().lower()
+        
+        if not query:
+            self._atualizar_tabela_acervo()
+            self.status_label.setVisible(False)
+            return
+        
+        # Busca sequencial simples
+        resultados = []
+        for numeracao, livro in self.b1.info_livros.items():
+            if isinstance(livro, dict):
+                titulo = str(livro.get("titulo", "")).lower()
+                autor = str(livro.get("autor", "")).lower()
+                genero = str(livro.get("genero", "")).lower()
+                num = str(livro.get("numeracao", "")).lower()
+                
+                if query in titulo or query in autor or query in genero or query in num:
+                    resultados.append((numeracao, livro))
+        
+        # Mostra resultados
+        self.table_livros.setRowCount(0)
+        for numeracao, livro in resultados:
+            row = self.table_livros.rowCount()
+            self.table_livros.insertRow(row)
+            
+            self.table_livros.setItem(row, 0, QTableWidgetItem(str(livro.get("numeracao", ""))))
+            self.table_livros.setItem(row, 1, QTableWidgetItem(str(livro.get("titulo", ""))))
+            self.table_livros.setItem(row, 2, QTableWidgetItem(str(livro.get("autor", ""))))
+            self.table_livros.setItem(row, 3, QTableWidgetItem(str(livro.get("genero", ""))))
+            self.table_livros.setItem(row, 4, QTableWidgetItem(str(livro.get("quantidade", ""))))
+            
+            btn_container = QWidget()
+            btn_layout = QHBoxLayout(btn_container)
+            btn_layout.setContentsMargins(2, 2, 2, 2)
+            btn_layout.setSpacing(2)
+            
+            btn_emprestar = QPushButton("Emprestar")
+            btn_emprestar.setFixedWidth(70)
+            btn_emprestar.clicked.connect(lambda checked, n=numeracao: self._abrir_emprestimo(n))
+            
+            btn_editar = QPushButton("Editar")
+            btn_editar.setFixedWidth(70)
+            btn_editar.clicked.connect(lambda checked, n=numeracao: self._abrir_altera_livro(n))
+            
+            btn_layout.addWidget(btn_emprestar)
+            btn_layout.addWidget(btn_editar)
+            self.table_livros.setCellWidget(row, 5, btn_container)
+        
+        # Mostra status
+        self.status_label.setText(f"Motor: Listagem completa · {len(resultados)} resultado(s)")
+        self.status_label.setVisible(True)
+    
+    def _buscar_alunos(self):
+        """Busca alunos por nome ou ID"""
+        query = self.search_alunos.text().lower()
+        
+        self.table_alunos.setRowCount(0)
+        
+        for aluno_id, aluno in self.b1.info_alunos.items():
+            if isinstance(aluno, dict):
+                nome = str(aluno.get("nome", "")).lower()
+                aid = str(aluno_id).lower()
+                
+                if not query or query in nome or query in aid:
+                    row = self.table_alunos.rowCount()
+                    self.table_alunos.insertRow(row)
+                    
+                    self.table_alunos.setItem(row, 0, QTableWidgetItem(str(aluno_id)))
+                    self.table_alunos.setItem(row, 1, QTableWidgetItem(str(aluno.get("nome", ""))))
+                    self.table_alunos.setItem(row, 2, QTableWidgetItem(str(aluno.get("serie", ""))))
+                    self.table_alunos.setItem(row, 3, QTableWidgetItem(str(aluno.get("turno", ""))))
+                    self.table_alunos.setItem(row, 4, QTableWidgetItem(str(aluno.get("contato", ""))))
+                    self.table_alunos.setItem(row, 5, QTableWidgetItem(str(aluno.get("endereco", ""))))
+                    
+                    btn_container = QWidget()
+                    btn_layout = QHBoxLayout(btn_container)
+                    btn_layout.setContentsMargins(2, 2, 2, 2)
+                    
+                    btn_editar = QPushButton("Editar")
+                    btn_editar.setFixedWidth(70)
+                    btn_editar.clicked.connect(lambda checked, aid=aluno_id: self._abrir_altera_aluno(aid))
+                    
+                    btn_layout.addWidget(btn_editar)
+                    self.table_alunos.setCellWidget(row, 6, btn_container)
+    
+    def _filtrar_livros(self, filtro: str):
+        """Filtra a tabela de livros"""
+        self.search_bar.clear()
+        self.status_label.setVisible(False)
+        
+        # Desmarca todos os filtros
+        self.btn_todos.setChecked(filtro == "todos")
+        self.btn_disponiveis.setChecked(filtro == "disponiveis")
+        
+        self.table_livros.setRowCount(0)
+        
+        for numeracao, livro in self.b1.info_livros.items():
+            if isinstance(livro, dict):
+                if filtro == "todos":
+                    incluir = True
+                elif filtro == "disponiveis":
+                    incluir = livro.get("quantidade", 0) > 0
+                elif filtro.startswith("genero:"):
+                    incluir = livro.get("genero", "").lower() == filtro.split(":")[1].lower()
+                else:
+                    incluir = True
+                
+                if incluir:
+                    row = self.table_livros.rowCount()
+                    self.table_livros.insertRow(row)
+                    
+                    self.table_livros.setItem(row, 0, QTableWidgetItem(str(livro.get("numeracao", ""))))
+                    self.table_livros.setItem(row, 1, QTableWidgetItem(str(livro.get("titulo", ""))))
+                    self.table_livros.setItem(row, 2, QTableWidgetItem(str(livro.get("autor", ""))))
+                    self.table_livros.setItem(row, 3, QTableWidgetItem(str(livro.get("genero", ""))))
+                    self.table_livros.setItem(row, 4, QTableWidgetItem(str(livro.get("quantidade", ""))))
+                    
+                    btn_container = QWidget()
+                    btn_layout = QHBoxLayout(btn_container)
+                    btn_layout.setContentsMargins(2, 2, 2, 2)
+                    btn_layout.setSpacing(2)
+                    
+                    btn_emprestar = QPushButton("Emprestar")
+                    btn_emprestar.setFixedWidth(70)
+                    btn_emprestar.clicked.connect(lambda checked, n=numeracao: self._abrir_emprestimo(n))
+                    
+                    btn_editar = QPushButton("Editar")
+                    btn_editar.setFixedWidth(70)
+                    btn_editar.clicked.connect(lambda checked, n=numeracao: self._abrir_altera_livro(n))
+                    
+                    btn_layout.addWidget(btn_emprestar)
+                    btn_layout.addWidget(btn_editar)
+                    self.table_livros.setCellWidget(row, 5, btn_container)
+    
+    def _abrir_emprestimo(self, numeracao: str):
+        """Abre janela de empréstimo com livro pré-preenchido"""
+        livro = self.b1.info_livros.get(numeracao)
+        if isinstance(livro, dict):
+            self.janelaEP.livro.setText(livro.get("titulo", ""))
+        self.janelaEP.show()
+    
+    def _abrir_altera_livro(self, numeracao: str):
+        """Abre janela de alteração de livro com dados pré-preenchidos"""
+        livro = self.b1.info_livros.get(numeracao)
+        if isinstance(livro, dict):
+            # Preencher campos (precisa acessar campos da janela)
+            # Para agora, apenas abre a janela
+            pass
+        self.janelaAL.show()
+    
+    def _abrir_altera_aluno(self, aluno_id: str):
+        """Abre janela de alteração de aluno"""
+        self.janelaAA.show()
+    
+    def _fazer_devolucao(self, chave: str):
+        """Faz a devolução de um livro"""
+        try:
+            self.b1.fazer_devolucao(chave)
+            faz_msg_box("Sucesso", "Devolução realizada com sucesso!", False)
+            self._atualizar_tabela_emprestimos()
+            self._atualizar_metricas()
+        except KeyError:
+            faz_msg_box("Erro", "Chave de empréstimo não encontrada!", True)
+    
     def config_style(self):
+        """Configura o estilo visual"""
         screen = QApplication.primaryScreen()
         screen_size = screen.size()
 
-        self.resize(screen_size.width(), screen_size.height())
-
+        self.resize(int(screen_size.width() * 0.95), int(screen_size.height() * 0.95))
         self.showMaximized()
 
-        self.setMinimumSize(screen_size.width() * 0.8, screen_size.height() * 0.8)
+        # Tema escuro roxo
+        STYLESHEET = """
+        QMainWindow, QDialog {
+            background-color: #1a1a2e;
+        }
+        QFrame#sidebar {
+            background-color: #12122a;
+            border-right: 1px solid rgba(173, 73, 225, 0.2);
+        }
+        QPushButton#nav-btn {
+            background: transparent;
+            border: none;
+            border-left: 2px solid transparent;
+            padding: 9px 16px 9px 14px;
+            text-align: left;
+            color: rgba(255,255,255,0.55);
+            font-size: 13px;
+        }
+        QPushButton#nav-btn:hover {
+            background: rgba(173, 73, 225, 0.08);
+            color: rgba(255,255,255,0.85);
+        }
+        QPushButton#nav-btn[active="true"] {
+            background: rgba(173, 73, 225, 0.12);
+            border-left: 2px solid #AD49E1;
+            color: #c97ff0;
+        }
+        QFrame#metric-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(173, 73, 225, 0.15);
+            border-radius: 8px;
+            padding: 12px;
+        }
+        QTableWidget {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(173, 73, 225, 0.12);
+            border-radius: 8px;
+            gridline-color: rgba(255,255,255,0.04);
+        }
+        QTableWidget::item:selected {
+            background: rgba(173, 73, 225, 0.2);
+        }
+        QHeaderView::section {
+            background: rgba(173, 73, 225, 0.07);
+            color: rgba(173, 73, 225, 0.7);
+            font-size: 10px;
+            letter-spacing: 1px;
+            border: none;
+            padding: 6px 8px;
+        }
+        QLineEdit#search-bar {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(173, 73, 225, 0.3);
+            border-radius: 8px;
+            padding: 9px 14px 9px 14px;
+            color: #e0e0e0;
+            font-size: 13px;
+        }
+        QLabel#status-bar {
+            background: rgba(173, 73, 225, 0.08);
+            border: 1px solid rgba(173, 73, 225, 0.2);
+            border-radius: 6px;
+            padding: 5px 12px;
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+        }
+        QLabel#section-label {
+            color: rgba(173, 73, 225, 0.45);
+            font-size: 10px;
+            letter-spacing: 2px;
+            padding: 12px 16px 4px;
+        }
+        QPushButton {
+            background: rgba(173, 73, 225, 0.2);
+            color: #e0e0e0;
+            border: 1px solid rgba(173, 73, 225, 0.3);
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-weight: 500;
+        }
+        QPushButton:hover {
+            background: rgba(173, 73, 225, 0.3);
+        }
+        QPushButton:pressed {
+            background: rgba(173, 73, 225, 0.4);
+        }
+        """
+        
+        self.setStyleSheet(STYLESHEET)
 
-        qdarktheme.setup_theme(
-            theme='dark',
-            corner_shape='rounded',
-            custom_colors={
-                "[dark]": {"primary": "#AD49E1"},
-                "[light]": {"primary": "#AD49E1"},
-            }
-        )
 
-
-
-    def criabotoes(self):
-        self.CA = Botao("Cadastra Aluno")
-        self.CL = Botao("Cadastra Livro")
-        self.AA = Botao("Altera Aluno")
-        self.AL = Botao("Altera Livro")
-        self.EP = Botao("Empréstimo")
-        self.DV = Botao("Devoluçao")
-
-    def listagem_dados(self, dados: dict):
-        _janela = QDialog()
-        _janela.setWindowTitle("Listagem dos dados")
-        _janela.setFixedSize(1000, 800)
-        _layout = QVBoxLayout()
-        _lista = QListWidget()
-        for chave, dado in dados.items():
-            _lista.addItem((f"ID: {chave}\n {dado}"))
-            _lista.addItem("\n")
-        _layout.addWidget(_lista)
-        _janela.setLayout(_layout)
-        _janela.exec()
-
-    def faz_slot(self, func, dicionario):
-        def slot():
-            func(dicionario)
-        return slot
-
-
-class BarraTitulo(QFrame):
-    def __init__(self):
-        super().__init__()
-        self.setFixedHeight(50)
-        self.setStyleSheet("background-color: #AD49E1; color: white;")
-
-        layout = QVBoxLayout(self)
-
-        self.titulo_label = QLabel("Biblioteca")
-        self.titulo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.titulo_label.setStyleSheet("font-size: 30px; font-weight: bold;")
-
-
-        layout.addWidget(self.titulo_label)
-
-
-class Botao(QPushButton):
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-
-        fonte = self.font()
-        fonte.setPixelSize(30)
-        fonte.setBold(True)
-        self.setFont(fonte)
-
-
-# classes para as janelas secundárias apenas com estilos
 class JanelaCadastraAluno(QDialog):
     def __init__(self, biblioteca: Biblioteca, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -477,7 +1060,7 @@ class JanelaAteraAluno(QDialog):
 
         self.botoes_box.rejected.connect(self.reject)
 
-    def faz_slot(self, func, *args: Botao):
+    def faz_slot(self, func, *args):
         def slot():
             __id, n, i, s, t, c, e = args
             if self.verifica_campos(*args):
