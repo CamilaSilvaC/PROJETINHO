@@ -61,7 +61,7 @@ class Biblioteca:
         self.inicializar_indices()
 
     def importacao(self, caminho: str):
-        with open(caminho, "r", encoding="utf-8") as arq:
+        with open(caminho, "r", encoding="utf-8-sig") as arq:
             return json.load(arq)
 
     def exportacao(self, caminho: str, dados: dict):
@@ -540,22 +540,27 @@ class JanelaPrincipal(QMainWindow):
             
             if isinstance(livro, dict):
                 item_num = QTableWidgetItem(str(livro.get("numeracao", "")))
+                item_num.setForeground(Qt.white)
                 item_num.setTextAlignment(Qt.AlignCenter)
                 self.table_livros.setItem(row, 0, item_num)
 
                 item_titulo = QTableWidgetItem(str(livro.get("titulo", "")))
+                item_titulo.setForeground(Qt.white)
                 item_titulo.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
                 self.table_livros.setItem(row, 1, item_titulo)
 
                 item_autor = QTableWidgetItem(str(livro.get("autor", "")))
+                item_autor.setForeground(Qt.white)
                 item_autor.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
                 self.table_livros.setItem(row, 2, item_autor)
 
                 item_genero = QTableWidgetItem(str(livro.get("genero", "")))
+                item_genero.setForeground(Qt.white)
                 item_genero.setTextAlignment(Qt.AlignCenter)
                 self.table_livros.setItem(row, 3, item_genero)
 
                 item_qtd = QTableWidgetItem(str(livro.get("quantidade", "")))
+                item_qtd.setForeground(Qt.white)
                 item_qtd.setTextAlignment(Qt.AlignCenter)
                 self.table_livros.setItem(row, 4, item_qtd)
                 
@@ -593,12 +598,24 @@ class JanelaPrincipal(QMainWindow):
             self.table_alunos.insertRow(row)
             
             if isinstance(aluno, dict):
-                self.table_alunos.setItem(row, 0, QTableWidgetItem(str(aluno_id)))
-                self.table_alunos.setItem(row, 1, QTableWidgetItem(str(aluno.get("nome", ""))))
-                self.table_alunos.setItem(row, 2, QTableWidgetItem(str(aluno.get("serie", ""))))
-                self.table_alunos.setItem(row, 3, QTableWidgetItem(str(aluno.get("turno", ""))))
-                self.table_alunos.setItem(row, 4, QTableWidgetItem(str(aluno.get("contato", ""))))
-                self.table_alunos.setItem(row, 5, QTableWidgetItem(str(aluno.get("endereco", ""))))
+                item_id = QTableWidgetItem(str(aluno_id))
+                item_id.setForeground(Qt.white)
+                self.table_alunos.setItem(row, 0, item_id)
+                item_nome = QTableWidgetItem(str(aluno.get("nome", "")))
+                item_nome.setForeground(Qt.white)
+                self.table_alunos.setItem(row, 1, item_nome)
+                item_serie = QTableWidgetItem(str(aluno.get("serie", "")))
+                item_serie.setForeground(Qt.white)
+                self.table_alunos.setItem(row, 2, item_serie)
+                item_turno = QTableWidgetItem(str(aluno.get("turno", "")))
+                item_turno.setForeground(Qt.white)
+                self.table_alunos.setItem(row, 3, item_turno)
+                item_contato = QTableWidgetItem(str(aluno.get("contato", "")))
+                item_contato.setForeground(Qt.white)
+                self.table_alunos.setItem(row, 4, item_contato)
+                item_endereco = QTableWidgetItem(str(aluno.get("endereco", "")))
+                item_endereco.setForeground(Qt.white)
+                self.table_alunos.setItem(row, 5, item_endereco)
                 
                 btn_container = QWidget()
                 btn_layout = QHBoxLayout(btn_container)
@@ -622,17 +639,25 @@ class JanelaPrincipal(QMainWindow):
             self.table_emprestimos.insertRow(row)
             
             if isinstance(emprestimo, dict):
-                self.table_emprestimos.setItem(row, 0, QTableWidgetItem(str(chave)))
+                item_chave = QTableWidgetItem(str(chave))
+                item_chave.setForeground(Qt.white)
+                self.table_emprestimos.setItem(row, 0, item_chave)
                 
                 aluno_info = emprestimo.get("aluno", {})
                 if isinstance(aluno_info, dict):
                     aluno_nome = aluno_info.get("nome", "N/A")
                 else:
                     aluno_nome = str(aluno_info)
-                self.table_emprestimos.setItem(row, 1, QTableWidgetItem(aluno_nome))
+                item_aluno = QTableWidgetItem(aluno_nome)
+                item_aluno.setForeground(Qt.white)
+                self.table_emprestimos.setItem(row, 1, item_aluno)
                 
-                self.table_emprestimos.setItem(row, 2, QTableWidgetItem(str(emprestimo.get("livro", ""))))
-                self.table_emprestimos.setItem(row, 3, QTableWidgetItem(str(emprestimo.get("devolucao", ""))))
+                item_livro = QTableWidgetItem(str(emprestimo.get("livro", "")))
+                item_livro.setForeground(Qt.white)
+                self.table_emprestimos.setItem(row, 2, item_livro)
+                item_devolucao = QTableWidgetItem(str(emprestimo.get("devolucao", "")))
+                item_devolucao.setForeground(Qt.white)
+                self.table_emprestimos.setItem(row, 3, item_devolucao)
                 
                 btn_container = QWidget()
                 btn_layout = QHBoxLayout(btn_container)
@@ -703,22 +728,27 @@ class JanelaPrincipal(QMainWindow):
             self.table_livros.insertRow(row)
             
             item_num = QTableWidgetItem(str(livro.get("numeracao", "")))
+            item_num.setForeground(Qt.white)
             item_num.setTextAlignment(Qt.AlignCenter)
             self.table_livros.setItem(row, 0, item_num)
 
             item_titulo = QTableWidgetItem(str(livro.get("titulo", "")))
+            item_titulo.setForeground(Qt.white)
             item_titulo.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
             self.table_livros.setItem(row, 1, item_titulo)
 
             item_autor = QTableWidgetItem(str(livro.get("autor", "")))
+            item_autor.setForeground(Qt.white)
             item_autor.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
             self.table_livros.setItem(row, 2, item_autor)
 
             item_genero = QTableWidgetItem(str(livro.get("genero", "")))
+            item_genero.setForeground(Qt.white)
             item_genero.setTextAlignment(Qt.AlignCenter)
             self.table_livros.setItem(row, 3, item_genero)
 
             item_qtd = QTableWidgetItem(str(livro.get("quantidade", "")))
+            item_qtd.setForeground(Qt.white)
             item_qtd.setTextAlignment(Qt.AlignCenter)
             self.table_livros.setItem(row, 4, item_qtd)
             
@@ -758,12 +788,24 @@ class JanelaPrincipal(QMainWindow):
                     row = self.table_alunos.rowCount()
                     self.table_alunos.insertRow(row)
                     
-                    self.table_alunos.setItem(row, 0, QTableWidgetItem(str(aluno_id)))
-                    self.table_alunos.setItem(row, 1, QTableWidgetItem(str(aluno.get("nome", ""))))
-                    self.table_alunos.setItem(row, 2, QTableWidgetItem(str(aluno.get("serie", ""))))
-                    self.table_alunos.setItem(row, 3, QTableWidgetItem(str(aluno.get("turno", ""))))
-                    self.table_alunos.setItem(row, 4, QTableWidgetItem(str(aluno.get("contato", ""))))
-                    self.table_alunos.setItem(row, 5, QTableWidgetItem(str(aluno.get("endereco", ""))))
+                    item_id = QTableWidgetItem(str(aluno_id))
+                    item_id.setForeground(Qt.white)
+                    self.table_alunos.setItem(row, 0, item_id)
+                    item_nome = QTableWidgetItem(str(aluno.get("nome", "")))
+                    item_nome.setForeground(Qt.white)
+                    self.table_alunos.setItem(row, 1, item_nome)
+                    item_serie = QTableWidgetItem(str(aluno.get("serie", "")))
+                    item_serie.setForeground(Qt.white)
+                    self.table_alunos.setItem(row, 2, item_serie)
+                    item_turno = QTableWidgetItem(str(aluno.get("turno", "")))
+                    item_turno.setForeground(Qt.white)
+                    self.table_alunos.setItem(row, 3, item_turno)
+                    item_contato = QTableWidgetItem(str(aluno.get("contato", "")))
+                    item_contato.setForeground(Qt.white)
+                    self.table_alunos.setItem(row, 4, item_contato)
+                    item_endereco = QTableWidgetItem(str(aluno.get("endereco", "")))
+                    item_endereco.setForeground(Qt.white)
+                    self.table_alunos.setItem(row, 5, item_endereco)
                     
                     btn_container = QWidget()
                     btn_layout = QHBoxLayout(btn_container)
@@ -801,22 +843,27 @@ class JanelaPrincipal(QMainWindow):
                     self.table_livros.insertRow(row)
                     
                     item_num = QTableWidgetItem(str(livro.get("numeracao", "")))
+                    item_num.setForeground(Qt.white)
                     item_num.setTextAlignment(Qt.AlignCenter)
                     self.table_livros.setItem(row, 0, item_num)
 
                     item_titulo = QTableWidgetItem(str(livro.get("titulo", "")))
+                    item_titulo.setForeground(Qt.white)
                     item_titulo.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
                     self.table_livros.setItem(row, 1, item_titulo)
 
                     item_autor = QTableWidgetItem(str(livro.get("autor", "")))
+                    item_autor.setForeground(Qt.white)
                     item_autor.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
                     self.table_livros.setItem(row, 2, item_autor)
 
                     item_genero = QTableWidgetItem(str(livro.get("genero", "")))
+                    item_genero.setForeground(Qt.white)
                     item_genero.setTextAlignment(Qt.AlignCenter)
                     self.table_livros.setItem(row, 3, item_genero)
 
                     item_qtd = QTableWidgetItem(str(livro.get("quantidade", "")))
+                    item_qtd.setForeground(Qt.white)
                     item_qtd.setTextAlignment(Qt.AlignCenter)
                     self.table_livros.setItem(row, 4, item_qtd)
                     
@@ -919,7 +966,7 @@ class JanelaPrincipal(QMainWindow):
         }
         QHeaderView::section {
             background: rgba(173, 73, 225, 0.07);
-            color: rgba(173, 73, 225, 0.7);
+            color: rgba(120, 30, 170, 1.0);
             font-size: 10px;
             letter-spacing: 1px;
             border: none;
@@ -960,6 +1007,15 @@ class JanelaPrincipal(QMainWindow):
         }
         QPushButton:pressed {
             background: rgba(173, 73, 225, 0.4);
+        }
+        """
+
+        STYLESHEET += """
+        QTableWidget {
+            color: #e0e0e0;
+        }
+        QTableWidgetItem {
+            color: #e0e0e0;
         }
         """
         

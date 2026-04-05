@@ -1,83 +1,273 @@
-{
-  "0": {
-    "ID": "0",
-    "Nome": "Pedrinho",
-    "Série": "9",
-    "Turno": "Manha",
-    "Idade": "10",
-    "Contato": "8",
-    "Endereço": "Rua 1 Bairro 2"
-  },
+﻿{
   "1": {
-    "ID": "1",
-    "Nome": "Aquila Menezes",
-    "Série": "9",
-    "Turno": "Tarde",
-    "Idade": "20",
-    "Contato": "88 99",
-    "Endereço": "Rua Bairro Cidade Numero"
+    "id": "1",
+    "nome": "Ana Silva",
+    "serie": "9",
+    "turno": "Manha",
+    "idade": "14",
+    "contato": "912345678",
+    "endereco": "Rua das Flores, 12"
   },
   "2": {
-    "ID": "2",
-    "Nome": "Pedenrique",
-    "Série": "9",
-    "Turno": "Manha",
-    "Idade": "20",
-    "Contato": "9",
-    "Endereço": "Rua 3"
+    "id": "2",
+    "nome": "Bruno Santos",
+    "serie": "9",
+    "turno": "Tarde",
+    "idade": "15",
+    "contato": "913456789",
+    "endereco": "Avenida Central, 45"
   },
   "3": {
-    "ID": "3",
-    "Nome": "Wellington Almeida Silva",
-    "Série": "9",
-    "Turno": "Tarde",
-    "Idade": "20",
-    "Contato": "88888888888",
-    "Endereço": "Rua 1 Bairro 1 Numero 1"
+    "id": "3",
+    "nome": "Carla Ferreira",
+    "serie": "8",
+    "turno": "Manha",
+    "idade": "13",
+    "contato": "914567890",
+    "endereco": "Rua do Sol, 8"
   },
   "4": {
-    "ID": "4",
-    "Nome": "Maria Helena",
-    "Série": "9",
-    "Turno": "Manha",
-    "Idade": "20",
-    "Contato": "0000000000",
-    "Endereço": "Rua Bairro Cidade "
+    "id": "4",
+    "nome": "Diogo Oliveira",
+    "serie": "9",
+    "turno": "Manha",
+    "idade": "14",
+    "contato": "915678901",
+    "endereco": "Bairro da Paz, Bloco A"
   },
   "5": {
-    "ID": "5",
-    "Nome": "Luisa De Souza Ferreira",
-    "Série": "Engenharia",
-    "Turno": "Diurno",
-    "Idade": "19",
-    "Contato": "luisasouzalinda90@gmail.com",
-    "Endereço": "Qr 222 Brasilia Df"
+    "id": "5",
+    "nome": "Elena Costa",
+    "serie": "7",
+    "turno": "Tarde",
+    "idade": "12",
+    "contato": "916789012",
+    "endereco": "Travessa do Ouro, 3"
   },
   "6": {
     "id": "6",
-    "nome": "Camila Silva Cavalcante",
-    "idade": "19",
-    "serie": "Faculdade",
-    "turno": "Diurno",
-    "contato": "00000",
-    "endereco": "Residencial Gamagiore"
+    "nome": "Fábio Pereira",
+    "serie": "9",
+    "turno": "Manha",
+    "idade": "14",
+    "contato": "917890123",
+    "endereco": "Rua Principal, 101"
   },
   "7": {
     "id": "7",
-    "nome": "Geovanna Umbelino",
-    "idade": "21",
-    "serie": "Faculdade",
-    "turno": "Diruno",
-    "contato": "Geovannaumbelino@gmail.com",
-    "endereco": "Residencial Alvorada"
+    "nome": "Gabriela Martins",
+    "serie": "8",
+    "turno": "Manha",
+    "idade": "13",
+    "contato": "918901234",
+    "endereco": "Alameda dos Pinheiros, 22"
   },
   "8": {
     "id": "8",
-    "nome": "1111",
-    "idade": "5",
-    "serie": "qq",
-    "turno": "Qqq",
-    "contato": "333",
-    "endereco": "Sssss"
+    "nome": "Hugo Rocha",
+    "serie": "6",
+    "turno": "Tarde",
+    "idade": "11",
+    "contato": "919012345",
+    "endereco": "Rua das Palmeiras, 56"
+  },
+  "9": {
+    "id": "9",
+    "nome": "Inês Castro",
+    "serie": "9",
+    "turno": "Manha",
+    "idade": "14",
+    "contato": "910123456",
+    "endereco": "Rua de Cima, 14"
+  },
+  "10": {
+    "id": "10",
+    "nome": "João Mendes",
+    "serie": "9",
+    "turno": "Tarde",
+    "idade": "15",
+    "contato": "921234567",
+    "endereco": "Praceta da Alegria, 9"
+  },
+  "11": {
+    "id": "11",
+    "nome": "Kátia Lima",
+    "serie": "7",
+    "turno": "Manha",
+    "idade": "12",
+    "contato": "922345678",
+    "endereco": "Rua Nova, 202"
+  },
+  "12": {
+    "id": "12",
+    "nome": "Lucas Antunes",
+    "serie": "8",
+    "turno": "Tarde",
+    "idade": "13",
+    "contato": "923456789",
+    "endereco": "Bairro Alto, Casa 4"
+  },
+  "13": {
+    "id": "13",
+    "nome": "Mariana Alves",
+    "serie": "9",
+    "turno": "Manha",
+    "idade": "14",
+    "contato": "924567890",
+    "endereco": "Estrada Real, 77"
+  },
+  "14": {
+    "id": "14",
+    "nome": "Nuno Gomes",
+    "serie": "9",
+    "turno": "Manha",
+    "idade": "14",
+    "contato": "925678901",
+    "endereco": "Rua Direita, 33"
+  },
+  "15": {
+    "id": "15",
+    "nome": "Olívia Ramos",
+    "serie": "6",
+    "turno": "Tarde",
+    "idade": "11",
+    "contato": "926789012",
+    "endereco": "Largo do Chafariz, 5"
+  },
+  "16": {
+    "id": "16",
+    "nome": "Pedro Nunes",
+    "serie": "8",
+    "turno": "Manha",
+    "idade": "13",
+    "contato": "927890123",
+    "endereco": "Rua da Esperança, 18"
+  },
+  "17": {
+    "id": "17",
+    "nome": "Quelvin Souza",
+    "serie": "9",
+    "turno": "Tarde",
+    "idade": "15",
+    "contato": "928901234",
+    "endereco": "Rua das Amendoeiras, 40"
+  },
+  "18": {
+    "id": "18",
+    "nome": "Rita Cardoso",
+    "serie": "7",
+    "turno": "Manha",
+    "idade": "12",
+    "contato": "929012345",
+    "endereco": "Rua de Trás, 10"
+  },
+  "19": {
+    "id": "19",
+    "nome": "Samuel Vaz",
+    "serie": "9",
+    "turno": "Manha",
+    "idade": "14",
+    "contato": "920123456",
+    "endereco": "Avenida Brasil, 900"
+  },
+  "20": {
+    "id": "20",
+    "nome": "Tiago Bragança",
+    "serie": "8",
+    "turno": "Tarde",
+    "idade": "13",
+    "contato": "931234567",
+    "endereco": "Rua dos Artistas, 2"
+  },
+  "21": {
+    "id": "21",
+    "nome": "Úrsula Duarte",
+    "serie": "9",
+    "turno": "Manha",
+    "idade": "14",
+    "contato": "932345678",
+    "endereco": "Rua do Comércio, 15"
+  },
+  "22": {
+    "id": "22",
+    "nome": "Vítor Machado",
+    "serie": "9",
+    "turno": "Tarde",
+    "idade": "15",
+    "contato": "933456789",
+    "endereco": "Rua da Ponte, 67"
+  },
+  "23": {
+    "id": "23",
+    "nome": "William Reis",
+    "serie": "7",
+    "turno": "Manha",
+    "idade": "12",
+    "contato": "934567890",
+    "endereco": "Bairro Azul, Bloco C"
+  },
+  "24": {
+    "id": "24",
+    "nome": "Xavier Neto",
+    "serie": "8",
+    "turno": "Tarde",
+    "idade": "13",
+    "contato": "935678901",
+    "endereco": "Rua dos Navegantes, 11"
+  },
+  "25": {
+    "id": "25",
+    "nome": "Yasmin Luna",
+    "serie": "9",
+    "turno": "Manha",
+    "idade": "14",
+    "contato": "936789012",
+    "endereco": "Vila das Águas, 88"
+  },
+  "26": {
+    "id": "26",
+    "nome": "Zeca Afonso",
+    "serie": "6",
+    "turno": "Manha",
+    "idade": "11",
+    "contato": "937890123",
+    "endereco": "Rua da Liberdade, 1"
+  },
+  "27": {
+    "id": "27",
+    "nome": "Bárbara Luz",
+    "serie": "9",
+    "turno": "Tarde",
+    "idade": "15",
+    "contato": "938901234",
+    "endereco": "Rua do Mirante, 50"
+  },
+  "28": {
+    "id": "28",
+    "nome": "Caio Moreira",
+    "serie": "8",
+    "turno": "Manha",
+    "idade": "13",
+    "contato": "939012345",
+    "endereco": "Rua da Saudade, 25"
+  },
+  "29": {
+    "id": "29",
+    "nome": "Daniela Paiva",
+    "serie": "7",
+    "turno": "Tarde",
+    "idade": "12",
+    "contato": "930123456",
+    "endereco": "Praceta das Rosas, 7"
+  },
+  "30": {
+    "id": "30",
+    "nome": "Erick Júnio",
+    "serie": "9",
+    "turno": "Manha",
+    "idade": "14",
+    "contato": "961234567",
+    "endereco": "Rua Vinte e Oito, 140"
   }
 }
+
